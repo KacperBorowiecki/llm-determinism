@@ -1,0 +1,2 @@
+# Hashes are computed from exact bytes: never let git change line endings.
+* -text
