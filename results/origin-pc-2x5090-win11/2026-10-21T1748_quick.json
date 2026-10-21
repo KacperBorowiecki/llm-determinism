@@ -5,7 +5,8 @@
  "finished": "2026-10-21T17:51:04+02:00",
  "length": "quick",
  "runs_per_temperature": 10,
- "note": "GPU 0, -ngl 999 (all layers on GPU); end-to-end test of the kit",
+ "gpu": 0,
+ "note": "End-to-end test of the kit: new server started following the determinism-test skill (-ngl 999, all layers on GPU 0), after stopping the servers of the 1000/5000-run tests. Two days after the first tests; no PC restart since 19 Oct 20:35.",
  "machine": {
   "os": "Windows 11 (10.0.26200)",
   "arch": "AMD64",

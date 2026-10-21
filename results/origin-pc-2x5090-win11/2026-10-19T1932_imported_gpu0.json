@@ -1,0 +1,1701 @@
+{
+ "schema": 1,
+ "label": "origin-pc-2x5090-win11",
+ "started": "2026-10-19T19:32:00+02:00",
+ "finished": "2026-10-19T20:17:00+02:00",
+ "length": "imported",
+ "runs_per_temperature": {
+  "0": 100,
+  "1": 100
+ },
+ "gpu": 0,
+ "note": "First test session (Ollama 0.40.4). One server on GPU 0, one request at a time, prompt cache off. Temperature 0 at 19:32–19:45, temperature 1 at 20:04–20:17. Imported from the origin project logs.",
+ "machine": {
+  "reconstructed": true,
+  "os": "Windows 11 (10.0.26200)",
+  "arch": "AMD64",
+  "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
+  "ram_gb": 61.6,
+  "gpus": [
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   },
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   }
+  ],
+  "ollama": "0.40.4",
+  "python": "3.13.5",
+  "server": {
+   "build_info": "b1-b42b7e6d3",
+   "model": "sha256-ec528f6d0b7e2d2219d203bea82f4c5b98cbcdcbfaa9153b6d8c36756504c2d5",
+   "n_ctx": 8192,
+   "slots": 1,
+   "sampling": {
+    "top_k": 64,
+    "top_p": 0.95,
+    "min_p": 0.05,
+    "samplers": [
+     "penalties",
+     "dry",
+     "top_n_sigma",
+     "top_k",
+     "typ_p",
+     "top_p",
+     "min_p",
+     "xtc",
+     "temperature"
+    ]
+   }
+  }
+ },
+ "temperatures": {
+  "0": {
+   "runs": 100,
+   "hashes": {
+    "138e66a98238": 100
+   },
+   "repeatable": true,
+   "reference_hash": "138e66a98238",
+   "equals_reference": true,
+   "answer_tokens": [
+    1305
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": null,
+   "divergence_vs_reference": null
+  },
+  "1": {
+   "runs": 100,
+   "hashes": {
+    "0e661f14a480": 100
+   },
+   "repeatable": true,
+   "reference_hash": "0e661f14a480",
+   "equals_reference": true,
+   "answer_tokens": [
+    1346
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": null,
+   "divergence_vs_reference": null
+  }
+ },
+ "warnings": [],
+ "texts": {
+  "138e66a98238": "Oto ciepła opowieść o niezwykłej przyjaźni, która narodziła się tam, gdzie nikt się jej nie spodziewał.\n\n***\n\n### Wielka Przygoda na Podwórku\n\nNa skraju małego miasteczka, w ogrodzie pełnym pachnących lawendą krzewów i starych jabłoni, mieszkał pies o imieniu Burek. Burek nie był typem groźnego ogara – był raczej puszystym, nieco leniwym Golden Retrieverem, którego głównym zajęciem było drzemanie w promieniach słońca i pilnowanie, by żadna mucha nie zakłóciła jego spokoju.\n\nPewnego słonecznego popołudnia spokój Burka został przerwany przez dziwny dźwięk: *„Kwa! Kwa! Kwa!”*.\n\nBurek otworzył jedno oko. Przy małym stawiku, w którym zwykle tylko żaby urządzały swoje koncerty, siedziała kaczka. Ale nie była to zwykła kaczka. Miała na sobie małą, czerwoną kokardkę przyczepioną do piórka i wyglądała na bardzo zagubioną.\n\n– Przepraszam najmocniej – odezwał się Burek, przeciągając się leniwie. – Czy ty masz jakiś problem, czy po prostu ćwiczysz operę?\n\nKaczka, która miała na imię Klara, podskoczyła z wrażenia.\n– Ojej! Mówiący pies! – zawołała. – Nie mam problemu, ja po prostu... zgubiłam swoją drogę do jeziora. Moja rodzina odpłynęła rano, a ja utknęłam w tym dziwnym, zielonym labiryncie!\n\nBurek, który miał bardzo dobre serce, wstał i otrzepał futro z liści.\n– Ten „zielony labirynt” to po prostu nasz ogród, Klaro. Ale nie martw się, pomogę ci.\n\nZanim jednak zdążyli zrobić pierwszy krok, z wysokiego muru, tuż nad ich głowami, zsunęła się mała, czarna plama. To był Kotek, imieniem Piorun. Piorun był małym, niezwykle energicznym kotkiem, który uważał, że świat kręci się wokół jego ogona.\n\n– Co tu się dzieje? – zapytał Piorun, lądując miękko na trawie. – Czy organizujemy tajną naradę? Czy jest jakaś misja? Czy mam przynieść mysz?\n\n– Klara zgubiła drogę do jeziora – wyjaśnił Burek. – Chcemy jej pomóc.\n\nPiorun natychmiast wyprostował grzbiet i przybrał bardzo poważną minę.\n– Jezioro? To wyprawa! Potrzebujemy planu, mapy i... strategicznego podejścia! Ja będę zwiadowcą. Będę wspinał się na drzewa i sprawdzał, czy droga jest wolna od przeszkód, takich jak... bardzo groźne odkurzacze!\n\nI tak oto ta niezwykła trójka wyruszyła w drogę. Burek szedł przodem, torując drogę przez wysoką trawę. Klara, mała i lekka, skakała tuż obok jego łap, starając się nie ugrzęznąć w błocie. Piorun natomiast biegał zygzakiem, co chwilę zatrzymując się, by sprawdzić coś nosem lub wskoczyć na płot, by „monitorować sytuację z góry”.\n\nPrzygoda nie była łatwa. Musieli pokonać „Górę Przeznaczenia” (która dla psa była tylko małym pagórkiem z ziemi), przejść przez „Dżunglę Nieskończoności” (czyli gęste krzaki róż) i uniknąć „Wielkiego Szumu” (którym okazał się włączony w domu odkurzacz, słyszany przez otwarte okno).\n\nW końcu, gdy słońce zaczęło powoli chować się za horyzontem, malując niebo na pomarańczowo, usłyszeli znajomy dźwięk. *„Kwa! Kwa! Kwa!”*.\n\n– To oni! – pisnęła Klara, machając skrzydełkami.\n\nZza zakrętu, przy wielkim, błękitnym jeziorze, wyłoniła się reszta kaczki. Klara z radością pobiegła w ich stronę, ale zatrzymała się na chwilę, by odwrócić się do swoich nowych przyjaciół.\n\n– Dziękuję wam! – zawołała. – Jesteście najlepszymi podróżnikami, jakich spotkałam!\n\nBurek uśmiechnął się szeroko, a Piorun, udając, że wcale nie jest wzruszony, zaczął intensywnie myć łapkę.\n\n– To była całkiem niezła misja – mruknął kotek. – Ale następnym razem, proszę, wybierzmy coś mniej... mokrego.\n\nBurek i Piorun wrócili do ogrodu. Choć byli zmęczeni, czuli coś wyjątkowego. Zrozumieli, że nie ma znaczenia, czy masz futro, pióra, czy wielkie uszy – jeśli masz przyjaciół, nawet największa wyprawa staje się najpiękniejszą przygodą.\n\nI od tego dnia, w ogrodzie pod jabłonią, często można było zobaczyć nietypową grupę: wielkiego psa, małego czarnego kotka i kaczki z czerwoną kokardką, którzy wspólnie dzielili się popołudniową drzemką.",
+  "0e661f14a480": "Oto ciepła opowieść o niezwykłej przyjaźni, która narodziła się tam, gdzie nikt się jej nie spodziewał.\n\n***\n\n### Wielka Przygoda na Podwórku\n\nNa skraju małego miasteczka, w ogrodzie pełnym pachnących lawendą krzewów i starych jabłoni, mieszkał pies o imieniu Burek. Burek był dużym, puszystym owczarkiem o mądrych oczach i sercu większym niż jego łapy. Choć wyglądał groźnie, w rzeczywistości był największym pacyfistą w całej okolicy – jego największą pasją było drzemanie w promieniach słońca.\n\nPewnego słonecznego popołudnia spokój Burka został zakłócony przez dziwny dźwięk: *„Kwa! Kwa! Chlap! Chlap!”*.\n\nBurek otworzył jedno oko. Przy małym, błotnistym oczku w ogrodzie stała mała, żółta kaczka. Nie była to jednak zwykła kaczka – wyglądała na bardzo zagubioną. Miała na sobie maleńką, niebieską wstążkę przy szyi i nerwowo rozglądała się dookoła.\n\n– Czy ty się zgubiłaś, mała? – zapytał Burek, starając się mówić jak najciszej, żeby nie wystraszyć gościa.\n\nKaczka, która miała na imię Kaczka (bo tak ją wszyscy nazywali), zatrzymała się i spojrzała na psa z nadzieją.\n– Szukam swojej mamy! – pisnęła. – Odleciałam za daleko za starym dębem i teraz nie wiem, w którą stronę płynąć do stawu!\n\nBurek, który uważał się za strażnika ogrodu, poczuł nagły przypływ odpowiedzialności. \n– Nie martw się, mała. Pomogę ci. Ale musimy być ostrożni. W krzakach żyje... On.\n\nKaczka drgnęła. „On”? Czy to potwór? Czy to wielki jastrząb? Czy to smok?\n\nW tym momencie z wysokiego płotu, z gracją godną baletnicy, zeskoczył mały, trójkolorowy kotek o imieniu Pusia. Pusia była mała, ale miała charakter większy niż niej sam. Jej uszy zawsze były nastawione na wszelkie dźwięki, a ogonek nieustannie pracował jak wahadło.\n\n– Słyszałam o „Nim”! – zawołała Pusia, lądując miękko tuż przed nosem Burka. – Chodzi o Cienia?\n\n– Nie, Pusia, nie o Cienia – westchnął Burek. – Chodzi o to, że musimy przejść przez środek wysokiej trawy, a tam może czaić się coś nieprzewidywalnego.\n\nPusia natychmiast zaprezentowała swoje pazurki. \n– Ja znam drogę! – oznajmiła dumnie. – Widziałam staw z góry, kiedy wspinałam się na dach szopy. Jeśli pójdziemy moją ścieżką, unikniemy błota i... może spotkamy mamę Kaczki!\n\nI tak rozpoczęła się wielka wyprawa. Nie była to łatwa podróż. \n\nNajpierw musieli pokonać „Dżunglę Paproci”. Dla małej Kaczki każda paproć była jak ogromne drzewo. Burek szedł przodem, rozsuwając liście swoim wielkim nosem, tworząc bezpieczny tunel. Pusia skakała po gałęziach nad ich głowami, pełniąc rolę zwiadowcy i krzycząc: „Czysto! Możecie iść!”.\n\nKiedy dotarli do brzegu małego strumyka, Kaczka zatrzymała się z przerażeniem. Woda wydawała się dla niej głęboka jak ocean. \n– Nie dam rady... – zapłakała, chowając dziób w piórach.\n\nWtedy Burek zrobił coś niezwykłego. Położył się na brzegu i powiedział:\n– Wskakuj na mój grzbiet, mała. Przeniosę cię.\n\nKaczka, nie mając wyboru, wspięła się na miękkie, ciepłe futro psa. Burek ostrożnie, krok po kroku, przeprawił ich przez wodę, podczas gdy Pusia biegała po kamieniach, pilnując, by pies nie poślizgnął się na mchu.\n\nWreszcie, po godzinie wędrówki, usłyszeli znajome *„Kwa! Kwa!”*. Na skraju stawu, przy trzcinach, stała wielka kaczka, wyglądająca na bardzo zmartwioną.\n\n– Mama! – wrzasnęła Kaczka i rzuciła się w stronę stawu.\n\nGdy cała rodzina kaczek była już bezpieczna, Burek i Pusia usiedli na brzegu, obserwując radosne pluskanie. \n\n– Dobra robota, piesku – mruknęła Pusia, ocierając się o bok Burka. – Masz całkiem niezłe instynkty ratunkowe.\n– A ty masz niezłe oko z góry, mała – odpowiedział Burek z uśmiechem.\n\nSłońce zaczęło zachodzić, malując niebo na pomarańczowo. Burek, Pusia i (teraz już tylko z daleka) Kaczka wiedzieli jedno: nie liczy się to, czy masz futro, pióra czy łuski, ale to, że w potrzebie można liczyć na przyjaciela.\n\nI choć Burek był psem, Pusia kotem, a Kaczka... no cóż, kaczką, tego wieczoru wszyscy byli po prostu jedną, wielką drużyną."
+ },
+ "runs": [
+  {
+   "temperature": 0.0,
+   "run": 1,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.08
+  },
+  {
+   "temperature": 0.0,
+   "run": 2,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.96
+  },
+  {
+   "temperature": 0.0,
+   "run": 3,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.88
+  },
+  {
+   "temperature": 0.0,
+   "run": 4,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.81
+  },
+  {
+   "temperature": 0.0,
+   "run": 5,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.76
+  },
+  {
+   "temperature": 0.0,
+   "run": 6,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 7,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 8,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.83
+  },
+  {
+   "temperature": 0.0,
+   "run": 9,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.93
+  },
+  {
+   "temperature": 0.0,
+   "run": 10,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.06
+  },
+  {
+   "temperature": 0.0,
+   "run": 11,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.2
+  },
+  {
+   "temperature": 0.0,
+   "run": 12,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.99
+  },
+  {
+   "temperature": 0.0,
+   "run": 13,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.01
+  },
+  {
+   "temperature": 0.0,
+   "run": 14,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.06
+  },
+  {
+   "temperature": 0.0,
+   "run": 15,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.77
+  },
+  {
+   "temperature": 0.0,
+   "run": 16,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.96
+  },
+  {
+   "temperature": 0.0,
+   "run": 17,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.91
+  },
+  {
+   "temperature": 0.0,
+   "run": 18,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.1
+  },
+  {
+   "temperature": 0.0,
+   "run": 19,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.01
+  },
+  {
+   "temperature": 0.0,
+   "run": 20,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.75
+  },
+  {
+   "temperature": 0.0,
+   "run": 21,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.82
+  },
+  {
+   "temperature": 0.0,
+   "run": 22,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.89
+  },
+  {
+   "temperature": 0.0,
+   "run": 23,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.88
+  },
+  {
+   "temperature": 0.0,
+   "run": 24,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.83
+  },
+  {
+   "temperature": 0.0,
+   "run": 25,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.0
+  },
+  {
+   "temperature": 0.0,
+   "run": 26,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.14
+  },
+  {
+   "temperature": 0.0,
+   "run": 27,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.43
+  },
+  {
+   "temperature": 0.0,
+   "run": 28,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.94
+  },
+  {
+   "temperature": 0.0,
+   "run": 29,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.02
+  },
+  {
+   "temperature": 0.0,
+   "run": 30,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.12
+  },
+  {
+   "temperature": 0.0,
+   "run": 31,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.29
+  },
+  {
+   "temperature": 0.0,
+   "run": 32,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.22
+  },
+  {
+   "temperature": 0.0,
+   "run": 33,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.97
+  },
+  {
+   "temperature": 0.0,
+   "run": 34,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.21
+  },
+  {
+   "temperature": 0.0,
+   "run": 35,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.89
+  },
+  {
+   "temperature": 0.0,
+   "run": 36,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.89
+  },
+  {
+   "temperature": 0.0,
+   "run": 37,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.07
+  },
+  {
+   "temperature": 0.0,
+   "run": 38,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.85
+  },
+  {
+   "temperature": 0.0,
+   "run": 39,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.8
+  },
+  {
+   "temperature": 0.0,
+   "run": 40,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.86
+  },
+  {
+   "temperature": 0.0,
+   "run": 41,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.89
+  },
+  {
+   "temperature": 0.0,
+   "run": 42,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.92
+  },
+  {
+   "temperature": 0.0,
+   "run": 43,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.16
+  },
+  {
+   "temperature": 0.0,
+   "run": 44,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.94
+  },
+  {
+   "temperature": 0.0,
+   "run": 45,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.98
+  },
+  {
+   "temperature": 0.0,
+   "run": 46,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.01
+  },
+  {
+   "temperature": 0.0,
+   "run": 47,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.9
+  },
+  {
+   "temperature": 0.0,
+   "run": 48,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 8.01
+  },
+  {
+   "temperature": 0.0,
+   "run": 49,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.95
+  },
+  {
+   "temperature": 0.0,
+   "run": 50,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.8
+  },
+  {
+   "temperature": 0.0,
+   "run": 51,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.63
+  },
+  {
+   "temperature": 0.0,
+   "run": 52,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.77
+  },
+  {
+   "temperature": 0.0,
+   "run": 53,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.63
+  },
+  {
+   "temperature": 0.0,
+   "run": 54,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.58
+  },
+  {
+   "temperature": 0.0,
+   "run": 55,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.57
+  },
+  {
+   "temperature": 0.0,
+   "run": 56,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.65
+  },
+  {
+   "temperature": 0.0,
+   "run": 57,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.65
+  },
+  {
+   "temperature": 0.0,
+   "run": 58,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.67
+  },
+  {
+   "temperature": 0.0,
+   "run": 59,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.6
+  },
+  {
+   "temperature": 0.0,
+   "run": 60,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.62
+  },
+  {
+   "temperature": 0.0,
+   "run": 61,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 62,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 63,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.64
+  },
+  {
+   "temperature": 0.0,
+   "run": 64,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.61
+  },
+  {
+   "temperature": 0.0,
+   "run": 65,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.73
+  },
+  {
+   "temperature": 0.0,
+   "run": 66,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.62
+  },
+  {
+   "temperature": 0.0,
+   "run": 67,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.62
+  },
+  {
+   "temperature": 0.0,
+   "run": 68,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.63
+  },
+  {
+   "temperature": 0.0,
+   "run": 69,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.66
+  },
+  {
+   "temperature": 0.0,
+   "run": 70,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.64
+  },
+  {
+   "temperature": 0.0,
+   "run": 71,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.62
+  },
+  {
+   "temperature": 0.0,
+   "run": 72,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.56
+  },
+  {
+   "temperature": 0.0,
+   "run": 73,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 74,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.62
+  },
+  {
+   "temperature": 0.0,
+   "run": 75,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.69
+  },
+  {
+   "temperature": 0.0,
+   "run": 76,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.59
+  },
+  {
+   "temperature": 0.0,
+   "run": 77,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.62
+  },
+  {
+   "temperature": 0.0,
+   "run": 78,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.6
+  },
+  {
+   "temperature": 0.0,
+   "run": 79,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.65
+  },
+  {
+   "temperature": 0.0,
+   "run": 80,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.67
+  },
+  {
+   "temperature": 0.0,
+   "run": 81,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.7
+  },
+  {
+   "temperature": 0.0,
+   "run": 82,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.66
+  },
+  {
+   "temperature": 0.0,
+   "run": 83,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.67
+  },
+  {
+   "temperature": 0.0,
+   "run": 84,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.66
+  },
+  {
+   "temperature": 0.0,
+   "run": 85,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.66
+  },
+  {
+   "temperature": 0.0,
+   "run": 86,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.59
+  },
+  {
+   "temperature": 0.0,
+   "run": 87,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.63
+  },
+  {
+   "temperature": 0.0,
+   "run": 88,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.59
+  },
+  {
+   "temperature": 0.0,
+   "run": 89,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.57
+  },
+  {
+   "temperature": 0.0,
+   "run": 90,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.65
+  },
+  {
+   "temperature": 0.0,
+   "run": 91,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.65
+  },
+  {
+   "temperature": 0.0,
+   "run": 92,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.64
+  },
+  {
+   "temperature": 0.0,
+   "run": 93,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.67
+  },
+  {
+   "temperature": 0.0,
+   "run": 94,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.65
+  },
+  {
+   "temperature": 0.0,
+   "run": 95,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 96,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.67
+  },
+  {
+   "temperature": 0.0,
+   "run": 97,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.67
+  },
+  {
+   "temperature": 0.0,
+   "run": 98,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.65
+  },
+  {
+   "temperature": 0.0,
+   "run": 99,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.63
+  },
+  {
+   "temperature": 0.0,
+   "run": 100,
+   "time": null,
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.63
+  },
+  {
+   "temperature": 1.0,
+   "run": 1,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.88
+  },
+  {
+   "temperature": 1.0,
+   "run": 2,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.19
+  },
+  {
+   "temperature": 1.0,
+   "run": 3,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.08
+  },
+  {
+   "temperature": 1.0,
+   "run": 4,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.1
+  },
+  {
+   "temperature": 1.0,
+   "run": 5,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.07
+  },
+  {
+   "temperature": 1.0,
+   "run": 6,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.08
+  },
+  {
+   "temperature": 1.0,
+   "run": 7,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.11
+  },
+  {
+   "temperature": 1.0,
+   "run": 8,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.1
+  },
+  {
+   "temperature": 1.0,
+   "run": 9,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.03
+  },
+  {
+   "temperature": 1.0,
+   "run": 10,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.11
+  },
+  {
+   "temperature": 1.0,
+   "run": 11,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.03
+  },
+  {
+   "temperature": 1.0,
+   "run": 12,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.98
+  },
+  {
+   "temperature": 1.0,
+   "run": 13,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.08
+  },
+  {
+   "temperature": 1.0,
+   "run": 14,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.96
+  },
+  {
+   "temperature": 1.0,
+   "run": 15,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.07
+  },
+  {
+   "temperature": 1.0,
+   "run": 16,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.93
+  },
+  {
+   "temperature": 1.0,
+   "run": 17,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.89
+  },
+  {
+   "temperature": 1.0,
+   "run": 18,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.99
+  },
+  {
+   "temperature": 1.0,
+   "run": 19,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.07
+  },
+  {
+   "temperature": 1.0,
+   "run": 20,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.09
+  },
+  {
+   "temperature": 1.0,
+   "run": 21,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.11
+  },
+  {
+   "temperature": 1.0,
+   "run": 22,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.96
+  },
+  {
+   "temperature": 1.0,
+   "run": 23,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.99
+  },
+  {
+   "temperature": 1.0,
+   "run": 24,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.96
+  },
+  {
+   "temperature": 1.0,
+   "run": 25,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.08
+  },
+  {
+   "temperature": 1.0,
+   "run": 26,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.01
+  },
+  {
+   "temperature": 1.0,
+   "run": 27,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.01
+  },
+  {
+   "temperature": 1.0,
+   "run": 28,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.1
+  },
+  {
+   "temperature": 1.0,
+   "run": 29,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.98
+  },
+  {
+   "temperature": 1.0,
+   "run": 30,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.02
+  },
+  {
+   "temperature": 1.0,
+   "run": 31,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.14
+  },
+  {
+   "temperature": 1.0,
+   "run": 32,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.12
+  },
+  {
+   "temperature": 1.0,
+   "run": 33,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.11
+  },
+  {
+   "temperature": 1.0,
+   "run": 34,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.14
+  },
+  {
+   "temperature": 1.0,
+   "run": 35,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.3
+  },
+  {
+   "temperature": 1.0,
+   "run": 36,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.21
+  },
+  {
+   "temperature": 1.0,
+   "run": 37,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.19
+  },
+  {
+   "temperature": 1.0,
+   "run": 38,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.16
+  },
+  {
+   "temperature": 1.0,
+   "run": 39,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.2
+  },
+  {
+   "temperature": 1.0,
+   "run": 40,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.16
+  },
+  {
+   "temperature": 1.0,
+   "run": 41,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.17
+  },
+  {
+   "temperature": 1.0,
+   "run": 42,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.03
+  },
+  {
+   "temperature": 1.0,
+   "run": 43,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.02
+  },
+  {
+   "temperature": 1.0,
+   "run": 44,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.85
+  },
+  {
+   "temperature": 1.0,
+   "run": 45,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.0
+  },
+  {
+   "temperature": 1.0,
+   "run": 46,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.97
+  },
+  {
+   "temperature": 1.0,
+   "run": 47,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.91
+  },
+  {
+   "temperature": 1.0,
+   "run": 48,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.93
+  },
+  {
+   "temperature": 1.0,
+   "run": 49,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.92
+  },
+  {
+   "temperature": 1.0,
+   "run": 50,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.94
+  },
+  {
+   "temperature": 1.0,
+   "run": 51,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.98
+  },
+  {
+   "temperature": 1.0,
+   "run": 52,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.94
+  },
+  {
+   "temperature": 1.0,
+   "run": 53,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.91
+  },
+  {
+   "temperature": 1.0,
+   "run": 54,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.84
+  },
+  {
+   "temperature": 1.0,
+   "run": 55,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.78
+  },
+  {
+   "temperature": 1.0,
+   "run": 56,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.85
+  },
+  {
+   "temperature": 1.0,
+   "run": 57,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.93
+  },
+  {
+   "temperature": 1.0,
+   "run": 58,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.77
+  },
+  {
+   "temperature": 1.0,
+   "run": 59,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.8
+  },
+  {
+   "temperature": 1.0,
+   "run": 60,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.94
+  },
+  {
+   "temperature": 1.0,
+   "run": 61,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.96
+  },
+  {
+   "temperature": 1.0,
+   "run": 62,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.93
+  },
+  {
+   "temperature": 1.0,
+   "run": 63,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.94
+  },
+  {
+   "temperature": 1.0,
+   "run": 64,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.77
+  },
+  {
+   "temperature": 1.0,
+   "run": 65,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.83
+  },
+  {
+   "temperature": 1.0,
+   "run": 66,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.83
+  },
+  {
+   "temperature": 1.0,
+   "run": 67,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.8
+  },
+  {
+   "temperature": 1.0,
+   "run": 68,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.79
+  },
+  {
+   "temperature": 1.0,
+   "run": 69,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.82
+  },
+  {
+   "temperature": 1.0,
+   "run": 70,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.82
+  },
+  {
+   "temperature": 1.0,
+   "run": 71,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.82
+  },
+  {
+   "temperature": 1.0,
+   "run": 72,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.8
+  },
+  {
+   "temperature": 1.0,
+   "run": 73,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.97
+  },
+  {
+   "temperature": 1.0,
+   "run": 74,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.82
+  },
+  {
+   "temperature": 1.0,
+   "run": 75,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.83
+  },
+  {
+   "temperature": 1.0,
+   "run": 76,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.94
+  },
+  {
+   "temperature": 1.0,
+   "run": 77,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.94
+  },
+  {
+   "temperature": 1.0,
+   "run": 78,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.92
+  },
+  {
+   "temperature": 1.0,
+   "run": 79,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.96
+  },
+  {
+   "temperature": 1.0,
+   "run": 80,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.89
+  },
+  {
+   "temperature": 1.0,
+   "run": 81,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.82
+  },
+  {
+   "temperature": 1.0,
+   "run": 82,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.79
+  },
+  {
+   "temperature": 1.0,
+   "run": 83,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.91
+  },
+  {
+   "temperature": 1.0,
+   "run": 84,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.94
+  },
+  {
+   "temperature": 1.0,
+   "run": 85,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.91
+  },
+  {
+   "temperature": 1.0,
+   "run": 86,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.94
+  },
+  {
+   "temperature": 1.0,
+   "run": 87,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.94
+  },
+  {
+   "temperature": 1.0,
+   "run": 88,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.82
+  },
+  {
+   "temperature": 1.0,
+   "run": 89,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.83
+  },
+  {
+   "temperature": 1.0,
+   "run": 90,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.95
+  },
+  {
+   "temperature": 1.0,
+   "run": 91,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.95
+  },
+  {
+   "temperature": 1.0,
+   "run": 92,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.83
+  },
+  {
+   "temperature": 1.0,
+   "run": 93,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.84
+  },
+  {
+   "temperature": 1.0,
+   "run": 94,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.9
+  },
+  {
+   "temperature": 1.0,
+   "run": 95,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.95
+  },
+  {
+   "temperature": 1.0,
+   "run": 96,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.82
+  },
+  {
+   "temperature": 1.0,
+   "run": 97,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.81
+  },
+  {
+   "temperature": 1.0,
+   "run": 98,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.83
+  },
+  {
+   "temperature": 1.0,
+   "run": 99,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.83
+  },
+  {
+   "temperature": 1.0,
+   "run": 100,
+   "time": null,
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 7.83
+  }
+ ]
+}

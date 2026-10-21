@@ -65,3 +65,4 @@ per second); versions must be frozen; cloud APIs usually cannot guarantee it.
 - 2026-10-21: kit created; origin PC results imported (temperature 0: 2108 runs; temperature 1: 108 runs).
 - 2026-10-21: origin PC temperature 1 – 5000 + 5000 runs added (10 108 runs in total, all identical).
 - 2026-10-21: end-to-end test of the kit on the origin PC (quick, 10 + 10, GPU 0): both reference hashes reproduced.
+- 2026-10-21: origin PC results split into one result file per test session (8 rows in RESULTS.md, with the context of each session in the note); `run_test.py --gpu` records which GPU was used.

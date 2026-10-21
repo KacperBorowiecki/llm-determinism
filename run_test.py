@@ -185,6 +185,7 @@ def main() -> None:
     ap.add_argument("--url", default="http://127.0.0.1:8090", help="llama-server address (default %(default)s)")
     ap.add_argument("--length", choices=LENGTHS, default="quick", help="quick 10, standard 100, long 1000 runs")
     ap.add_argument("--runs", type=int, help="runs per temperature (overrides --length)")
+    ap.add_argument("--gpu", type=int, help="index of the GPU the server runs on (as in CUDA_VISIBLE_DEVICES)")
     ap.add_argument("--note", default="", help="free text, e.g. the GPU/RAM split or anything unusual")
     args = ap.parse_args()
     if not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", args.label):
@@ -213,7 +214,7 @@ def main() -> None:
     summary = summarize(results, reference)
     record = {"schema": 1, "label": args.label, "started": started.isoformat(timespec="seconds"),
               "finished": datetime.now().astimezone().isoformat(timespec="seconds"), "length": length,
-              "runs_per_temperature": n, "note": args.note, "machine": machine, "temperatures": summary,
+              "runs_per_temperature": n, "gpu": args.gpu, "note": args.note, "machine": machine, "temperatures": summary,
               "warnings": warnings_for(machine, summary, reference, build_after),
               "texts": {r["hash"]: r["text"] for r in results},
               "runs": [{k: r[k] for k in ("temperature", "run", "time", "hash", "answer_tokens", "seconds")}

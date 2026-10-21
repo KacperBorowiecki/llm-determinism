@@ -36,7 +36,9 @@ Follow CLAUDE.md. Talk to the user in their language.
 7. **Length:** ask – quick (10 + 10, default), standard (100 + 100), long (1000 + 1000). Give the expected time
    (RTX 5090 ≈ 8 s per generation; much slower with partial offload or CPU). For more than ~10 minutes remind the
    user to disable sleep.
-8. **Run:** `python run_test.py --label <label> --length <length> --note "<GPU/RAM split, anything unusual>"`.
+8. **Run:** `python run_test.py --label <label> --length <length> --gpu <index> --note "<context>"` – the note
+   says what is special about this run: GPU/RAM split, other things running, and what happened since the last
+   test on this machine (restart, Ollama or driver update, date change, sleep during the run).
 9. **Stop the server.**
 10. **Report:** per temperature – repeatable? equal to the reference? warnings? If something differs, explain what is
     known (warnings, divergence position) and offer to investigate. Suggest `determinism-submit` to keep the result.

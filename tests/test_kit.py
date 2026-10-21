@@ -70,14 +70,17 @@ def test_warnings_flag_factors_that_change_the_hash():
 
 
 def test_results_table_lists_every_result(tmp_path):
-    record = {"label": "test-pc", "started": "2026-10-21T10:00:00+02:00", "note": "",
+    record = {"label": "test-pc", "started": "2026-10-21T10:00:00+02:00", "note": "", "gpu": 0,
               "machine": {"os": "Linux", "gpus": [{"name": "GPU X"}], "ollama": "0.40.6",
                           "server": {"build_info": "b1-abc"}},
-              "temperatures": {"0": {"hashes": {"138e66a98238": 10}, "repeatable": True, "equals_reference": True},
-                               "1": {"hashes": {"aaa": 6, "bbb": 4}, "repeatable": False, "equals_reference": False}},
+              "temperatures": {"0": {"runs": 10, "hashes": {"138e66a98238": 10}, "repeatable": True,
+                                     "equals_reference": True},
+                               "1": {"runs": 10, "hashes": {"aaa": 6, "bbb": 4}, "repeatable": False,
+                                     "equals_reference": False}},
               "warnings": ["x"]}
     (tmp_path / "results" / "test-pc").mkdir(parents=True)
     (tmp_path / "results" / "test-pc" / "r.json").write_text(json.dumps(record), encoding="utf-8")
     (tmp_path / "reference.json").write_text((ROOT / "reference.json").read_text(encoding="utf-8"), encoding="utf-8")
     md = results_table.build(tmp_path)
     assert "| test-pc |" in md and "`138e66a98238`×10" in md and "not repeatable" in md and "≠ ref" in md
+    assert "| 0 |" in md and "| 10 / 10 |" in md
