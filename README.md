@@ -27,7 +27,7 @@ repeat the test on their own hardware and collect the results in one table.
 
 Open this folder in Claude Code and say *"run the determinism test"* (skill `determinism-test`). Claude asks for a
 label for your machine, checks that the model fits, starts `llama-server` from Ollama, runs the test and shows the
-result. Then say *"save the result"* (skill `determinism-submit`).
+result. Then say *"save the result"* (skill `determinism-findings`: the table, the findings and a local commit).
 
 ## Run it by hand
 
