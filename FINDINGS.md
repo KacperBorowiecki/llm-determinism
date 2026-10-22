@@ -50,8 +50,10 @@ any machine – so many more people can take part.
 
 - Ollama 0.40.6: `8cc886e38b1a` (536 tokens) / `e94074591fd4` (434 tokens), 10/10 each.
   Ollama 0.40.7: `23cd03276e07` (370 tokens) / `599eb85dd1d7` (90 tokens), 10/10 each, in two separate tests.
-- **Thinking on** (a trial outside the protocol, Ollama 0.40.6): also repeatable – both the answer and the thinking
-  10/10 at both temperatures. The text differs from the thinking-off text (the prompt differs). The thinking shows
+- **Thinking on** (`--thinking`; Ollama 0.40.6 and 0.40.7): also repeatable – both the answer and the thinking
+  10/10 at both temperatures, on both versions (0.40.7: `93da943bed61` + thinking `52499a3e123b` /
+  `fa20d1ae8cef` + thinking `4074d4788a6f`). The text differs from the thinking-off text: the prompt differs –
+  25 tokens instead of 29, because with thinking off the chat template appends an empty thinking block. The thinking shows
   that the model misunderstood the Polish prompt, differently at each temperature ("a story about a fox, a rabbit,
   and a cat" / "a wolf and a mouse, plus a cat") – and repeats the misunderstanding exactly. Repeatable ≠ correct.
 - The Polish text quality is very poor (invented words) – irrelevant for the test.
@@ -103,3 +105,5 @@ per second); versions must be frozen (an update can change the text); cloud APIs
 - 2026-10-22: Ollama 0.40.7 changed the text of both models (still repeatable; not caused by a parallel CPU load –
   clean rerun). Reference hashes are now stored per model and llama.cpp build; `qwen3-0.6b-q8` added as a second
   model profile and made the default (`run_test.py --profile`).
+- 2026-10-22: thinking as an option (`--thinking`; answer and thinking hashed separately), Qwen references with
+  thinking for 0.40.6 and 0.40.7; RESULTS.md shows where the model ran (`--device`: GPU / CPU / mix).

@@ -5,7 +5,11 @@
   "prompt": "Napisz mi historie o psie i kaczce oraz kotku?",
   "seed": 42,
   "max_tokens": 4096,
-  "temperatures": [0, 1]
+  "max_tokens_thinking": 8000,
+  "temperatures": [
+   0,
+   1
+  ]
  },
  "profiles": {
   "qwen3-0.6b-q8": {
@@ -13,13 +17,91 @@
    "model_file": "sha256-31db9797248620627b127c47c75caa76ec2ce9b7de9dc0f2faca02ba59615818",
    "download_gb": 0.8,
    "memory_gb": 2,
-   "sampling": {"top_k": 40, "top_p": 0.95, "min_p": 0.05},
+   "sampling": {
+    "top_k": 40,
+    "top_p": 0.95,
+    "min_p": 0.05
+   },
    "prompt_tokens": 29,
    "references": [
-    {"llama_cpp": ["b1-620d2225c"], "ollama": ["0.40.6"],
-     "hashes": {"0": "8cc886e38b1a", "1": "e94074591fd4"}, "answer_tokens": {"0": 536, "1": 434}},
-    {"llama_cpp": ["b1-f174553e1"], "ollama": ["0.40.7"],
-     "hashes": {"0": "23cd03276e07", "1": "599eb85dd1d7"}, "answer_tokens": {"0": 370, "1": 90}}
+    {
+     "thinking": false,
+     "llama_cpp": [
+      "b1-620d2225c"
+     ],
+     "ollama": [
+      "0.40.6"
+     ],
+     "hashes": {
+      "0": "8cc886e38b1a",
+      "1": "e94074591fd4"
+     },
+     "answer_tokens": {
+      "0": 536,
+      "1": 434
+     }
+    },
+    {
+     "thinking": false,
+     "llama_cpp": [
+      "b1-f174553e1"
+     ],
+     "ollama": [
+      "0.40.7"
+     ],
+     "hashes": {
+      "0": "23cd03276e07",
+      "1": "599eb85dd1d7"
+     },
+     "answer_tokens": {
+      "0": 370,
+      "1": 90
+     }
+    },
+    {
+     "thinking": true,
+     "llama_cpp": [
+      "b1-620d2225c"
+     ],
+     "ollama": [
+      "0.40.6"
+     ],
+     "prompt_tokens": 25,
+     "hashes": {
+      "0": "482f7ccfcecf",
+      "1": "31cf38892cc4"
+     },
+     "thinking_hashes": {
+      "0": "cb78d96c1efb",
+      "1": "3098c730f004"
+     },
+     "answer_tokens": {
+      "0": 730,
+      "1": 808
+     }
+    },
+    {
+     "thinking": true,
+     "llama_cpp": [
+      "b1-f174553e1"
+     ],
+     "ollama": [
+      "0.40.7"
+     ],
+     "prompt_tokens": 25,
+     "hashes": {
+      "0": "93da943bed61",
+      "1": "fa20d1ae8cef"
+     },
+     "thinking_hashes": {
+      "0": "52499a3e123b",
+      "1": "4074d4788a6f"
+     },
+     "answer_tokens": {
+      "0": 885,
+      "1": 1097
+     }
+    }
    ]
   },
   "gemma4-26b-q8": {
@@ -27,13 +109,49 @@
    "model_file": "sha256-ec528f6d0b7e2d2219d203bea82f4c5b98cbcdcbfaa9153b6d8c36756504c2d5",
    "download_gb": 28,
    "memory_gb": 30,
-   "sampling": {"top_k": 64, "top_p": 0.95, "min_p": 0.05},
+   "sampling": {
+    "top_k": 64,
+    "top_p": 0.95,
+    "min_p": 0.05
+   },
    "prompt_tokens": 29,
    "references": [
-    {"llama_cpp": ["b1-b42b7e6d3", "b1-620d2225c"], "ollama": ["0.40.4", "0.40.6"],
-     "hashes": {"0": "138e66a98238", "1": "0e661f14a480"}, "answer_tokens": {"0": 1305, "1": 1346}},
-    {"llama_cpp": ["b1-f174553e1"], "ollama": ["0.40.7"],
-     "hashes": {"0": "179e3c96dff3", "1": "d4afe73e6d3c"}, "answer_tokens": {"0": 1276, "1": 981}}
+    {
+     "thinking": false,
+     "llama_cpp": [
+      "b1-b42b7e6d3",
+      "b1-620d2225c"
+     ],
+     "ollama": [
+      "0.40.4",
+      "0.40.6"
+     ],
+     "hashes": {
+      "0": "138e66a98238",
+      "1": "0e661f14a480"
+     },
+     "answer_tokens": {
+      "0": 1305,
+      "1": 1346
+     }
+    },
+    {
+     "thinking": false,
+     "llama_cpp": [
+      "b1-f174553e1"
+     ],
+     "ollama": [
+      "0.40.7"
+     ],
+     "hashes": {
+      "0": "179e3c96dff3",
+      "1": "d4afe73e6d3c"
+     },
+     "answer_tokens": {
+      "0": 1276,
+      "1": 981
+     }
+    }
    ]
   }
  },

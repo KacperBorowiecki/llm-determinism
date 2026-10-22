@@ -1,0 +1,322 @@
+{
+ "schema": 1,
+ "label": "origin-pc-2x5090-win11",
+ "profile": "qwen3-0.6b-q8",
+ "thinking": true,
+ "reference_llama_cpp": [
+  "b1-620d2225c"
+ ],
+ "reference_exact": true,
+ "started": "2026-10-21T19:02:13+02:00",
+ "finished": null,
+ "length": "quick",
+ "runs_per_temperature": 10,
+ "device": "gpu",
+ "gpu": 0,
+ "note": "First test with thinking on (converted from a trial run, same session as the 18:59 test; same request as run_test.py --thinking except max_tokens 4096 – all runs ended normally).",
+ "machine": {
+  "os": "Windows 11 (10.0.26200)",
+  "arch": "AMD64",
+  "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
+  "ram_gb": 61.6,
+  "gpus": [
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   },
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   }
+  ],
+  "ollama": "0.40.6",
+  "python": "3.13.5",
+  "server": {
+   "build_info": "b1-620d2225c",
+   "model": "sha256-31db9797248620627b127c47c75caa76ec2ce9b7de9dc0f2faca02ba59615818",
+   "n_ctx": 8192,
+   "slots": 1,
+   "sampling": {
+    "top_k": 40,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
+    "samplers": [
+     "penalties",
+     "dry",
+     "top_n_sigma",
+     "top_k",
+     "typ_p",
+     "top_p",
+     "min_p",
+     "xtc",
+     "temperature"
+    ]
+   }
+  }
+ },
+ "temperatures": {
+  "0": {
+   "runs": 10,
+   "hashes": {
+    "482f7ccfcecf": 10
+   },
+   "repeatable": true,
+   "reference_hash": "482f7ccfcecf",
+   "equals_reference": true,
+   "answer_tokens": [
+    730
+   ],
+   "prompt_tokens": [
+    25
+   ],
+   "tok_per_s_median": null,
+   "finish_reasons": {
+    "stop": 10
+   },
+   "divergence_vs_reference": null,
+   "thinking_hashes": {
+    "cb78d96c1efb": 10
+   },
+   "thinking_reference_hash": "cb78d96c1efb"
+  },
+  "1": {
+   "runs": 10,
+   "hashes": {
+    "31cf38892cc4": 10
+   },
+   "repeatable": true,
+   "reference_hash": "31cf38892cc4",
+   "equals_reference": true,
+   "answer_tokens": [
+    808
+   ],
+   "prompt_tokens": [
+    25
+   ],
+   "tok_per_s_median": null,
+   "finish_reasons": {
+    "stop": 10
+   },
+   "divergence_vs_reference": null,
+   "thinking_hashes": {
+    "3098c730f004": 10
+   },
+   "thinking_reference_hash": "3098c730f004"
+  }
+ },
+ "warnings": [],
+ "texts": {
+  "482f7ccfcecf": "**Historia o psie, kaczce i kotku**\n\nW boszu zielymi, gdzie czarne światło zaczęło się w czasach nieogromowych, byli trzy przyjazné przyjazné: psia, kaczka i kotka. Ktoś wtedy, gdy światło się zaczęło się, zauważył, że psia, zaczęła się odwagą, a kaczka, zaczęła się odwagą, a kotka, zaczęła się odwagą. To nie było tylko odwagą, ale też nie tylko – to było odwagą, która pozwalała na połączenie.\n\n**Psia** – to człowiek, który zaczęł się odwagą, ale nie zaczęł się odwagą. Zaczęł się odwagą, ale nie zaczęł się odwagą. To był tylko zaczynanie. Zaczęł się odwagą, ale nie zaczęł się odwagą. To był tylko zaczynanie. Zaczęł się odwagą, ale nie zaczęł się odwagą. To był tylko zaczynanie.\n\n**Kaczka** – to człowiek, który zaczęł się odwagą, ale nie zaczęł się odwagą. Zaczęł się odwagą, ale nie zaczęł się odwagą. To był tylko zaczynanie. Zaczęł się odwagą, ale nie zaczęł się odwagą. To był tylko zaczynanie.\n\n**Kotka** – to człowiek, który zaczęł się odwagą, ale nie zaczęł się odwagą. Zaczęł się odwagą, ale nie zaczęł się odwagą. To był tylko zaczynanie. Zaczęł się odwagą, ale nie zaczęł się odwagą. To był tylko zaczynanie.\n\nTo było tylko zaczynanie. To było odwagą, która pozwalała na połączenie. Zaczęł się odwagą, ale nie zaczęł się odwagą. To był tylko zaczynanie. Zaczęł się odwagą, ale nie zaczęł się odwagą. To był tylko zaczynanie.",
+  "31cf38892cc4": "**Tadeusz i Mice i Kaczka**  \n\nW niesłonecznym, pięknie zabudowanych rzęgnach Goliatków Baskowych pochodziła **Tadeusz**, niemal nagle przygotowany w klasze na piękne urodzenia. On był zaznaczony z wyrazu, który nazywał się **Kaczka**, a jego świat nie był przypadkiem przez niego rozgorywany. Z niespotecznych i niepolskim chomskiem przyszło też **Mice**, która pochwaliła się swoim rozumieniem, że odgrywała ważne rolę w świecie.  \n\nKaczka, prawdopodobnie z nasłonecznymi zegarami i niespotecznymi wyrazami, była zaczynała się szukać **puzzle**. W tej szacunkowej kolekcyjnym świecie, gdzie rzeczy były niezawodne i mohły się rozwiązać, byś wytłumaczyła jej wesołe wizyjne niezawodność. Kaczka nie była tylko tym, kto szukała zabaw, ale także pełen wyczucia, że świat był zawsze zbyt wydajnym, i że mamy wszystko, co chcemy.  \n\nPonieważ Tadeusz nie był tylko kaczką, jego świat miał też **Mice**, która uśmiechała się na jego zegare. Wraz z nim, po wznawieniu, zachodziły dwa elementy, które stawiały się na najbardziej odległym, ale również najbardziej przyjaznym końcu świata: **czystotą i pochuczonym zmysłom**, i **przekonanym wierzeniem w świat pożegnania**.  \n\nZ tej koncepcji zaczynały się święte doświadczenia, które pozwoliły Tadeusz i Mice na koniec wytłumaczyć, że świat nie był zawsze przyjazny – tylko że mógł być."
+ },
+ "runs": [
+  {
+   "temperature": 0.0,
+   "run": 1,
+   "time": null,
+   "hash": "482f7ccfcecf",
+   "thinking_hash": "cb78d96c1efb",
+   "answer_tokens": 730,
+   "finish_reason": "stop",
+   "seconds": 1.45
+  },
+  {
+   "temperature": 0.0,
+   "run": 2,
+   "time": null,
+   "hash": "482f7ccfcecf",
+   "thinking_hash": "cb78d96c1efb",
+   "answer_tokens": 730,
+   "finish_reason": "stop",
+   "seconds": 1.37
+  },
+  {
+   "temperature": 0.0,
+   "run": 3,
+   "time": null,
+   "hash": "482f7ccfcecf",
+   "thinking_hash": "cb78d96c1efb",
+   "answer_tokens": 730,
+   "finish_reason": "stop",
+   "seconds": 1.43
+  },
+  {
+   "temperature": 0.0,
+   "run": 4,
+   "time": null,
+   "hash": "482f7ccfcecf",
+   "thinking_hash": "cb78d96c1efb",
+   "answer_tokens": 730,
+   "finish_reason": "stop",
+   "seconds": 1.44
+  },
+  {
+   "temperature": 0.0,
+   "run": 5,
+   "time": null,
+   "hash": "482f7ccfcecf",
+   "thinking_hash": "cb78d96c1efb",
+   "answer_tokens": 730,
+   "finish_reason": "stop",
+   "seconds": 1.46
+  },
+  {
+   "temperature": 0.0,
+   "run": 6,
+   "time": null,
+   "hash": "482f7ccfcecf",
+   "thinking_hash": "cb78d96c1efb",
+   "answer_tokens": 730,
+   "finish_reason": "stop",
+   "seconds": 1.42
+  },
+  {
+   "temperature": 0.0,
+   "run": 7,
+   "time": null,
+   "hash": "482f7ccfcecf",
+   "thinking_hash": "cb78d96c1efb",
+   "answer_tokens": 730,
+   "finish_reason": "stop",
+   "seconds": 1.43
+  },
+  {
+   "temperature": 0.0,
+   "run": 8,
+   "time": null,
+   "hash": "482f7ccfcecf",
+   "thinking_hash": "cb78d96c1efb",
+   "answer_tokens": 730,
+   "finish_reason": "stop",
+   "seconds": 1.45
+  },
+  {
+   "temperature": 0.0,
+   "run": 9,
+   "time": null,
+   "hash": "482f7ccfcecf",
+   "thinking_hash": "cb78d96c1efb",
+   "answer_tokens": 730,
+   "finish_reason": "stop",
+   "seconds": 1.44
+  },
+  {
+   "temperature": 0.0,
+   "run": 10,
+   "time": null,
+   "hash": "482f7ccfcecf",
+   "thinking_hash": "cb78d96c1efb",
+   "answer_tokens": 730,
+   "finish_reason": "stop",
+   "seconds": 1.4
+  },
+  {
+   "temperature": 1.0,
+   "run": 1,
+   "time": null,
+   "hash": "31cf38892cc4",
+   "thinking_hash": "3098c730f004",
+   "answer_tokens": 808,
+   "finish_reason": "stop",
+   "seconds": 1.61
+  },
+  {
+   "temperature": 1.0,
+   "run": 2,
+   "time": null,
+   "hash": "31cf38892cc4",
+   "thinking_hash": "3098c730f004",
+   "answer_tokens": 808,
+   "finish_reason": "stop",
+   "seconds": 1.61
+  },
+  {
+   "temperature": 1.0,
+   "run": 3,
+   "time": null,
+   "hash": "31cf38892cc4",
+   "thinking_hash": "3098c730f004",
+   "answer_tokens": 808,
+   "finish_reason": "stop",
+   "seconds": 1.59
+  },
+  {
+   "temperature": 1.0,
+   "run": 4,
+   "time": null,
+   "hash": "31cf38892cc4",
+   "thinking_hash": "3098c730f004",
+   "answer_tokens": 808,
+   "finish_reason": "stop",
+   "seconds": 1.61
+  },
+  {
+   "temperature": 1.0,
+   "run": 5,
+   "time": null,
+   "hash": "31cf38892cc4",
+   "thinking_hash": "3098c730f004",
+   "answer_tokens": 808,
+   "finish_reason": "stop",
+   "seconds": 1.68
+  },
+  {
+   "temperature": 1.0,
+   "run": 6,
+   "time": null,
+   "hash": "31cf38892cc4",
+   "thinking_hash": "3098c730f004",
+   "answer_tokens": 808,
+   "finish_reason": "stop",
+   "seconds": 1.62
+  },
+  {
+   "temperature": 1.0,
+   "run": 7,
+   "time": null,
+   "hash": "31cf38892cc4",
+   "thinking_hash": "3098c730f004",
+   "answer_tokens": 808,
+   "finish_reason": "stop",
+   "seconds": 1.57
+  },
+  {
+   "temperature": 1.0,
+   "run": 8,
+   "time": null,
+   "hash": "31cf38892cc4",
+   "thinking_hash": "3098c730f004",
+   "answer_tokens": 808,
+   "finish_reason": "stop",
+   "seconds": 1.58
+  },
+  {
+   "temperature": 1.0,
+   "run": 9,
+   "time": null,
+   "hash": "31cf38892cc4",
+   "thinking_hash": "3098c730f004",
+   "answer_tokens": 808,
+   "finish_reason": "stop",
+   "seconds": 1.59
+  },
+  {
+   "temperature": 1.0,
+   "run": 10,
+   "time": null,
+   "hash": "31cf38892cc4",
+   "thinking_hash": "3098c730f004",
+   "answer_tokens": 808,
+   "finish_reason": "stop",
+   "seconds": 1.67
+  }
+ ],
+ "thinking_texts": {
+  "cb78d96c1efb": "Okay, the user wants a story about a fox, a rabbit, and a cat. Let me start by setting the scene. Maybe a forest to keep it magical. The fox could be curious, the rabbit playful, and the cat maybe a bit more cautious. I need to make sure each character has distinct traits. The fox could be the main character, maybe a bit of a loner, while the rabbit and cat are companions. I should include some interactions to show their friendship. Maybe the fox helps the rabbit find something, and the cat helps in a different way. I need to keep the story engaging and have a happy ending. Let me check if there's anything missing, like a conflict or a lesson. Maybe the cat helps the fox in a way that shows their bond. Alright, time to put it all together in a coherent narrative.\n",
+  "3098c730f004": "Okay, the user wants a story about a wolf and a mouse, plus a cat. Let me start by brainstorming how to structure it. Maybe set a peaceful scene to make it engaging. I need to include the characters and their interactions.\n\nFirst, I should introduce the wolf, making sure it's friendly and not too aggressive. The mouse could be curious, perhaps with some curiosity to bring in some elements. Then the cat can be another animal that adds a different angle. Maybe the cat has a problem or a unique trait, like a puzzle or something.\n\nI need to establish a beginning, middle, and end. The beginning could be the setting, the middle the conflict or discovery, and the end showing resolution or a happy ending. Including some dialogue between the characters would make it more relatable.\n\nI should check if the characters are all developed enough. The wolf might need a reason to interact with the mouse or cat, but keep it simple. The cat's story could have a unique trait, like a magical property or a puzzle. The mouse's curiosity can add some light-heartedness.\n\nWait, maybe add some magical elements to make the story more interesting. The cat's puzzle could relate to something in the world. The mouse's curiosity could lead to some small adventures. The wolf's interaction with them could be a lesson or a friendly bond.\n\nI need to make sure the story flows smoothly and each character plays a role. Avoid clichés, keep the setting simple but vivid. Maybe end with the characters finding peace or a new beginning. Let me put it all together now.\n"
+ }
+}

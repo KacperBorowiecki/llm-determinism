@@ -9,7 +9,9 @@ this machine (repeatability) and compared with the reference machine (same hash?
 - **Never `git push`, `gh pr create` or upload anything** unless the user asks for that specific action. The repo is
   local-only.
 - **Two model profiles** (`reference.json`): `qwen3-0.6b-q8` – the default, small and fast; `gemma4-26b-q8` – the
-  main experiment, needs ~30 GB of memory. Ask which one (`run_test.py --profile`).
+  main experiment, needs ~30 GB of memory.
+- **Before a test, ask:** model (`--profile`), thinking on/off (`--thinking`, default off) and length. Record where
+  the model ran with `--device gpu|cpu|mix` (matches `-ngl`: all layers / 0 / some).
 - **Before pulling a model** (sizes in `reference.json`: ~0.8 GB / ~28 GB): ask, check free disk space and check
   that it can fit at all (`memory_gb`: GPU memory, Apple unified memory, or GPU + RAM). If it cannot, say so and
   stop.

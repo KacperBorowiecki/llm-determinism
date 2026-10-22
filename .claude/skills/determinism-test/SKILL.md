@@ -17,6 +17,10 @@ Follow CLAUDE.md. Talk to the user in their language.
    GPU + RAM memory, ~8 s per generation on an RTX 5090. Check RAM and GPU memory (NVIDIA: `nvidia-smi`; Apple:
    unified memory) against `memory_gb` of the profile; if clearly not enough: say so, offer the smaller model,
    stop. Check `ollama --version`.
+   Also ask: **thinking on or off** (default off). With thinking the model first writes its reasoning – a
+   different, longer text; the answer and the thinking are hashed separately (`--thinking`). Origin references
+   exist for qwen3-0.6b-q8 with and without thinking, for gemma4-26b-q8 only without (with thinking it writes
+   thousands of tokens per answer).
 4. **Model file:** `ollama list`. If the profile's `model` is missing: check free disk space and ask before
    `ollama pull <model>` (`download_gb` of the profile).
 5. **GPU free?** No other `llama-server` process, nothing in `ollama ps`, no other heavy GPU load. If busy: stop and
@@ -33,8 +37,8 @@ Follow CLAUDE.md. Talk to the user in their language.
      `OLLAMA_LIBRARY_PATH` = the same two folders, `GGML_BACKEND_PATH` = `<GPU folder>\ggml-cuda.dll`,
      `CUDA_VISIBLE_DEVICES` = GPU index (default 0).
    - Arguments: `--model <file> --host 127.0.0.1 --port 8090 --no-webui -ngl 999` + `server_args` from
-     `reference.json`. If the model does not fit on the GPU, use a lower `-ngl`, tell the user, and put it into
-     `--note`.
+     `reference.json`. If the model does not fit on the GPU, use a lower `-ngl` (partial offload: `--device mix`; no
+     usable GPU: `-ngl 0`, `--device cpu`), tell the user, and put it into `--note`.
    - Start it in the background; wait until `http://127.0.0.1:8090/health` returns 200; check the model is on the GPU
      (NVIDIA: GPU memory in `nvidia-smi` grows by about the model size; otherwise generation speed).
      Unexpected CPU: stop and report.
@@ -42,7 +46,7 @@ Follow CLAUDE.md. Talk to the user in their language.
    (RTX 5090: ≈ 1 s per generation for qwen3-0.6b-q8, ≈ 8 s for gemma4-26b-q8; much slower with partial
    offload or CPU). For more than ~10 minutes remind the
    user to disable sleep.
-8. **Run:** `python run_test.py --label <label> --profile <profile> --length <length> --gpu <index> --note "<context>"` – the note
+8. **Run:** `python run_test.py --label <label> --profile <profile> --length <length> --device <gpu|cpu|mix> --gpu <index> [--thinking] --note "<context>"` – the note
    says what is special about this run: GPU/RAM split, other things running, and what happened since the last
    test on this machine (restart, Ollama or driver update, date change, sleep during the run).
 9. **Stop the server.**

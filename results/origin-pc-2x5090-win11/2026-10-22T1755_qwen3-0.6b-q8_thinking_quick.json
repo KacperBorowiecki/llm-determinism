@@ -1,0 +1,322 @@
+{
+ "schema": 1,
+ "label": "origin-pc-2x5090-win11",
+ "profile": "qwen3-0.6b-q8",
+ "thinking": true,
+ "reference_llama_cpp": [
+  "b1-f174553e1"
+ ],
+ "reference_exact": true,
+ "started": "2026-10-22T17:55:10+02:00",
+ "finished": "2026-10-22T17:55:49+02:00",
+ "length": "quick",
+ "runs_per_temperature": 10,
+ "gpu": 0,
+ "note": "First test with thinking on, to create the thinking reference for Ollama 0.40.7. Became the reference for this build.",
+ "machine": {
+  "os": "Windows 11 (10.0.26200)",
+  "arch": "AMD64",
+  "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
+  "ram_gb": 61.6,
+  "gpus": [
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   },
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   }
+  ],
+  "ollama": "0.40.7",
+  "python": "3.13.5",
+  "server": {
+   "build_info": "b1-f174553e1",
+   "model": "sha256-31db9797248620627b127c47c75caa76ec2ce9b7de9dc0f2faca02ba59615818",
+   "n_ctx": 8192,
+   "slots": 1,
+   "sampling": {
+    "top_k": 40,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
+    "samplers": [
+     "penalties",
+     "dry",
+     "top_n_sigma",
+     "top_k",
+     "typ_p",
+     "top_p",
+     "min_p",
+     "xtc",
+     "temperature"
+    ]
+   }
+  }
+ },
+ "temperatures": {
+  "0": {
+   "runs": 10,
+   "hashes": {
+    "93da943bed61": 10
+   },
+   "repeatable": true,
+   "reference_hash": "93da943bed61",
+   "equals_reference": true,
+   "answer_tokens": [
+    885
+   ],
+   "prompt_tokens": [
+    25
+   ],
+   "tok_per_s_median": 539.2,
+   "finish_reasons": {
+    "stop": 10
+   },
+   "divergence_vs_reference": null,
+   "thinking_hashes": {
+    "52499a3e123b": 10
+   },
+   "thinking_reference_hash": "52499a3e123b"
+  },
+  "1": {
+   "runs": 10,
+   "hashes": {
+    "fa20d1ae8cef": 10
+   },
+   "repeatable": true,
+   "reference_hash": "fa20d1ae8cef",
+   "equals_reference": true,
+   "answer_tokens": [
+    1097
+   ],
+   "prompt_tokens": [
+    25
+   ],
+   "tok_per_s_median": 523.5,
+   "finish_reasons": {
+    "stop": 10
+   },
+   "divergence_vs_reference": null,
+   "thinking_hashes": {
+    "4074d4788a6f": 10
+   },
+   "thinking_reference_hash": "4074d4788a6f"
+  }
+ },
+ "warnings": [],
+ "texts": {
+  "93da943bed61": "**Historia o psie, kaczce i kotku**  \n\nW bosie zielnej, gdzie światło zaczyna się w czarach, byli trzy przyjazné przyjazné: **Pyszka**, **Kaczka** i **Kotka**.  \n\nPyszka, o 12 lat, była bardzo ciekawą i znała wszystko, co w świecie. Ją zauważyła kaczka, która zaczęła się zadowolona, że wojna z kądom nie była zbyt zbyt. Kaczka, o 8 lat, była bardzo zrozumiała, a kotka, o 10 lat, była bardzo zrozumiała.  \n\nPyszka i kotka zaczęły wojny, ale to nie była wojna. To była **przyjazna wojna**. Pyszka, zamiast zabrać się wojnę, zaczęła się zadowolona, że kotka była przyjazna. Kaczka, zamiast zabrać się wojnę, zaczęła się zadowolona, że kotka była przyjazna.  \n\nKotka, zamiast zabrać się wojnę, zaczęła się zadowolona, że Pyszka była przyjazna.  \n\nZaczęła się wojna, ale nie była wojną. To była **przyjazna wojna**.  \n\nPyszka i kotka zaczęły wojną, ale nie wojną. To była **przyjazna wojna**.  \n\nKotka, zamiast zabrać się wojnę, zaczęła się zadowolona, że Pyszka była przyjazna.  \n\nZaczęła się wojna, ale nie była wojną. To była **przyjazna wojna**.  \n\nPyszka, kotka i kotka zaczęły wojną, ale nie wojną. To była **przyjazna wojna**.  \n\nZaczęła się wojna, ale nie była wojną. To była **przyjazna wojna**.  \n\n**Koniec**.  \n\n---  \n*Zamknięcie:* W tej przyjaznej wojnie, trzy przyjazné przyjazné zaczęły wojną, ale nie wojną. To była **przyjazna wojna**.",
+  "fa20d1ae8cef": "**Histoire: La Pigeonnière et les Coeurs des Chacres**\n\nDans un pays verdoyant et profond, près d’un lac, se déroulait une histoire simple mais riche. Dans le bois, où les feuilles se transformaient en arbres et le vent chantait des oiseaux, se trouvait une petite ville, le **Soleil-Léon**, où les humeurs des habitants étaient enchantées.\n\nAu centre de cette ville, un chien noir, **Max**, vint à se promenner. Son frinet était un peu trop long, mais son sourire était grand. Il avait des yeux bleus et des oreilles propres, et chaque jour, il cherchait à se faire connaître. C’était la **pigeonnière**, **Léa**, qui avait eu un contrat avec lui : il lui offrirait des pâtés de soie pour ses vacances.\n\nMais pourtant, le petit Max avait été un **pigeon**. Il avait vécu dans des chutes, et s’était perdu dans un parterre. Il avait eu besoin d’un guide, et il apercevait à l’aide de **la marmotte**, une créature de taille moyenne avec des yeux bleus et une voix douce. Elle était nommée **Coco**.\n\n**La première semaine** du printemps, les deux hommes se sont retroués à l’aube. Max, délicat et curieux, avait demandé à Coco pour aider à laver ses pâtés. Coco, curieuse et d’une humeur bien placée, lui avait offert des fleurs, un parfum, et des souvenirs. C’était une histoire d’ami.\n\nMais une raison plus grande se produisit un jour. Léa, qui avait vu un autre pavois mal en cuir, se sentit déçue. Elle souhaitait que le pâté soit bon. Ce jour-là, Coco et Max se retrouvèrent dans un forêt, et se sont retrouvés par hasard.\n\nUn oiseau grand et puissant, le **poulin**, venait à se promener. Il semblait avoir perdu sa source, et ses yeux brillaient. Léa lui avait offert des fruits, et Coco, qui avait vu la maladie dans sa voie, s’était appuyée contre lui. Léa se sentit apaisée, et le poulin, dans sa peau, se sentit aussi plus en sécurité.\n\nUn jour, en s’approchant de la ville, Max et Coco se sont retrouvés dans un refuge, où les humeurs étaient plus calmes. Le poulin, qui se réchauffait, se sentait un bien-fondé. Léa, qui avait appris de Coco, avait trouvé le bien-être dans la simple présence de chacun.\n\nCette histoire finit par se transformer en un lien éternel entre les trois animaux, qui s’aimaient et s’étaient nourris mutuellement. Le **poulin** se trouvait à côté de **Léa** et **Coco**, et le **pigeon** avait appris à se voir comme une étoile, pas comme une lourde.\n\n*Fin de la histoire.*"
+ },
+ "runs": [
+  {
+   "temperature": 0.0,
+   "run": 1,
+   "time": "2026-10-22T17:55:12+02:00",
+   "hash": "93da943bed61",
+   "thinking_hash": "52499a3e123b",
+   "answer_tokens": 885,
+   "finish_reason": "stop",
+   "seconds": 1.82
+  },
+  {
+   "temperature": 0.0,
+   "run": 2,
+   "time": "2026-10-22T17:55:14+02:00",
+   "hash": "93da943bed61",
+   "thinking_hash": "52499a3e123b",
+   "answer_tokens": 885,
+   "finish_reason": "stop",
+   "seconds": 1.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 3,
+   "time": "2026-10-22T17:55:15+02:00",
+   "hash": "93da943bed61",
+   "thinking_hash": "52499a3e123b",
+   "answer_tokens": 885,
+   "finish_reason": "stop",
+   "seconds": 1.66
+  },
+  {
+   "temperature": 0.0,
+   "run": 4,
+   "time": "2026-10-22T17:55:17+02:00",
+   "hash": "93da943bed61",
+   "thinking_hash": "52499a3e123b",
+   "answer_tokens": 885,
+   "finish_reason": "stop",
+   "seconds": 1.71
+  },
+  {
+   "temperature": 0.0,
+   "run": 5,
+   "time": "2026-10-22T17:55:19+02:00",
+   "hash": "93da943bed61",
+   "thinking_hash": "52499a3e123b",
+   "answer_tokens": 885,
+   "finish_reason": "stop",
+   "seconds": 1.65
+  },
+  {
+   "temperature": 0.0,
+   "run": 6,
+   "time": "2026-10-22T17:55:20+02:00",
+   "hash": "93da943bed61",
+   "thinking_hash": "52499a3e123b",
+   "answer_tokens": 885,
+   "finish_reason": "stop",
+   "seconds": 1.69
+  },
+  {
+   "temperature": 0.0,
+   "run": 7,
+   "time": "2026-10-22T17:55:22+02:00",
+   "hash": "93da943bed61",
+   "thinking_hash": "52499a3e123b",
+   "answer_tokens": 885,
+   "finish_reason": "stop",
+   "seconds": 1.65
+  },
+  {
+   "temperature": 0.0,
+   "run": 8,
+   "time": "2026-10-22T17:55:24+02:00",
+   "hash": "93da943bed61",
+   "thinking_hash": "52499a3e123b",
+   "answer_tokens": 885,
+   "finish_reason": "stop",
+   "seconds": 1.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 9,
+   "time": "2026-10-22T17:55:26+02:00",
+   "hash": "93da943bed61",
+   "thinking_hash": "52499a3e123b",
+   "answer_tokens": 885,
+   "finish_reason": "stop",
+   "seconds": 1.72
+  },
+  {
+   "temperature": 0.0,
+   "run": 10,
+   "time": "2026-10-22T17:55:27+02:00",
+   "hash": "93da943bed61",
+   "thinking_hash": "52499a3e123b",
+   "answer_tokens": 885,
+   "finish_reason": "stop",
+   "seconds": 1.64
+  },
+  {
+   "temperature": 1.0,
+   "run": 1,
+   "time": "2026-10-22T17:55:29+02:00",
+   "hash": "fa20d1ae8cef",
+   "thinking_hash": "4074d4788a6f",
+   "answer_tokens": 1097,
+   "finish_reason": "stop",
+   "seconds": 2.04
+  },
+  {
+   "temperature": 1.0,
+   "run": 2,
+   "time": "2026-10-22T17:55:31+02:00",
+   "hash": "fa20d1ae8cef",
+   "thinking_hash": "4074d4788a6f",
+   "answer_tokens": 1097,
+   "finish_reason": "stop",
+   "seconds": 2.13
+  },
+  {
+   "temperature": 1.0,
+   "run": 3,
+   "time": "2026-10-22T17:55:34+02:00",
+   "hash": "fa20d1ae8cef",
+   "thinking_hash": "4074d4788a6f",
+   "answer_tokens": 1097,
+   "finish_reason": "stop",
+   "seconds": 2.2
+  },
+  {
+   "temperature": 1.0,
+   "run": 4,
+   "time": "2026-10-22T17:55:36+02:00",
+   "hash": "fa20d1ae8cef",
+   "thinking_hash": "4074d4788a6f",
+   "answer_tokens": 1097,
+   "finish_reason": "stop",
+   "seconds": 2.13
+  },
+  {
+   "temperature": 1.0,
+   "run": 5,
+   "time": "2026-10-22T17:55:38+02:00",
+   "hash": "fa20d1ae8cef",
+   "thinking_hash": "4074d4788a6f",
+   "answer_tokens": 1097,
+   "finish_reason": "stop",
+   "seconds": 2.12
+  },
+  {
+   "temperature": 1.0,
+   "run": 6,
+   "time": "2026-10-22T17:55:40+02:00",
+   "hash": "fa20d1ae8cef",
+   "thinking_hash": "4074d4788a6f",
+   "answer_tokens": 1097,
+   "finish_reason": "stop",
+   "seconds": 2.17
+  },
+  {
+   "temperature": 1.0,
+   "run": 7,
+   "time": "2026-10-22T17:55:42+02:00",
+   "hash": "fa20d1ae8cef",
+   "thinking_hash": "4074d4788a6f",
+   "answer_tokens": 1097,
+   "finish_reason": "stop",
+   "seconds": 2.23
+  },
+  {
+   "temperature": 1.0,
+   "run": 8,
+   "time": "2026-10-22T17:55:44+02:00",
+   "hash": "fa20d1ae8cef",
+   "thinking_hash": "4074d4788a6f",
+   "answer_tokens": 1097,
+   "finish_reason": "stop",
+   "seconds": 2.14
+  },
+  {
+   "temperature": 1.0,
+   "run": 9,
+   "time": "2026-10-22T17:55:46+02:00",
+   "hash": "fa20d1ae8cef",
+   "thinking_hash": "4074d4788a6f",
+   "answer_tokens": 1097,
+   "finish_reason": "stop",
+   "seconds": 2.13
+  },
+  {
+   "temperature": 1.0,
+   "run": 10,
+   "time": "2026-10-22T17:55:49+02:00",
+   "hash": "fa20d1ae8cef",
+   "thinking_hash": "4074d4788a6f",
+   "answer_tokens": 1097,
+   "finish_reason": "stop",
+   "seconds": 2.17
+  }
+ ],
+ "thinking_texts": {
+  "52499a3e123b": "Okay, the user wants a story about a fox, a rabbit, and a cat. Let me start by brainstorming characters. The fox is usually a clever and curious animal, so maybe a fox with a unique trait. The rabbit could be a simple, innocent creature, and the cat might be a playful one. I need to create a setting that allows for a story. Maybe a forest or a village? Let's set it in a forest to give it a magical or mystical feel.\n\nI should introduce the three characters with their personalities. The fox could be the wise one, the rabbit the curious one, and the cat the playful one. Maybe they have some interactions that lead to a resolution. Perhaps the fox helps the rabbit find something, and the cat helps in a different way. The story should have a beginning, middle, and end. Let me think of a plot. Maybe the fox and rabbit are in a forest, and the cat comes in to help. The fox could be the one who guides them, and the rabbit learns something. The cat could be a guardian or a friend. \n\nI need to make sure the story flows well. Start with the setting, introduce the characters, their interactions, and a conclusion. Maybe include some magical elements, like a hidden treasure or a magical item. The user might want the story to be engaging and have a positive message. Let me check for any possible issues. Are the characters distinct enough? Are the interactions natural? I think this should work. Now, let me put it all together in a coherent story.\n",
+  "4074d4788a6f": "Okay, the user wants a story about a wolf and a pig and a cat. Let me start by brainstorming the characters and setting. The wolf and pig could be in a forest, maybe near a river or a stream. The cat is a curious companion, perhaps with a pet-like touch.\n\nI should set the scene to create a peaceful atmosphere. Maybe describe the environment: trees, maybe a stream, a clearing. Introduce the main characters, their names, and their interactions. The wolf might be a predator, the pig a curious animal, and the cat a friend. \n\nI need to establish their relationship. Perhaps the wolf is protecting the pig, and the cat helps them. The story should highlight their bonds and maybe some conflict. Maybe the cat has a special ability, like spotting something or a magical element. \n\nI should check if there's a specific setting or genre in mind. Since the user hasn't specified, keeping it a simple fantasy story would work. The characters need a clear beginning, middle, and end. Make sure the story flows smoothly and includes emotions like friendship and adventure.\n\nWait, the user mentioned a wolf, a pig, and a cat. Let me think about combining them. Maybe the wolf is a guardian, the pig is vulnerable, and the cat is a protector. The conflict could be about survival or a challenge they face together. Including their interactions can show their personalities and development. Also, adding some elements like magic or nature can enrich the story.\n\nI need to make sure the story is engaging and has a positive outcome. Maybe end with them being close friends. Let me structure the story with a beginning, middle, and end. Use descriptive language to paint a vivid picture. Check for any potential issues and ensure all elements are covered.\n"
+ },
+ "device": "gpu"
+}

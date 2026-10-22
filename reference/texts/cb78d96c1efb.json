@@ -1,0 +1,11 @@
+{
+ "hash": "cb78d96c1efb",
+ "sha256": "cb78d96c1efb93ec592cd4f9bb3753dc7398099c1dd9e1d105ce02f4fb550981",
+ "kind": "thinking",
+ "temperature": 0,
+ "seed": 42,
+ "prompt": "Napisz mi historie o psie i kaczce oraz kotku?",
+ "thinking": true,
+ "source": "qwen3-0.6b-q8, thinking on, Ollama 0.40.6 (b1-620d2225c); origin PC, 2026-10-21T1902 (10/10 identical)",
+ "text": "Okay, the user wants a story about a fox, a rabbit, and a cat. Let me start by setting the scene. Maybe a forest to keep it magical. The fox could be curious, the rabbit playful, and the cat maybe a bit more cautious. I need to make sure each character has distinct traits. The fox could be the main character, maybe a bit of a loner, while the rabbit and cat are companions. I should include some interactions to show their friendship. Maybe the fox helps the rabbit find something, and the cat helps in a different way. I need to keep the story engaging and have a happy ending. Let me check if there's anything missing, like a conflict or a lesson. Maybe the cat helps the fox in a way that shows their bond. Alright, time to put it all together in a coherent narrative.\n"
+}

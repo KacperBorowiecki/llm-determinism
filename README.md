@@ -53,11 +53,13 @@ result. Then say *"save the result"* (skill `determinism-submit`).
    ```
    python run_test.py --label <your-machine-label> --length quick     # default model, 10 + 10 runs
    python run_test.py --label <your-machine-label> --profile gemma4-26b-q8 --length standard   # 100 + 100
+   python run_test.py --label <your-machine-label> --thinking --device cpu   # thinking on, model on the CPU
    ```
 
 ## How the hash is computed
 
 1. The answer text exactly as returned by the server (`choices[0].message.content`), no reasoning, no prompt.
+   With `--thinking`, the thinking (`reasoning_content`) gets its own hash, computed the same way.
 2. No normalisation: no trimming, no Unicode normalisation, no newline conversion.
 3. UTF-8 without BOM → SHA-256 → lowercase hex; the short hash is the first 12 characters (the full digest is stored
    too).
@@ -70,10 +72,12 @@ Reference hashes come from the origin PC and are stored **per model and per llam
 can change the text (0.40.6 → 0.40.7 changed both models), so results are compared with the reference of the
 same build:
 
-| model | Ollama (llama.cpp build) | temperature 0 | temperature 1 |
+| model (thinking) | Ollama (llama.cpp build) | temperature 0 | temperature 1 |
 |---|---|---|---|
 | qwen3-0.6b-q8 | 0.40.6 (`b1-620d2225c`) | `8cc886e38b1a` | `e94074591fd4` |
 | qwen3-0.6b-q8 | 0.40.7 (`b1-f174553e1`) | `23cd03276e07` | `599eb85dd1d7` |
+| qwen3-0.6b-q8 (on) | 0.40.6 (`b1-620d2225c`) | `482f7ccfcecf` + thinking `cb78d96c1efb` | `31cf38892cc4` + thinking `3098c730f004` |
+| qwen3-0.6b-q8 (on) | 0.40.7 (`b1-f174553e1`) | `93da943bed61` + thinking `52499a3e123b` | `fa20d1ae8cef` + thinking `4074d4788a6f` |
 | gemma4-26b-q8 | 0.40.4, 0.40.6 (`b1-b42b7e6d3`, `b1-620d2225c`) | `138e66a98238` | `0e661f14a480` |
 | gemma4-26b-q8 | 0.40.7 (`b1-f174553e1`) | `179e3c96dff3` | `d4afe73e6d3c` |
 

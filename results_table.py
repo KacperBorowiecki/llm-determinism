@@ -1,11 +1,11 @@
 """Rebuild RESULTS.md from all result files results/<label>/*.json (run after adding or merging results).
 
-"= ref" is computed here, from reference.json: each result is compared with the reference of the same model profile
-and the same llama.cpp build, so adding a reference for a new build later updates the table.
+"= ref" is computed here, from reference.json: each result is compared with the reference of the same model profile,
+the same llama.cpp build and the same thinking mode, so adding a reference for a new build later updates the table.
+With thinking, both the answer and the thinking must match.
 
   python results_table.py
 """
-import collections
 import json
 from pathlib import Path
 
@@ -14,53 +14,71 @@ MAX_HASHES = 3
 LEGACY_PROFILE = "gemma4-26b-q8"   # result files written before model profiles existed
 
 
-def reference_for(reference: dict, profile: str, build: str | None) -> dict | None:
+def reference_for(reference: dict, profile: str, build: str | None, thinking: bool) -> dict | None:
     for entry in reference["profiles"].get(profile, {}).get("references", []):
-        if build in entry["llama_cpp"]:
+        if build in entry["llama_cpp"] and entry.get("thinking", False) == thinking:
             return entry
     return None
 
 
-def cell(stats: dict | None, ref_hash: str | None, has_ref: bool) -> str:
+def hash_list(counts: dict) -> str:
+    items = list(counts.items())
+    shown = ", ".join(f"`{h}`×{c}" for h, c in items[:MAX_HASHES])
+    return shown + (f" (+{len(items) - MAX_HASHES} more)" if len(items) > MAX_HASHES else "")
+
+
+def cell(stats: dict | None, ref: dict | None, key: str) -> str:
     if not stats:
         return "–"
-    items = list(stats["hashes"].items())
-    shown = ", ".join(f"`{h}`×{c}" for h, c in items[:MAX_HASHES])
-    more = f" (+{len(items) - MAX_HASHES} more)" if len(items) > MAX_HASHES else ""
-    if not has_ref:
-        ref = "no ref for this build"
+    text = hash_list(stats["hashes"])
+    thinking = stats.get("thinking_hashes")
+    if thinking:
+        text += f" · thinking {hash_list(thinking)}"
+    if ref is None:
+        verdict = "no ref for this build"
     else:
-        ref = "= ref" if set(stats["hashes"]) == {ref_hash} else "**≠ ref**"
-    return f"{shown}{more} – {'repeatable' if stats['repeatable'] else '**not repeatable**'}, {ref}"
+        same = set(stats["hashes"]) == {ref["hashes"].get(key)}
+        if thinking:
+            same = same and set(thinking) == {ref.get("thinking_hashes", {}).get(key)}
+        verdict = "= ref" if same else "**≠ ref**"
+    return f"{text} – {'repeatable' if stats['repeatable'] else '**not repeatable**'}, {verdict}"
 
 
-def gpu_models(machine: dict) -> str:
-    counts = collections.Counter(g["name"] for g in machine.get("gpus", []))
-    return ", ".join(f"{n}× {name}" if n > 1 else name for name, n in counts.items()) or "CPU"
+def compute(r: dict) -> str:
+    """Where the model ran: GPU (which one), CPU (which one) or a mix (partial offload)."""
+    m = r["machine"]
+    gpus, idx = m.get("gpus", []), r.get("gpu")
+    device = r.get("device") or ("gpu" if gpus else "cpu")   # results written before --device existed ran on a GPU
+    if idx is not None and idx < len(gpus):
+        gpu = f"GPU {idx}: {gpus[idx]['name']}"
+    else:
+        gpu = f"GPU: {gpus[0]['name']}" if gpus else "GPU: ?"
+    cpu = f"CPU: {m.get('cpu', '?')}"
+    return {"gpu": gpu, "cpu": cpu, "mix": f"mix – {gpu} + {cpu}"}[device]
 
 
 def row(r: dict, reference: dict) -> str:
     m, t = r["machine"], r["temperatures"]
     profile = r.get("profile", LEGACY_PROFILE)
+    thinking = r.get("thinking", False)
     build = m.get("server", {}).get("build_info")
-    ref = reference_for(reference, profile, build)
+    ref = reference_for(reference, profile, build, thinking)
     runs = " / ".join(str(t[k]["runs"]) if k in t else "–" for k in ("0", "1"))
-    gpu = r.get("gpu")
-    cells = [cell(t.get(k), ref["hashes"].get(k) if ref else None, ref is not None) for k in ("0", "1")]
-    return (f"| {profile} | {r['label']} | {r['started'][:16].replace('T', ' ')} | {m.get('os', '')} | {gpu_models(m)} | "
-            f"{'?' if gpu is None else gpu} | {m.get('ollama')} / {build} | {runs} | {cells[0]} | {cells[1]} | "
-            f"{len(r.get('warnings', []))} | {r.get('note', '')} |")
+    return (f"| {profile} | {'on' if thinking else 'off'} | {r['label']} | {r['started'][:16].replace('T', ' ')} | "
+            f"{m.get('os', '')} | {compute(r)} | {m.get('ollama')} / {build} | {runs} | {cell(t.get('0'), ref, '0')} | "
+            f"{cell(t.get('1'), ref, '1')} | {len(r.get('warnings', []))} | {r.get('note', '')} |")
 
 
 def build(root: Path = ROOT) -> str:
     reference = json.loads((root / "reference.json").read_text(encoding="utf-8"))
     records = [json.loads(p.read_text(encoding="utf-8")) for p in sorted(root.glob("results/*/*.json"))]
-    records.sort(key=lambda r: (r.get("profile", LEGACY_PROFILE), r["label"], r["started"], str(r.get("gpu"))))
+    records.sort(key=lambda r: (r.get("profile", LEGACY_PROFILE), r.get("thinking", False), r["label"], r["started"],
+                                str(r.get("gpu"))))
     lines = ["# Results", "",
              "Generated by `results_table.py` from `results/*/*.json` – do not edit by hand.", "",
-             "\"= ref\" compares with the reference hashes of the same model and the same llama.cpp build "
-             "(`reference.json`).", "",
-             "| model | machine | started | OS | GPU | GPU used | Ollama / llama.cpp build | runs (t0 / t1) "
+             "\"= ref\" compares with the reference hashes of the same model, the same llama.cpp build and the same "
+             "thinking mode (`reference.json`); with thinking, the answer and the thinking must both match.", "",
+             "| model | thinking | machine | started | OS | compute | Ollama / llama.cpp build | runs (t0 / t1) "
              "| temperature 0 | temperature 1 | warnings | note |",
              "|---|---|---|---|---|---|---|---|---|---|---|---|"]
     return "\n".join(lines + [row(r, reference) for r in records]) + "\n"

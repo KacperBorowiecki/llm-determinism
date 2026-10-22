@@ -101,6 +101,59 @@ def test_results_table_compares_with_the_reference_of_the_same_build(tmp_path):
         (tmp_path / "results" / "pc" / f"r{i}.json").write_text(json.dumps(record("pc", build, h)), encoding="utf-8")
     (tmp_path / "reference.json").write_text((ROOT / "reference.json").read_text(encoding="utf-8"), encoding="utf-8")
     md = results_table.build(tmp_path)
-    assert "| gemma4-26b-q8 | pc |" in md and "`138e66a98238`×10 – repeatable, = ref" in md
+    assert "| gemma4-26b-q8 | off | pc |" in md and "`138e66a98238`×10 – repeatable, = ref" in md
     assert "not repeatable" in md and "≠ ref" in md and "no ref for this build" in md
-    assert "| 0 |" in md and "| 10 / 10 |" in md
+    assert "| GPU 0: GPU X |" in md and "| 10 / 10 |" in md
+
+
+def fake_thinking(temp, text, thought):
+    r = fake(temp, text)
+    r["thinking_hash"] = text_hash(thought)[0]
+    return r
+
+
+def test_pick_reference_respects_the_thinking_mode():
+    profile = {"references": [{"llama_cpp": ["b1"], "thinking": False, "hashes": {"0": "off"}},
+                              {"llama_cpp": ["b1"], "thinking": True, "hashes": {"0": "on"}}]}
+    assert pick_reference(profile, "b1")[0]["hashes"]["0"] == "off"
+    assert pick_reference(profile, "b1", thinking=True)[0]["hashes"]["0"] == "on"
+    assert pick_reference({"references": profile["references"][:1]}, "b1", thinking=True) == (
+        {"llama_cpp": [], "thinking": True, "hashes": {}}, False)
+
+
+def test_summarize_with_thinking_needs_answer_and_thinking():
+    ref = {"hashes": {"0": text_hash("story")[0]}, "thinking_hashes": {"0": text_hash("plan")[0]}}
+    s = summarize([fake_thinking(0.0, "story", "plan")] * 2, ref)["0"]
+    assert s["repeatable"] and s["equals_reference"] and s["thinking_hashes"] == {text_hash("plan")[0]: 2}
+    s = summarize([fake_thinking(0.0, "story", "plan"), fake_thinking(0.0, "story", "other plan")], ref)["0"]
+    assert not s["repeatable"] and not s["equals_reference"]
+
+
+def test_warning_when_the_text_was_cut_off():
+    r = dict(fake(0.0, "same story"), finish_reason="length")
+    summary = summarize([r], REFERENCE)
+    machine = {"server": {"model": "sha256-abc", "sampling": {"top_k": 64, "top_p": 0.95, "min_p": 0.05}}}
+    assert any("hit max_tokens" in w for w in warnings_for(machine, summary, REFERENCE, None))
+
+
+def test_results_table_thinking_column_and_both_hashes(tmp_path):
+    reference = {"profiles": {"m": {"references": [
+        {"llama_cpp": ["b1"], "thinking": True, "hashes": {"0": "aaa"}, "thinking_hashes": {"0": "ttt"}}]}}}
+    record = {"label": "pc", "profile": "m", "thinking": True, "started": "2026-10-22T10:00:00+02:00", "note": "",
+              "gpu": 0, "machine": {"os": "Linux", "gpus": [], "ollama": "0.40.7", "server": {"build_info": "b1"}},
+              "temperatures": {"0": {"runs": 3, "hashes": {"aaa": 3}, "thinking_hashes": {"ttt": 3},
+                                     "repeatable": True}},
+              "warnings": []}
+    (tmp_path / "results" / "pc").mkdir(parents=True)
+    (tmp_path / "results" / "pc" / "r.json").write_text(json.dumps(record), encoding="utf-8")
+    (tmp_path / "reference.json").write_text(json.dumps(reference), encoding="utf-8")
+    md = results_table.build(tmp_path)
+    assert "| m | on | pc |" in md and "`aaa`×3 · thinking `ttt`×3 – repeatable, = ref" in md
+
+
+def test_compute_column_shows_gpu_cpu_or_mix():
+    machine = {"cpu": "CPU Y", "gpus": [{"name": "GPU A"}, {"name": "GPU B"}]}
+    assert results_table.compute({"machine": machine, "gpu": 1, "device": "gpu"}) == "GPU 1: GPU B"
+    assert results_table.compute({"machine": machine, "device": "cpu"}) == "CPU: CPU Y"
+    assert results_table.compute({"machine": machine, "gpu": 0, "device": "mix"}) == "mix – GPU 0: GPU A + CPU: CPU Y"
+    assert results_table.compute({"machine": machine, "gpu": 0}) == "GPU 0: GPU A"   # before --device existed
