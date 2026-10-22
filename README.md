@@ -12,9 +12,8 @@ repeat the test on their own hardware and collect the results in one table.
 
 ## Requirements
 
-- [Ollama](https://ollama.com) with one of the two test models (profiles in `reference.json`):
-  - `qwen3:0.6b-q8_0` – **default**: ~0.8 GB download, ~2 GB of memory, runs on almost any machine, ~20 s for a
-    quick test on a modern GPU;
+- [Ollama](https://ollama.com) with one of the test models (profiles in `reference.json`):
+  - `qwen3:0.6b-q8_0` – **default**: ~0.8 GB download, ~2 GB of memory, runs on almost any machine;
   - `qwen3:0.6b-q4_K_M` (the same file as the default tag `qwen3:0.6b`) – the Q4 variant, ~0.5 GB; gives a
     different text than Q8 (a different quantization is effectively a different model), about as fast;
   - `gemma4:26b-a4b-it-q8_0` – the main experiment: ~28 GB download, ~30 GB of GPU memory, Apple unified memory,

@@ -19,16 +19,16 @@ Follow CLAUDE.md. Talk to the user in their language.
 4. **Model and whether it can run:** let the user choose one of the profiles in `reference.json` → `profiles`
    (as options, the default first). Only these – other models have no references; if the user names another
    one, say that for now the test supports only these:
-   `qwen3:0.6b-q8_0` – the default: ~0.8 GB download, ~2 GB memory, ~1 s per generation, runs on almost any
+   `qwen3:0.6b-q8_0` – the default: ~0.8 GB download, ~2 GB memory, runs on almost any
    machine (also CPU-only); `qwen3:0.6b-q4_K_M` – the same model in Q4_K_M (= the default tag `qwen3:0.6b`,
    ~0.5 GB; gives a different text than Q8, about as fast); `gemma4:26b-a4b-it-q8_0` – the main experiment: ~28 GB download, ~30 GB of GPU, unified, or
-   GPU + RAM memory, ~8 s per generation on an RTX 5090. Compare RAM and GPU memory from step 3 with
+   GPU + RAM memory, much slower than Qwen. Compare RAM and GPU memory from step 3 with
    `memory_gb` of the profile; if clearly not enough: say so, offer the smaller model,
    stop.
    Also ask: **thinking on or off** (default off). With thinking the model first writes its reasoning – a
    different, longer text; the answer and the thinking are hashed separately (`--thinking`). Origin references
-   exist for all three profiles with and without thinking (gemma4:26b-a4b-it-q8_0 with thinking: ~2 000 tokens and
-   ~11–12 s per answer on an RTX 5090).
+   exist for all three profiles with and without thinking (gemma4:26b-a4b-it-q8_0 with thinking writes ~2 000 tokens
+   per answer).
 5. **Model file:** `ollama list`. If the profile's `model` is missing: check free disk space and ask before
    `ollama pull <model>` (`download_gb` of the profile); if the pull hangs near the end, stop it and run it
    again (it resumes). Then check the file: the **first** `FROM` line of `ollama show <model> --modelfile` must
@@ -71,10 +71,9 @@ Follow CLAUDE.md. Talk to the user in their language.
    - Start it in the background; wait until `http://127.0.0.1:8090/health` returns 200; check the model is on the GPU
      (NVIDIA: GPU memory in `nvidia-smi` grows by about the model size; otherwise generation speed).
      Unexpected CPU: stop and report.
-8. **Length:** ask – quick (10 + 10, default), standard (100 + 100), long (1000 + 1000). Give the expected time
-   (RTX 5090: ≈ 1 s per generation for qwen3:0.6b-q8_0, ≈ 8 s for gemma4:26b-a4b-it-q8_0; much slower with partial
-   offload or CPU). For more than ~10 minutes remind the
-   user to disable sleep.
+8. **Length:** ask – quick (10 + 10, default), standard (100 + 100), long (1000 + 1000). No time estimates in
+   advance – the speed depends on the hardware; a quick test shows this machine's time per generation, use it
+   if the user asks how long a longer test takes. For standard and long remind the user to disable sleep.
 9. **Run:** `python run_test.py --label <label> --profile <profile> --length <length> --device <gpu|cpu|mix> --gpu <index> [--thinking] --note "<context>"` – the note
    says what is special about this run: GPU/RAM split, other things running, and what happened since the last
    test on this machine (restart, Ollama or driver update, date change, sleep during the run).
