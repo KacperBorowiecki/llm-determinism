@@ -1,9 +1,9 @@
 ---
-name: determinism-findings
+name: determinism-save
 description: After new determinism results (a test on any of the user's machines), rebuild RESULTS.md and update FINDINGS.md. Use after a determinism test when the user wants to save the result, or when the user asks what the results show so far.
 ---
 
-# Update results and findings
+# Save a result: table, findings, commit
 
 Follow CLAUDE.md – never push.
 

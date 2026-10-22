@@ -37,6 +37,6 @@ this machine (repeatability) and compared with the reference machine (same hash?
 
 ## Skills
 - `determinism-test` – run the test on this machine.
-- `determinism-findings` – save a result: RESULTS.md + FINDINGS.md + local commit.
+- `determinism-save` – save a result: RESULTS.md + FINDINGS.md + local commit.
 - Optional curiosity: `parallel_test.py` (10 requests at once, needs `-np 10 -c 20480`) – offer it only if the user
   is interested.

@@ -81,4 +81,4 @@ Follow CLAUDE.md. Talk to the user in their language.
 11. **Report:** per temperature – repeatable? equal to the reference? warnings? The reference is the one for the
     same llama.cpp build; if the build has no reference yet (a newer or older Ollama), the warning says so – the
     repeatability result still holds, but a different hash is expected and is not a hardware difference.
-    If something differs, explain what is known (warnings, divergence position) and offer to investigate. Suggest `determinism-findings` to save the result.
+    If something differs, explain what is known (warnings, divergence position) and offer to investigate. Suggest `determinism-save` to save the result.
