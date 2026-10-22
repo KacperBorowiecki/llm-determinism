@@ -104,6 +104,60 @@
     }
    ]
   },
+  "qwen3-0.6b-q4": {
+   "model": "qwen3:0.6b-q4_K_M",
+   "model_file": "sha256-7f4030143c1c477224c5434f8272c662a8b042079a0a584f0a27a1684fe2e1fa",
+   "download_gb": 0.5,
+   "memory_gb": 2,
+   "sampling": {
+    "top_k": 40,
+    "top_p": 0.95,
+    "min_p": 0.05
+   },
+   "prompt_tokens": 29,
+   "references": [
+    {
+     "thinking": false,
+     "llama_cpp": [
+      "b1-f174553e1"
+     ],
+     "ollama": [
+      "0.40.7"
+     ],
+     "prompt_tokens": 29,
+     "hashes": {
+      "0": "0ac50154a638",
+      "1": "872d20cd2d2e"
+     },
+     "answer_tokens": {
+      "0": 446,
+      "1": 297
+     }
+    },
+    {
+     "thinking": true,
+     "llama_cpp": [
+      "b1-f174553e1"
+     ],
+     "ollama": [
+      "0.40.7"
+     ],
+     "prompt_tokens": 25,
+     "hashes": {
+      "0": "1f701b198097",
+      "1": "14b5be25f98e"
+     },
+     "thinking_hashes": {
+      "0": "227ff26f211c",
+      "1": "ac573c3b004d"
+     },
+     "answer_tokens": {
+      "0": 768,
+      "1": 795
+     }
+    }
+   ]
+  },
   "gemma4-26b-q8": {
    "model": "gemma4:26b-a4b-it-q8_0",
    "model_file": "sha256-ec528f6d0b7e2d2219d203bea82f4c5b98cbcdcbfaa9153b6d8c36756504c2d5",
@@ -150,6 +204,28 @@
      "answer_tokens": {
       "0": 1276,
       "1": 981
+     }
+    },
+    {
+     "thinking": true,
+     "llama_cpp": [
+      "b1-f174553e1"
+     ],
+     "ollama": [
+      "0.40.7"
+     ],
+     "prompt_tokens": 32,
+     "hashes": {
+      "0": "29ea83a13637",
+      "1": "f975c9bddcfd"
+     },
+     "thinking_hashes": {
+      "0": "2d68efe195a0",
+      "1": "1d183e394b78"
+     },
+     "answer_tokens": {
+      "0": 1843,
+      "1": 2143
      }
     }
    ]

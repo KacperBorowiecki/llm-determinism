@@ -38,7 +38,8 @@ def test_profiles_and_reference_per_build():
     entry, exact = pick_reference(gemma, "b1-620d2225c")
     assert exact and entry["hashes"]["0"] == "138e66a98238"
     entry, exact = pick_reference(gemma, "b1-unknown")
-    assert not exact and entry is gemma["references"][-1]
+    newest_off = [e for e in gemma["references"] if not e.get("thinking", False)][-1]
+    assert not exact and entry is newest_off   # unknown build -> newest reference of the same thinking mode
 
 
 def fake(temp, text, prompt_tokens=29):

@@ -15,6 +15,8 @@ repeat the test on their own hardware and collect the results in one table.
 - [Ollama](https://ollama.com) with one of the two test models (profiles in `reference.json`):
   - `qwen3:0.6b-q8_0` – **default**: ~0.8 GB download, ~2 GB of memory, runs on almost any machine, ~20 s for a
     quick test on a modern GPU;
+  - `qwen3:0.6b-q4_K_M` (the same file as the default tag `qwen3:0.6b`) – the Q4 variant, ~0.5 GB; gives a
+    different text than Q8 (a different quantization is effectively a different model), about as fast;
   - `gemma4:26b-a4b-it-q8_0` – the main experiment: ~28 GB download, ~30 GB of GPU memory, Apple unified memory,
     or GPU + RAM together.
   The kit uses the `llama-server` that ships with Ollama.
@@ -80,6 +82,9 @@ same build:
 | qwen3-0.6b-q8 (on) | 0.40.7 (`b1-f174553e1`) | `93da943bed61` + thinking `52499a3e123b` | `fa20d1ae8cef` + thinking `4074d4788a6f` |
 | gemma4-26b-q8 | 0.40.4, 0.40.6 (`b1-b42b7e6d3`, `b1-620d2225c`) | `138e66a98238` | `0e661f14a480` |
 | gemma4-26b-q8 | 0.40.7 (`b1-f174553e1`) | `179e3c96dff3` | `d4afe73e6d3c` |
+| qwen3-0.6b-q4 | 0.40.7 (`b1-f174553e1`) | `0ac50154a638` | `872d20cd2d2e` |
+| qwen3-0.6b-q4 (on) | 0.40.7 (`b1-f174553e1`) | `1f701b198097` + thinking `227ff26f211c` | `14b5be25f98e` + thinking `ac573c3b004d` |
+| gemma4-26b-q8 (on) | 0.40.7 (`b1-f174553e1`) | `29ea83a13637` + thinking `2d68efe195a0` | `f975c9bddcfd` + thinking `1d183e394b78` |
 
 ## Results
 

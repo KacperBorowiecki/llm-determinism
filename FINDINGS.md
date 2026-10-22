@@ -59,6 +59,29 @@ any machine – so many more people can take part.
 - The Polish text quality is very poor (invented words) – irrelevant for the test.
 - Its default sampling differs from Gemma's (`top_k` 40 instead of 64) – stored per profile in `reference.json`.
 
+## Quantization: Q4_K_M vs Q8_0 (qwen3:0.6b, Ollama 0.40.7)
+
+`qwen3:0.6b` (the default tag) is `qwen3:0.6b-q4_K_M` – the same file (`sha256-7f4030143c1c…`, 522 MB vs 832 MB
+for Q8_0). Profile `qwen3-0.6b-q4`.
+
+- **Repeatable, but a different text than Q8 in all four combinations** (temperature 0 / 1, thinking off / on):
+  e.g. temperature 0 – Q4 `0ac50154a638` (446 tokens) vs Q8 `23cd03276e07` (370 tokens). The quantization rounds
+  the weights differently, so the probabilities differ slightly and the first near-tie goes the other way – a
+  different quantization is effectively a different model.
+- **Hardly faster:** ~557–567 tok/s (Q4) vs ~528–543 tok/s (Q8) on an RTX 5090 – about 5 %, although the file is
+  37 % smaller. For such a small model the speed is limited by the fixed cost per token (launching GPU work,
+  choosing the token on the CPU), not by reading the weights. *(Hypothesis for the reason; the numbers are
+  measured.)*
+
+## Thinking on: gemma4-26b-q8 (Ollama 0.40.7)
+
+- **Repeatable:** answer and thinking 10/10 at both temperatures – temperature 0 `29ea83a13637` + thinking
+  `2d68efe195a0` (1 843 tokens incl. thinking), temperature 1 `f975c9bddcfd` + thinking `1d183e394b78`
+  (2 143 tokens); ~11–12 s per generation, ~175 tok/s; all runs ended normally (within the 8 000-token limit).
+- **The prompt gets longer with thinking (32 tokens instead of 29)** – the Gemma 4 template adds a system turn
+  with `<|think|>`; with Qwen3 it gets shorter (25 instead of 29). The expected prompt length depends on the
+  model and the mode, so each reference stores its own.
+
 ## Curiosity: 10 requests at once (batching)
 
 Origin PC, gemma4-26b-q8 (Ollama 0.40.6), one server with `-np 10 -c 20480`, prompt cache off, seed 42.
@@ -107,3 +130,5 @@ per second); versions must be frozen (an update can change the text); cloud APIs
   model profile and made the default (`run_test.py --profile`).
 - 2026-10-22: thinking as an option (`--thinking`; answer and thinking hashed separately), Qwen references with
   thinking for 0.40.6 and 0.40.7; RESULTS.md shows where the model ran (`--device`: GPU / CPU / mix).
+- 2026-10-22: `qwen3-0.6b-q4` profile (Q4_K_M = the default tag `qwen3:0.6b`); references for it (thinking off
+  and on) and for gemma4-26b-q8 with thinking (Ollama 0.40.7).

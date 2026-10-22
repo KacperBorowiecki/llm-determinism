@@ -1,0 +1,310 @@
+{
+ "schema": 1,
+ "label": "origin-pc-2x5090-win11",
+ "profile": "qwen3-0.6b-q4",
+ "thinking": false,
+ "reference_llama_cpp": [
+  "b1-f174553e1"
+ ],
+ "reference_exact": true,
+ "started": "2026-10-22T18:46:09+02:00",
+ "finished": "2026-10-22T18:46:23+02:00",
+ "length": "quick",
+ "runs_per_temperature": 10,
+ "device": "gpu",
+ "gpu": 0,
+ "note": "qwen3:0.6b default tag = q4_K_M; first test of this quantization (compare with the q8_0 profile). Became the reference for this build.",
+ "machine": {
+  "os": "Windows 11 (10.0.26200)",
+  "arch": "AMD64",
+  "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
+  "ram_gb": 61.6,
+  "gpus": [
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   },
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   }
+  ],
+  "ollama": "0.40.7",
+  "python": "3.13.5",
+  "server": {
+   "build_info": "b1-f174553e1",
+   "model": "sha256-7f4030143c1c477224c5434f8272c662a8b042079a0a584f0a27a1684fe2e1fa",
+   "n_ctx": 8192,
+   "slots": 1,
+   "sampling": {
+    "top_k": 40,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
+    "samplers": [
+     "penalties",
+     "dry",
+     "top_n_sigma",
+     "top_k",
+     "typ_p",
+     "top_p",
+     "min_p",
+     "xtc",
+     "temperature"
+    ]
+   }
+  }
+ },
+ "temperatures": {
+  "0": {
+   "runs": 10,
+   "hashes": {
+    "0ac50154a638": 10
+   },
+   "repeatable": true,
+   "reference_hash": "0ac50154a638",
+   "equals_reference": true,
+   "answer_tokens": [
+    446
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 556.9,
+   "finish_reasons": {
+    "stop": 10
+   },
+   "divergence_vs_reference": null
+  },
+  "1": {
+   "runs": 10,
+   "hashes": {
+    "872d20cd2d2e": 10
+   },
+   "repeatable": true,
+   "reference_hash": "872d20cd2d2e",
+   "equals_reference": true,
+   "answer_tokens": [
+    297
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 566.7,
+   "finish_reasons": {
+    "stop": 10
+   },
+   "divergence_vs_reference": null
+  }
+ },
+ "warnings": [],
+ "texts": {
+  "0ac50154a638": "Oczywiście! Oto historię o psie, kaczce i kotku:\n\n---\n\n**Psie, kaczce i kot** – trzy nieznałe, które zaczęły się w samej jednej z jednostek, a potem zaczęły się w trzech innych. W tym czasie, gdy trzy nieznałe zaczęły się w jednej z jednostek, zaczęły się też trzy nieznałe, które zaczęły się w trzech innych. W trzech innych, trzy nieznałe zaczęły się w trzech innych, a potem zaczęły się trzy nieznałe, które zaczęły się w trzech innych. W trzech innych, trzy nieznałe zaczęły się w trzech innych, a potem zaczęły się trzy nieznałe, które zaczęły się w trzech innych. W trzech innych, trzy nieznałe zaczęły się w trzech innych, a potem zaczęły się trzy nieznałe, które zaczęły się w trzech innych.\n\n---\n\nZa chwilę, gdy trzy nieznałe zaczęły się w trzech innych, zaczęły się trzy nieznałe, które zaczęły się w trzech innych. W trzech innych, trzy nieznałe zaczęły się w trzech innych, a potem zaczęły się trzy nieznałe, które zaczęły się w trzech innych. W trzech innych, trzy nieznałe zaczęły się w trzech innych, a potem zaczęły się trzy nieznałe, które zaczęły się w trzech innych.\n\n--- \n\nJeśli chcesz, mogę też zapisać historię w formie tekstu lub w formie graficznej.",
+  "872d20cd2d2e": "Napiszę historię o psie i kaczce oraz kotku:\n\n---\n\n**Historia o psie i kaczce – Wątki w głowie**\n\nW niepokojnym czasie w wózach i budynkach na sklepie Była chwilka. W tej chwili pojawiały się doby i bydwy, które nie mogły by wojákować.\n\nByła psia, która była zawsze w szalonej, szczurejącym, masową i niepokojną chwili. Jąda, która była w taki sposób, że nie mogła by wojákować. Szczurka, która była zawsze w szalonej, szczurejącym, masową i niepokojną chwili.\n\nByła kotka, która była zawsze w szalonej, szczurejącym, masową i niepokojną chwili.\n\nW tej chwili pojawiały się doby i bydwy, które nie mogły by wojákować.\n\nW wózach i budynkach na sklepie Była chwilka. W tej chwili pojawiały się doby i bydwy, które nie mogły by wojákować.\n\n---\n\nW tym czasie wszystko w połączeniu."
+ },
+ "runs": [
+  {
+   "temperature": 0.0,
+   "run": 1,
+   "time": "2026-10-22T18:46:10+02:00",
+   "hash": "0ac50154a638",
+   "thinking_hash": null,
+   "answer_tokens": 446,
+   "finish_reason": "stop",
+   "seconds": 0.95
+  },
+  {
+   "temperature": 0.0,
+   "run": 2,
+   "time": "2026-10-22T18:46:10+02:00",
+   "hash": "0ac50154a638",
+   "thinking_hash": null,
+   "answer_tokens": 446,
+   "finish_reason": "stop",
+   "seconds": 0.81
+  },
+  {
+   "temperature": 0.0,
+   "run": 3,
+   "time": "2026-10-22T18:46:11+02:00",
+   "hash": "0ac50154a638",
+   "thinking_hash": null,
+   "answer_tokens": 446,
+   "finish_reason": "stop",
+   "seconds": 0.81
+  },
+  {
+   "temperature": 0.0,
+   "run": 4,
+   "time": "2026-10-22T18:46:12+02:00",
+   "hash": "0ac50154a638",
+   "thinking_hash": null,
+   "answer_tokens": 446,
+   "finish_reason": "stop",
+   "seconds": 0.81
+  },
+  {
+   "temperature": 0.0,
+   "run": 5,
+   "time": "2026-10-22T18:46:13+02:00",
+   "hash": "0ac50154a638",
+   "thinking_hash": null,
+   "answer_tokens": 446,
+   "finish_reason": "stop",
+   "seconds": 0.84
+  },
+  {
+   "temperature": 0.0,
+   "run": 6,
+   "time": "2026-10-22T18:46:14+02:00",
+   "hash": "0ac50154a638",
+   "thinking_hash": null,
+   "answer_tokens": 446,
+   "finish_reason": "stop",
+   "seconds": 0.82
+  },
+  {
+   "temperature": 0.0,
+   "run": 7,
+   "time": "2026-10-22T18:46:15+02:00",
+   "hash": "0ac50154a638",
+   "thinking_hash": null,
+   "answer_tokens": 446,
+   "finish_reason": "stop",
+   "seconds": 0.84
+  },
+  {
+   "temperature": 0.0,
+   "run": 8,
+   "time": "2026-10-22T18:46:15+02:00",
+   "hash": "0ac50154a638",
+   "thinking_hash": null,
+   "answer_tokens": 446,
+   "finish_reason": "stop",
+   "seconds": 0.83
+  },
+  {
+   "temperature": 0.0,
+   "run": 9,
+   "time": "2026-10-22T18:46:16+02:00",
+   "hash": "0ac50154a638",
+   "thinking_hash": null,
+   "answer_tokens": 446,
+   "finish_reason": "stop",
+   "seconds": 0.85
+  },
+  {
+   "temperature": 0.0,
+   "run": 10,
+   "time": "2026-10-22T18:46:17+02:00",
+   "hash": "0ac50154a638",
+   "thinking_hash": null,
+   "answer_tokens": 446,
+   "finish_reason": "stop",
+   "seconds": 0.82
+  },
+  {
+   "temperature": 1.0,
+   "run": 1,
+   "time": "2026-10-22T18:46:18+02:00",
+   "hash": "872d20cd2d2e",
+   "thinking_hash": null,
+   "answer_tokens": 297,
+   "finish_reason": "stop",
+   "seconds": 0.55
+  },
+  {
+   "temperature": 1.0,
+   "run": 2,
+   "time": "2026-10-22T18:46:18+02:00",
+   "hash": "872d20cd2d2e",
+   "thinking_hash": null,
+   "answer_tokens": 297,
+   "finish_reason": "stop",
+   "seconds": 0.55
+  },
+  {
+   "temperature": 1.0,
+   "run": 3,
+   "time": "2026-10-22T18:46:19+02:00",
+   "hash": "872d20cd2d2e",
+   "thinking_hash": null,
+   "answer_tokens": 297,
+   "finish_reason": "stop",
+   "seconds": 0.56
+  },
+  {
+   "temperature": 1.0,
+   "run": 4,
+   "time": "2026-10-22T18:46:19+02:00",
+   "hash": "872d20cd2d2e",
+   "thinking_hash": null,
+   "answer_tokens": 297,
+   "finish_reason": "stop",
+   "seconds": 0.53
+  },
+  {
+   "temperature": 1.0,
+   "run": 5,
+   "time": "2026-10-22T18:46:20+02:00",
+   "hash": "872d20cd2d2e",
+   "thinking_hash": null,
+   "answer_tokens": 297,
+   "finish_reason": "stop",
+   "seconds": 0.55
+  },
+  {
+   "temperature": 1.0,
+   "run": 6,
+   "time": "2026-10-22T18:46:20+02:00",
+   "hash": "872d20cd2d2e",
+   "thinking_hash": null,
+   "answer_tokens": 297,
+   "finish_reason": "stop",
+   "seconds": 0.55
+  },
+  {
+   "temperature": 1.0,
+   "run": 7,
+   "time": "2026-10-22T18:46:21+02:00",
+   "hash": "872d20cd2d2e",
+   "thinking_hash": null,
+   "answer_tokens": 297,
+   "finish_reason": "stop",
+   "seconds": 0.55
+  },
+  {
+   "temperature": 1.0,
+   "run": 8,
+   "time": "2026-10-22T18:46:21+02:00",
+   "hash": "872d20cd2d2e",
+   "thinking_hash": null,
+   "answer_tokens": 297,
+   "finish_reason": "stop",
+   "seconds": 0.59
+  },
+  {
+   "temperature": 1.0,
+   "run": 9,
+   "time": "2026-10-22T18:46:22+02:00",
+   "hash": "872d20cd2d2e",
+   "thinking_hash": null,
+   "answer_tokens": 297,
+   "finish_reason": "stop",
+   "seconds": 0.59
+  },
+  {
+   "temperature": 1.0,
+   "run": 10,
+   "time": "2026-10-22T18:46:23+02:00",
+   "hash": "872d20cd2d2e",
+   "thinking_hash": null,
+   "answer_tokens": 297,
+   "finish_reason": "stop",
+   "seconds": 0.59
+  }
+ ]
+}

@@ -1,0 +1,322 @@
+{
+ "schema": 1,
+ "label": "origin-pc-2x5090-win11",
+ "profile": "gemma4-26b-q8",
+ "thinking": true,
+ "reference_llama_cpp": [
+  "b1-f174553e1"
+ ],
+ "reference_exact": true,
+ "started": "2026-10-22T18:47:49+02:00",
+ "finished": "2026-10-22T18:51:38+02:00",
+ "length": "quick",
+ "runs_per_temperature": 10,
+ "device": "gpu",
+ "gpu": 0,
+ "note": "gemma4 26B with thinking on; first thinking test of this model (Ollama 0.40.7). Became the reference for this build.",
+ "machine": {
+  "os": "Windows 11 (10.0.26200)",
+  "arch": "AMD64",
+  "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
+  "ram_gb": 61.6,
+  "gpus": [
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   },
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   }
+  ],
+  "ollama": "0.40.7",
+  "python": "3.13.5",
+  "server": {
+   "build_info": "b1-f174553e1",
+   "model": "sha256-ec528f6d0b7e2d2219d203bea82f4c5b98cbcdcbfaa9153b6d8c36756504c2d5",
+   "n_ctx": 8192,
+   "slots": 1,
+   "sampling": {
+    "top_k": 64,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
+    "samplers": [
+     "penalties",
+     "dry",
+     "top_n_sigma",
+     "top_k",
+     "typ_p",
+     "top_p",
+     "min_p",
+     "xtc",
+     "temperature"
+    ]
+   }
+  }
+ },
+ "temperatures": {
+  "0": {
+   "runs": 10,
+   "hashes": {
+    "29ea83a13637": 10
+   },
+   "repeatable": true,
+   "reference_hash": "29ea83a13637",
+   "equals_reference": true,
+   "answer_tokens": [
+    1843
+   ],
+   "prompt_tokens": [
+    32
+   ],
+   "tok_per_s_median": 175.6,
+   "finish_reasons": {
+    "stop": 10
+   },
+   "divergence_vs_reference": null,
+   "thinking_hashes": {
+    "2d68efe195a0": 10
+   },
+   "thinking_reference_hash": "2d68efe195a0"
+  },
+  "1": {
+   "runs": 10,
+   "hashes": {
+    "f975c9bddcfd": 10
+   },
+   "repeatable": true,
+   "reference_hash": "f975c9bddcfd",
+   "equals_reference": true,
+   "answer_tokens": [
+    2143
+   ],
+   "prompt_tokens": [
+    32
+   ],
+   "tok_per_s_median": 175.2,
+   "finish_reasons": {
+    "stop": 10
+   },
+   "divergence_vs_reference": null,
+   "thinking_hashes": {
+    "1d183e394b78": 10
+   },
+   "thinking_reference_hash": "1d183e394b78"
+  }
+ },
+ "warnings": [],
+ "texts": {
+  "29ea83a13637": "Oto ciepła opowieść o niezwykłej przyjaźni, która narodziła się tam, gdzie nikt się jej nie spodziewał.\n\n***\n\n### Wielka Przygoda w Ogrodzie pod Lipą\n\nW ogrodzie u starszej pani Marii działy się rzeczy niezwykłe. Choć większość zwierząt trzymała się swoich grup, tutaj panowała zasada, że różnorodność jest największą siłą. Mieszkał tam Bary – wielki, złocisty labrador o sercu ze złota, Klara – biała kaczka o niezwykle uporządkowanym charakterze, oraz Mruczek – malutki, szary kotek, który uważał, że cały świat jest jego placem zabaw.\n\nIch przyjaźń zaczęła się pewnego słonecznego popołudnia, kiedy Mruczek, próbując złapać skaczącą ważkę, wpadł prosto w środek stawu. Klara, która akurat odpoczywała na brzegu, natychmiast zaczęła głośno kwakać, alarmując wszystkich w okolicy. Bary, słysząc zamieszanie, przybiegł galopem i delikatnie, używając swojego wielkiego nosa, wypchnął przemoczonego, trzęsącego się kotka na suchy brzeg.\n\nOd tego dnia stali się nierozłączni.\n\nPewnego letniego dnia, gdy słońce prażyło niemiłosiernie, trójka przyjaciół postanowiła wyruszyć na „Wielką Wyprawę do Cienia”. Ich celem był stary, rozłożysty dąb na końcu ogrodu, gdzie trawa była zawsze chłodna i wilgotna.\n\n– Musimy trzymać się razem – zarządziła Klara, dumnie wypinając pierś. – Ja będę nawigatorem, bo mam najlepszy wzrok z poziomu wody. Bary, ty będziesz naszym taranem, jeśli napotkamy przeszkody. A Mruczek... Mruczek będzie naszym zwiadowcą!\n\nMruczek, który właśnie próbował ugryźć własny ogon, natychmiast wyprostował się i mruknął z dumą:\n– Melduję gotowość do misji!\n\nWyprawa nie była jednak łatwa. Najpierw musieli pokonać „Dolinę Wielkich Kroków”, czyli ścieżkę, którą codziennie przechodził ogrodnik. Każdy szelest liści sprawiał, że Mruczek chował się w gęstej sierści Bary’ego, a Klara udawała, że jest tylko zwykłym kamieniem.\n\nPotem przyszło największe wyzwanie: „Labirynt Róż”. Gęste krzewy róż były tak ciasne, że nawet Bary musiał się przeciskać, a kolce groziły wszystkim skaleczeniem.\n\n– Stop! – zawołała Klara, zatrzymując się przy krawędzi krzewu. – Widzę przejście! Jest nisko przy ziemi, pod gałęziami. Mruczek, ty przejdziesz pierwszy i sprawdzisz, czy nie ma tam pułapek.\n\nMały kotek, dzięki swojej zwinności, przemknął pod kolcami jak szary cień. Gdy tylko znalazł bezpieczną ścieżkę, zaczął głośno miauczeć, wskazując drogę reszcie. Bary, używając swojej siły, delikatnie odchylał ciężkie gałęzie, by Klara mogła bezpiecznie przejść bez strachu o swoje pióra.\n\nW końcu, po długiej walce z upałem i przeszkodami, dotarli do celu. Stary dąb rzucał ogromny, kojący cień. Trawa była miękka i pachniała rosą.\n\nBary położył się z głośnym westchnieniem ulgi, Klara usiadła obok niego, czyszcząc pióra, a Mruczek, zmęczony swoją rolą zwiadowcy, natychmiast ułożył się na brzuchu psa, mrucząc najgłośniej jak potrafił.\n\n– Wiecie co? – mruknął Mruczek, przymykając oczy. – Jesteśmy najlepszą drużyną na świecie.\n\n– Bo w drużynie nie liczy się to, czy masz pióra, futro, czy sierść – odpowiedziała mądra Klara. – Liczy się to, że zawsze pilnujesz pleców swojego przyjaciela.\n\nBary tylko przytaknął, kładąc wielką łapę obok małego kotka, i wszyscy troje zasnęli w chłodnym cieniu, śniąc o kolejnych, wielkich przygodach.",
+  "f975c9bddcfd": "Oto ciepła i pouczająca historia o niezwykłej przyjaźni.\n\n***\n\n### Wielka wyprawa w ogrodzie\n\nW małym, słonecznym ogrodzie, gdzie pachniały róże i świeżo skoszona trawa, mieszkało niezwykłe trio. Był tam **Burek** – wielki, puszysty labrador o sercu ze złota, który uwielbiał drzemki w cieniu starej jabłoni. Była **Dufka** – biała kaczka o bardzo wybujałym ego, która uważała, że staw w ogrodzie to jej prywatne królestwo. I był **Mruczek** – malutki, rudy kotek, który był tak energiczny, że nie potrafił usiedzieć w miejscu nawet przez minutę.\n\nChoć różnili się od siebie we wszystkim, tworzyli paczkę, która zawsze trzymała się razem.\n\nPewnego popołudnia, gdy słońce mocno przygrzewało, wydarzyła się tragedia. Mruczek, goniąc za wyjątkowo odważnym motylem, wpadł w gęste zarośla dzikiej róży. Gdy motyl odleciał, kotek zorientował się, że nie może wyjść – jego futerko zaplątało się w kolczaste gałązki, a on sam utknął w wąskiej szczelinie między krzewami.\n\n– Miau! Miau! Pomocy! – piszczał cichutko Mruczek, bo bał się, że jego krzyk wystraszy ptaki.\n\nBurek, który właśnie smacznie chrapał pod jabłonią, podniósł łeb. Jego wielkie uszy natychmiast wychwyciły niepokojący dźwięk. Podbiegł do krzaków i zaczął intensywnie wąchać powietrze.\n\n– Co się dzieje, mały? – zapytał Burek, mrużąc oczy. – Czuję twój strach, ale nie widzę cię!\n\n– Utknąłem! – załkał Mruczek spod liści. – Te kolce są wszędzie!\n\nBurek próbował pomóc, ale jego wielkie łapy i potężny nos zupełnie nie nadawały się do delikatnych prac w gęstych zaroślach. Każdy jego ruch tylko bardziej zagęszczał krzewy.\n\n– Musimy wezwać specjalistę – mruknął pies.\n\nW tym momencie z okolic stawu nadciągnęła Dufka, dumnie kołysząc się na boki.\n– Co tu jest takiego hałaśliwego? Próbujecie zepsuć moją ciszę przed wieczornym pływaniem? – zapytała, poprawiając piórka na skrzydłach.\n\n– Dufka, sytuacja jest poważna! – zawołał Burek. – Mruczek utknął w różach. Ja jestem za duży, a on jest za mały, żeby sam się wyplątać.\n\nDufka podeszła bliżej i spojrzała w głąb krzaków.\n– No dobrze, skoro już tu jestem... – westchnęła, udając, że robi to z wielką łaską. – Ja mam bardzo precyzyjny dziób. Mogę spróbować odsunąć te cienkie gałązki, ale potrzebuję kogoś, kto będzie trzymał główne pędy, żeby nie wracały na miejsce.\n\nZaczęła się wielka operacja ratunkowa. Burek, używając swojej siły, delikatnie nacisnął potężną nogą na gruby pień krzewu, tworząc małą szczelinę. Dufka, z niesamowitą precyzją, zaczęła swoim płaskim dziobem odsuwać mniejsze, kolczaste gałązki, tworząc „korytarz” dla małego kota.\n\n– Teraz, Mruczek! – zawołała Dufka. – Przesuwaj się powoli, bokiem, jak mała myszka!\n\nMruczek, z trudem i z wielkim skupieniem, zaczął się wyślizgiwać. Czuł lekkie kłucie w futerku, ale wiedział, że przyjaciele są blisko. W końcu, z ostatnim wysiłkiem, wypadł prosto w miękką trawę, prosto pod nos Burka.\n\nKotek był cały w listkach i miał trochę rozczochrane futerko, ale był bezpieczny. Przez chwilę panowała cisza, a potem wszyscy trzej wybuchnęli radością. Burek zaczął merdać ogonem tak mocno, że aż podrywał trawę, Dufka dumnie wypięła pierś, a Mruczek wtulił się w ciepły bok labradora.\n\n– Dobra robota, ekipo – powiedział Burek.\n\n– Oczywiście, że dobra – dodała Dufka, choć w jej oczach widać było dumę. – Bez mojego dzioba i twojej siły, pewnie wciąż byś tam siedział, maluchu.\n\nMruczek tylko mruczał z wdzięcznością. Tego wieczoru, kiedy słońce zaczęło zachodzić, nie było w ogrodzie nikogo szczęśliwszego. Nauczyli się bowiem, że nie ważne, czy jesteś wielki jak pies, zwinny jak kot, czy mały jak kaczka – kiedy działacie razem, żadna przeszkoda nie jest zbyt duża."
+ },
+ "runs": [
+  {
+   "temperature": 0.0,
+   "run": 1,
+   "time": "2026-10-22T18:48:00+02:00",
+   "hash": "29ea83a13637",
+   "thinking_hash": "2d68efe195a0",
+   "answer_tokens": 1843,
+   "finish_reason": "stop",
+   "seconds": 10.87
+  },
+  {
+   "temperature": 0.0,
+   "run": 2,
+   "time": "2026-10-22T18:48:10+02:00",
+   "hash": "29ea83a13637",
+   "thinking_hash": "2d68efe195a0",
+   "answer_tokens": 1843,
+   "finish_reason": "stop",
+   "seconds": 10.72
+  },
+  {
+   "temperature": 0.0,
+   "run": 3,
+   "time": "2026-10-22T18:48:21+02:00",
+   "hash": "29ea83a13637",
+   "thinking_hash": "2d68efe195a0",
+   "answer_tokens": 1843,
+   "finish_reason": "stop",
+   "seconds": 10.57
+  },
+  {
+   "temperature": 0.0,
+   "run": 4,
+   "time": "2026-10-22T18:48:31+02:00",
+   "hash": "29ea83a13637",
+   "thinking_hash": "2d68efe195a0",
+   "answer_tokens": 1843,
+   "finish_reason": "stop",
+   "seconds": 10.55
+  },
+  {
+   "temperature": 0.0,
+   "run": 5,
+   "time": "2026-10-22T18:48:42+02:00",
+   "hash": "29ea83a13637",
+   "thinking_hash": "2d68efe195a0",
+   "answer_tokens": 1843,
+   "finish_reason": "stop",
+   "seconds": 10.52
+  },
+  {
+   "temperature": 0.0,
+   "run": 6,
+   "time": "2026-10-22T18:48:53+02:00",
+   "hash": "29ea83a13637",
+   "thinking_hash": "2d68efe195a0",
+   "answer_tokens": 1843,
+   "finish_reason": "stop",
+   "seconds": 10.61
+  },
+  {
+   "temperature": 0.0,
+   "run": 7,
+   "time": "2026-10-22T18:49:03+02:00",
+   "hash": "29ea83a13637",
+   "thinking_hash": "2d68efe195a0",
+   "answer_tokens": 1843,
+   "finish_reason": "stop",
+   "seconds": 10.56
+  },
+  {
+   "temperature": 0.0,
+   "run": 8,
+   "time": "2026-10-22T18:49:14+02:00",
+   "hash": "29ea83a13637",
+   "thinking_hash": "2d68efe195a0",
+   "answer_tokens": 1843,
+   "finish_reason": "stop",
+   "seconds": 10.54
+  },
+  {
+   "temperature": 0.0,
+   "run": 9,
+   "time": "2026-10-22T18:49:24+02:00",
+   "hash": "29ea83a13637",
+   "thinking_hash": "2d68efe195a0",
+   "answer_tokens": 1843,
+   "finish_reason": "stop",
+   "seconds": 10.63
+  },
+  {
+   "temperature": 0.0,
+   "run": 10,
+   "time": "2026-10-22T18:49:35+02:00",
+   "hash": "29ea83a13637",
+   "thinking_hash": "2d68efe195a0",
+   "answer_tokens": 1843,
+   "finish_reason": "stop",
+   "seconds": 10.6
+  },
+  {
+   "temperature": 1.0,
+   "run": 1,
+   "time": "2026-10-22T18:49:47+02:00",
+   "hash": "f975c9bddcfd",
+   "thinking_hash": "1d183e394b78",
+   "answer_tokens": 2143,
+   "finish_reason": "stop",
+   "seconds": 12.3
+  },
+  {
+   "temperature": 1.0,
+   "run": 2,
+   "time": "2026-10-22T18:49:59+02:00",
+   "hash": "f975c9bddcfd",
+   "thinking_hash": "1d183e394b78",
+   "answer_tokens": 2143,
+   "finish_reason": "stop",
+   "seconds": 12.33
+  },
+  {
+   "temperature": 1.0,
+   "run": 3,
+   "time": "2026-10-22T18:50:12+02:00",
+   "hash": "f975c9bddcfd",
+   "thinking_hash": "1d183e394b78",
+   "answer_tokens": 2143,
+   "finish_reason": "stop",
+   "seconds": 12.33
+  },
+  {
+   "temperature": 1.0,
+   "run": 4,
+   "time": "2026-10-22T18:50:24+02:00",
+   "hash": "f975c9bddcfd",
+   "thinking_hash": "1d183e394b78",
+   "answer_tokens": 2143,
+   "finish_reason": "stop",
+   "seconds": 12.4
+  },
+  {
+   "temperature": 1.0,
+   "run": 5,
+   "time": "2026-10-22T18:50:36+02:00",
+   "hash": "f975c9bddcfd",
+   "thinking_hash": "1d183e394b78",
+   "answer_tokens": 2143,
+   "finish_reason": "stop",
+   "seconds": 12.26
+  },
+  {
+   "temperature": 1.0,
+   "run": 6,
+   "time": "2026-10-22T18:50:49+02:00",
+   "hash": "f975c9bddcfd",
+   "thinking_hash": "1d183e394b78",
+   "answer_tokens": 2143,
+   "finish_reason": "stop",
+   "seconds": 12.43
+  },
+  {
+   "temperature": 1.0,
+   "run": 7,
+   "time": "2026-10-22T18:51:01+02:00",
+   "hash": "f975c9bddcfd",
+   "thinking_hash": "1d183e394b78",
+   "answer_tokens": 2143,
+   "finish_reason": "stop",
+   "seconds": 12.29
+  },
+  {
+   "temperature": 1.0,
+   "run": 8,
+   "time": "2026-10-22T18:51:14+02:00",
+   "hash": "f975c9bddcfd",
+   "thinking_hash": "1d183e394b78",
+   "answer_tokens": 2143,
+   "finish_reason": "stop",
+   "seconds": 12.42
+  },
+  {
+   "temperature": 1.0,
+   "run": 9,
+   "time": "2026-10-22T18:51:26+02:00",
+   "hash": "f975c9bddcfd",
+   "thinking_hash": "1d183e394b78",
+   "answer_tokens": 2143,
+   "finish_reason": "stop",
+   "seconds": 12.27
+  },
+  {
+   "temperature": 1.0,
+   "run": 10,
+   "time": "2026-10-22T18:51:38+02:00",
+   "hash": "f975c9bddcfd",
+   "thinking_hash": "1d183e394b78",
+   "answer_tokens": 2143,
+   "finish_reason": "stop",
+   "seconds": 12.43
+  }
+ ],
+ "thinking_texts": {
+  "2d68efe195a0": "*   Characters: A dog (pies), a duck (kaczka), and a kitten (kotek).\n*   Language: Polish.\n*   Goal: Write a story involving these three characters.\n\n    *   *Option A: Adventure/Quest.* They go on a journey to find something.\n    *   *Option B: Friendship/Daily Life.* They live together and face a small problem.\n    *   *Option C: Fable/Moral.* They learn a lesson about cooperation.\n\n    *Decision:* Option B/C blend. A cozy story about an unlikely friendship and how they help each other.\n\n    *   *Dog:* Burek (classic) or maybe something more modern like Max. Let's go with **Bary** – a large, gentle Golden Retriever type.\n    *   *Duck:* **Kaczka Klara** – a bit bossy but very organized.\n    *   *Kitten:* **Mruczek** – small, curious, and a bit clumsy.\n\n    *   *Setting:* A sunny garden with a small pond.\n    *   *Inciting Incident:* A sudden summer storm or a lost object. Let's go with a lost toy/object that leads to a small \"rescue\" mission. Or better: They are trying to build a \"secret club\" or a \"fort.\"\n    *   *Conflict:* The kitten gets stuck or something goes wrong during their play. Let's say Mruczek (the kitten) gets stuck in a high place or a bush, and the others have to work together.\n\n    *   *Introduction:* Introduce the trio and their unusual friendship. They live in a garden.\n    *   *Development:* Describe their personalities. Bary (dog) is the protector, Klara (duck) is the navigator/planner, Mruczek (kitten) is the explorer.\n    *   *Climax:* Mruczek chases a butterfly and gets stuck in a thick, thorny rose bush or a high tree branch. Let's go with a thick rose bush near the pond.\n    *   *Resolution:* Bary uses his strength to move a branch, Klara uses her beak to guide/distract, and they save Mruczek.\n    *   *Ending:* They all nap together in the sun.\n\n    *   *Title:* \"Niezwykła Przyjaźń w Ogrodzie\" (An Unusual Friendship in the Garden).\n    *   *Opening:* Once upon a time, in a garden full of flowers, lived three friends.\n    *   *Character details:* Bary (big, golden), Klara (white, loves the pond), Mruczek (tiny, grey).\n    *   *The Incident:* One afternoon, Mruczek saw a blue butterfly. He ran too fast. *Zaplątał się w krzakach róż* (Got tangled in rose bushes).\n    *   *The Rescue:* Bary heard the meow. He went to help. But the thorns were sharp. Klara came too. She couldn't pull him, but she could see where he was stuck.\n    *   *Action:* Bary used his nose to gently push the branches aside. Klara \"quacked\" to keep Mruczek calm.\n    *   *Success:* Mruczek is free! He's a bit dusty but okay.\n    *   *Moral/Closing:* They realized that even though they are different, they are a great team.\n\n    *   Use descriptive adjectives (*puszysty, złocisty, głośne kwakanie*).\n    *   Ensure the tone is warm and suitable for all ages.",
+  "1d183e394b78": "*   Characters: A dog (pies), a duck (kaczka), and a kitten (kotek).\n*   Goal: Write a story involving these three characters.\n*   Language: Polish.\n\n    *   *Option A (Fable style):* They learn a lesson about friendship.\n    *   *Option B (Adventure style):* They go on a quest to find something lost.\n    *   *Option C (Slice of life/Cozy style):* A peaceful day in a garden where they overcome a small misunderstanding.\n\n    *Decision:* Option C/B hybrid. A cozy setting (a garden) with a small \"adventure\" (searching for a lost toy/object) works best for a heartwarming story.\n\n    *   *The Dog:* Burek (classic) or maybe something more modern like Maks. Let's go with **Burek** – big, clumsy, but kind-hearted.\n    *   *The Duck:* Kaczka **Dufka** – curious, loves water, maybe a bit bossy.\n    *   *The Kitten:* **Mruczek** – small, agile, energetic, but a bit scared of big things.\n\n    *   *Setting:* A sunny garden with a small pond.\n    *   *Inciting Incident:* Mruczek loses his favorite bell (dzwoneczek) or a ball. Let's say a bright red ball.\n    *   *Rising Action:*\n        *   Mruczek is crying/meowing.\n        *   Burek hears him and tries to help (but is too big/clumsy).\n        *   Dufka decides to help using her ability to swim/explore the pond area.\n    *   *Climax:* They find the ball in an unexpected place (under a bush or near the pond).\n    *   *Resolution:* They play together, realizing that different talents make a great team.\n\n    *   *Intro:* Introduce the characters in the garden.\n        *   Burek is napping in the sun.\n        *   Dufka is swimming in the pond.\n        *   Mruczek is chasing butterflies.\n\n    *   *Problem:* Mruczek realizes his favorite blue ball is gone. He's sad.\n        *   \"Miau, miau! Gdzie jest moja piłeczka?\"\n\n    *   *Collaboration:*\n        *   Burek wakes up, sniffs around. He's too big to see under the dense rose bushes.\n        *   Dufka waddles over. She suggests looking near the pond.\n        *   Dufka swims to the edge. She sees something blue near the reeds.\n\n    *   *The Search:*\n        *   Burek uses his nose.\n        *   Dufka uses her beak.\n        *   Mruczek uses his agility to squeeze through the narrow gap.\n\n    *   *Discovery:* The ball rolled into a hollow log or under some lily pads. Let's go with under a willow tree near the pond.\n\n    *   *Ending:* They find it. Mruczek is happy. Burek is happy. Even Dufka feels part of the \"gang.\" They all nap together.\n\n    *   *Title:* \"Wielka wyprawa w ogrodzie\" (The Great Garden Expedition).\n    *   *Keywords to include:* *przyjaźń* (friendship), *współpraca* (cooperation), *ciepłe słońce* (warm sun).\n\n    *   *Self-Correction during writing:* Make sure the tone is gentle and suitable for all ages.\n\n    *(Drafting the actual Polish text - mental translation/construction)*:\n    \"W małym, słonecznym ogrodzie, gdzie pachniały róże i świeżo skoszona trawa, mieszkało niezwykłe trio...\" (In a small, sunny garden... lived an unusual trio...)\n\n    *   Dog? Yes (Burek).\n    *   Duck? Yes (Dufka).\n    *   Kitten? Yes (Mruczek)."
+ }
+}
