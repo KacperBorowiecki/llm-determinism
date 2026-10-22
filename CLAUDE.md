@@ -7,7 +7,7 @@ this machine (repeatability) and compared with the reference machine (same hash?
 - **Always ask for the machine label** before a test. Propose one from the hardware (e.g. `mac-m5pro-64gb`);
   labels already in `results/` are only suggestions – wait for the user's confirmation.
 - **Never `git push`, `gh pr create` or upload anything** unless the user asks for that specific action – publishing
-  is the user's decision (the user pushes; most people running the test have no write access to this repository).
+  is the user's decision (the user pushes).
 - **Model profiles** (`reference.json`): `qwen3:0.6b-q8_0` – the default, small and fast; `qwen3:0.6b-q4_K_M` – the same
   model in Q4_K_M (a different text); `gemma4:26b-a4b-it-q8_0` – the main experiment, needs ~30 GB of memory.
 - **Before a test, ask:** model (`--profile`), thinking on/off (`--thinking`, default off) and length. Record where
@@ -37,7 +37,7 @@ this machine (repeatability) and compared with the reference machine (same hash?
 
 ## Skills
 - `determinism-test` – run the test on this machine.
-- `determinism-submit` – keep the result (local commit) or pack it for sending.
-- `determinism-findings` – after results from other machines arrive: RESULTS.md + FINDINGS.md.
+- `determinism-submit` – keep the result (local commit).
+- `determinism-findings` – after new results: RESULTS.md + FINDINGS.md.
 - Optional curiosity: `parallel_test.py` (10 requests at once, needs `-np 10 -c 20480`) – offer it only if the user
   is interested.
