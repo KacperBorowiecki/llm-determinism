@@ -82,8 +82,8 @@ same build:
 | qwen3-0.6b-q8 (on) | 0.40.7 (`b1-f174553e1`) | `93da943bed61` + thinking `52499a3e123b` | `fa20d1ae8cef` + thinking `4074d4788a6f` |
 | gemma4-26b-q8 | 0.40.4, 0.40.6 (`b1-b42b7e6d3`, `b1-620d2225c`) | `138e66a98238` | `0e661f14a480` |
 | gemma4-26b-q8 | 0.40.7 (`b1-f174553e1`) | `179e3c96dff3` | `d4afe73e6d3c` |
-| qwen3-0.6b-q4 | 0.40.7 (`b1-f174553e1`) | `0ac50154a638` | `872d20cd2d2e` |
-| qwen3-0.6b-q4 (on) | 0.40.7 (`b1-f174553e1`) | `1f701b198097` + thinking `227ff26f211c` | `14b5be25f98e` + thinking `ac573c3b004d` |
+| qwen3-0.6b-q4_K_M | 0.40.7 (`b1-f174553e1`) | `0ac50154a638` | `872d20cd2d2e` |
+| qwen3-0.6b-q4_K_M (on) | 0.40.7 (`b1-f174553e1`) | `1f701b198097` + thinking `227ff26f211c` | `14b5be25f98e` + thinking `ac573c3b004d` |
 | gemma4-26b-q8 (on) | 0.40.7 (`b1-f174553e1`) | `29ea83a13637` + thinking `2d68efe195a0` | `f975c9bddcfd` + thinking `1d183e394b78` |
 
 ## Results
@@ -101,3 +101,8 @@ The repository is local-only. To share a result, send the result file (zipped) t
 `parallel_test.py` sends 10 requests at the same time to a server started with `-np 10 -c 20480`. On the reference
 machine none of the simultaneous answers matched the single-request text – the server computes requests together in
 one batch, which is what makes cloud APIs non-deterministic even at temperature 0.
+
+## License
+
+MIT – see [LICENSE](LICENSE). Use it, copy it, change it and share it, for any purpose; just keep the
+copyright notice.

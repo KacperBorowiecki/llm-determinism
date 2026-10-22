@@ -104,7 +104,7 @@
     }
    ]
   },
-  "qwen3-0.6b-q4": {
+  "qwen3-0.6b-q4_K_M": {
    "model": "qwen3:0.6b-q4_K_M",
    "model_file": "sha256-7f4030143c1c477224c5434f8272c662a8b042079a0a584f0a27a1684fe2e1fa",
    "download_gb": 0.5,

@@ -13,7 +13,7 @@ Follow CLAUDE.md. Talk to the user in their language.
    Wait for confirmation.
 3. **Model and whether it can run:** ask which model profile (`reference.json` → `profiles`):
    `qwen3-0.6b-q8` – the default: ~0.8 GB download, ~2 GB memory, ~1 s per generation, runs on almost any
-   machine (also CPU-only); `qwen3-0.6b-q4` – the same model in Q4_K_M (= the default tag `qwen3:0.6b`,
+   machine (also CPU-only); `qwen3-0.6b-q4_K_M` – the same model in Q4_K_M (= the default tag `qwen3:0.6b`,
    ~0.5 GB; gives a different text than Q8, about as fast); `gemma4-26b-q8` – the main experiment: ~28 GB download, ~30 GB of GPU, unified, or
    GPU + RAM memory, ~8 s per generation on an RTX 5090. Check RAM and GPU memory (NVIDIA: `nvidia-smi`; Apple:
    unified memory) against `memory_gb` of the profile; if clearly not enough: say so, offer the smaller model,

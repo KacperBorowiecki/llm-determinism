@@ -62,7 +62,7 @@ any machine – so many more people can take part.
 ## Quantization: Q4_K_M vs Q8_0 (qwen3:0.6b, Ollama 0.40.7)
 
 `qwen3:0.6b` (the default tag) is `qwen3:0.6b-q4_K_M` – the same file (`sha256-7f4030143c1c…`, 522 MB vs 832 MB
-for Q8_0). Profile `qwen3-0.6b-q4`.
+for Q8_0). Profile `qwen3-0.6b-q4_K_M`.
 
 - **Repeatable, but a different text than Q8 in all four combinations** (temperature 0 / 1, thinking off / on):
   e.g. temperature 0 – Q4 `0ac50154a638` (446 tokens) vs Q8 `23cd03276e07` (370 tokens). The quantization rounds
@@ -130,5 +130,5 @@ per second); versions must be frozen (an update can change the text); cloud APIs
   model profile and made the default (`run_test.py --profile`).
 - 2026-10-22: thinking as an option (`--thinking`; answer and thinking hashed separately), Qwen references with
   thinking for 0.40.6 and 0.40.7; RESULTS.md shows where the model ran (`--device`: GPU / CPU / mix).
-- 2026-10-22: `qwen3-0.6b-q4` profile (Q4_K_M = the default tag `qwen3:0.6b`); references for it (thinking off
+- 2026-10-22: `qwen3-0.6b-q4_K_M` profile (Q4_K_M = the default tag `qwen3:0.6b`); references for it (thinking off
   and on) and for gemma4-26b-q8 with thinking (Ollama 0.40.7).

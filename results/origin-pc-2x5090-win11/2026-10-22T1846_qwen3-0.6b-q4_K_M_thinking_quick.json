@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "label": "origin-pc-2x5090-win11",
- "profile": "qwen3-0.6b-q4",
+ "profile": "qwen3-0.6b-q4_K_M",
  "thinking": true,
  "reference_llama_cpp": [
   "b1-f174553e1"
