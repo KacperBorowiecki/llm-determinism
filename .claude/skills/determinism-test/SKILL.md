@@ -27,16 +27,34 @@ Follow CLAUDE.md. Talk to the user in their language.
 5. **GPU free?** No other `llama-server` process, nothing in `ollama ps`, no other heavy GPU load. If busy: stop and
    ask.
 6. **Start llama-server from Ollama's installation:**
-   - Binary: Ollama's log shows how Ollama starts it – search for lines containing
-     `msg="starting llama-server"`; the `cmd="…"` part holds the full command (backslashes in paths are doubled) (Windows:
-     `%LOCALAPPDATA%\Ollama\server.log`; macOS: `~/.ollama/logs/server.log`; Linux: `journalctl -u ollama`).
-     Otherwise look in the install directory (Windows: `%LOCALAPPDATA%\Programs\Ollama\lib\ollama\llama-server.exe`).
-     Not found: stop and ask – never use another binary silently.
+   - Binary: the `llama-server` that Ollama itself starts – never another one (Homebrew, own build: a different
+     build gives a different text). Try in this order, stop at the first that works:
+     1. Ollama's logs: search case-insensitively for `starting llama-server` (no quotes, no `cmd=` – the format
+        changes between versions) in the current log **and the rotated older ones** – after a restart the
+        current log may have none. The newest hit holds the full command; its first word is the binary (on
+        Windows the log doubles backslashes). Logs: Windows `%LOCALAPPDATA%\Ollama\server*.log`; macOS
+        `~/.ollama/logs/server*.log`; Linux `journalctl -u ollama --no-pager` (or `~/.ollama/logs/` when Ollama
+        was started by hand).
+     2. Ollama's install folder: resolve the `ollama` executable (`where ollama` / `command -v ollama`, follow
+        links with `readlink -f`) and look for `llama-server*` next to it, in `lib/ollama` below it and in
+        `../lib/ollama` (Windows: `%LOCALAPPDATA%\Programs\Ollama\lib\ollama\llama-server.exe`).
+     3. Let Ollama start it (the model is there – step 4, the GPU is free – step 5): load the model through the
+        API (`POST http://127.0.0.1:11434/api/generate` with only `{"model": "<model>"}` – loads, generates
+        nothing), read the path and arguments from the process list (Windows: `Get-CimInstance Win32_Process
+        -Filter "Name like 'llama-server%'" | Select-Object ExecutablePath, CommandLine`; macOS / Linux:
+        `ps -eo pid,args | grep '[l]lama-server'`), then `ollama stop <model>`. The log now has a fresh start
+        line too.
+     4. Search the disk for `llama-server*`, but accept only a file inside Ollama's installation.
+     Nothing found: stop and ask – this Ollama may not ship a separate `llama-server`.
    - Model file: the path in the **first** `FROM` line of `ollama show <model of the profile> --modelfile`.
-   - Environment, as Ollama sets it (the log line with `OLLAMA_LIBRARY_PATH` shows the folders). Windows + NVIDIA:
+   - Environment, as Ollama sets it – without it the server silently computes on the CPU. From the same logs:
+     the line with `OLLAMA_LIBRARY_PATH` lists the library folders (its `extra_envs` the device variables, e.g.
+     `CUDA_VISIBLE_DEVICES`), `load_backend: loaded CUDA backend from …` names the GPU library; on Linux, while
+     Ollama's server runs, `/proc/<pid>/environ` of `llama-server` shows the whole environment. Windows + NVIDIA:
      `PATH` += `<ollama>\lib\ollama;<ollama>\lib\ollama\cuda_v13` (the GPU folder Ollama uses),
      `OLLAMA_LIBRARY_PATH` = the same two folders, `GGML_BACKEND_PATH` = `<GPU folder>\ggml-cuda.dll`,
-     `CUDA_VISIBLE_DEVICES` = GPU index (default 0).
+     `CUDA_VISIBLE_DEVICES` = GPU index (default 0). Linux: the library folders go into `LD_LIBRARY_PATH`
+     (not `PATH`).
    - Arguments: `--model <file> --host 127.0.0.1 --port 8090 --no-webui -ngl 999` + `server_args` from
      `reference.json`. If the model does not fit on the GPU, use a lower `-ngl` (partial offload: `--device mix`; no
      usable GPU: `-ngl 0`, `--device cpu`), tell the user, and put it into `--note`.
