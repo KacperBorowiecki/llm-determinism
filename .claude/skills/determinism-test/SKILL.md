@@ -9,14 +9,17 @@ Follow CLAUDE.md. Talk to the user in their language.
 
 1. **Python:** `.venv` in the repo root (`python -m venv .venv` if missing); `pip install -r requirements.txt`
    into it; run scripts with the `.venv` interpreter; Windows: `PYTHONUTF8=1`.
-2. **Label:** ask for this machine's label (lowercase, digits, `.`, `_`, `-`). Propose one from the hardware.
-   Wait for confirmation.
+2. **Hardware, then label:** first check the hardware with the same functions that write it into the result
+   file: `python -c "import run_test as r; print(r.cpu_name(), r.ram_gb(), r.gpus())"` (CPU, RAM in GB, NVIDIA
+   GPUs or Apple unified memory; an empty GPU list means no NVIDIA GPU was found – ask what GPU there is).
+   Show it, then ask for this machine's label (lowercase, digits, `.`, `_`, `-`) and propose one from it
+   (e.g. `mac-m5pro-64gb`). Wait for confirmation.
 3. **Model and whether it can run:** ask which model profile (`reference.json` → `profiles`):
    `qwen3:0.6b-q8_0` – the default: ~0.8 GB download, ~2 GB memory, ~1 s per generation, runs on almost any
    machine (also CPU-only); `qwen3:0.6b-q4_K_M` – the same model in Q4_K_M (= the default tag `qwen3:0.6b`,
    ~0.5 GB; gives a different text than Q8, about as fast); `gemma4:26b-a4b-it-q8_0` – the main experiment: ~28 GB download, ~30 GB of GPU, unified, or
-   GPU + RAM memory, ~8 s per generation on an RTX 5090. Check RAM and GPU memory (NVIDIA: `nvidia-smi`; Apple:
-   unified memory) against `memory_gb` of the profile; if clearly not enough: say so, offer the smaller model,
+   GPU + RAM memory, ~8 s per generation on an RTX 5090. Compare RAM and GPU memory from step 2 with
+   `memory_gb` of the profile; if clearly not enough: say so, offer the smaller model,
    stop. Check `ollama --version`.
    Also ask: **thinking on or off** (default off). With thinking the model first writes its reasoning – a
    different, longer text; the answer and the thinking are hashed separately (`--thinking`). Origin references
