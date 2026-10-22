@@ -1,0 +1,11 @@
+{
+ "hash": "599eb85dd1d7",
+ "sha256": "599eb85dd1d7f67a399d341e2cccc6ecb3e1688b6187b5d987094de5646175d8",
+ "temperature": 1,
+ "seed": 42,
+ "prompt": "Napisz mi historie o psie i kaczce oraz kotku?",
+ "answer_tokens": 90,
+ "prompt_tokens": 29,
+ "source": "qwen3-0.6b-q8, Ollama 0.40.7 (b1-f174553e1); origin PC, 2026-10-22T1740_quick.json (10/10 runs identical); no logprobs",
+ "text": "W przestrzeni nieogromnej i niepraktycznie szklanej, w której żadna ścież i czynność nie zmienia się, bycia wykorzystywana do rozmowy. W taki sposób, pojawia się oni, bystynie, pojawia się w taki sposób, że to możliwe.  \nOczywiście, byliśmy na tym."
+}

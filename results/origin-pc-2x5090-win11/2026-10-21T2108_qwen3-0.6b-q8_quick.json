@@ -1,0 +1,262 @@
+{
+ "schema": 1,
+ "label": "origin-pc-2x5090-win11",
+ "profile": "qwen3-0.6b-q8",
+ "reference_llama_cpp": [
+  "b1-f174553e1"
+ ],
+ "reference_exact": true,
+ "started": "2026-10-21T21:08:28+02:00",
+ "finished": "2026-10-21T21:08:43+02:00",
+ "length": "quick",
+ "runs_per_temperature": 10,
+ "gpu": 0,
+ "note": "qwen3:0.6b-q8_0 after the Ollama update 0.40.6 -> 0.40.7 (b1-f174553e1); a CPU-only llama-server test (gemma4 26B, -ngl 0) was running at the same time.",
+ "machine": {
+  "os": "Windows 11 (10.0.26200)",
+  "arch": "AMD64",
+  "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
+  "ram_gb": 61.6,
+  "gpus": [
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   },
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   }
+  ],
+  "ollama": "0.40.7",
+  "python": "3.13.5",
+  "server": {
+   "build_info": "b1-f174553e1",
+   "model": "sha256-31db9797248620627b127c47c75caa76ec2ce9b7de9dc0f2faca02ba59615818",
+   "n_ctx": 8192,
+   "slots": 1,
+   "sampling": {
+    "top_k": 40,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
+    "samplers": [
+     "penalties",
+     "dry",
+     "top_n_sigma",
+     "top_k",
+     "typ_p",
+     "top_p",
+     "min_p",
+     "xtc",
+     "temperature"
+    ]
+   }
+  }
+ },
+ "temperatures": {
+  "0": {
+   "runs": 10,
+   "hashes": {
+    "23cd03276e07": 10
+   },
+   "repeatable": true,
+   "reference_hash": "23cd03276e07",
+   "equals_reference": true,
+   "answer_tokens": [
+    370
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 332.7,
+   "divergence_vs_reference": null
+  },
+  "1": {
+   "runs": 10,
+   "hashes": {
+    "599eb85dd1d7": 10
+   },
+   "repeatable": true,
+   "reference_hash": "599eb85dd1d7",
+   "equals_reference": true,
+   "answer_tokens": [
+    90
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 337.2,
+   "divergence_vs_reference": null
+  }
+ },
+ "warnings": [],
+ "texts": {
+  "23cd03276e07": "Oczywiście! Oto historię o psie, kaczce i kotku:\n\n---\n\nW nocy, gdy świat był zbyt zbyt, wojny zaczęła się. W tle kuchni, w przestrzeni, gdzie świat był zbyt zbyt, pojawiała się psia. Jako nieznała, że to nie tylko świat, ale też świat zbyt. Jako nieznała, że to nie tylko świat, ale też świat zbyt.\n\nPsia, zaczęła się wojny. Wojna zaczęła się zaczynając się z kaczki. Kaczka, która była w tle kuchni, pojawiała się wojną. Kaczka, która była w tle kuchni, pojawiała się wojną. Kaczka, która była w tle kuchni, pojawiała się wojną.\n\nKotka, która była w tle kuchni, pojawiała się wojną. Kotka, która była w tle kuchni, pojawiała się wojną. Kotka, która była w tle kuchni, pojawiała się wojną.\n\nWojna zaczęła się, a świat był zbyt. Wojna zaczęła się, a świat był zbyt. Wojna zaczęła się, a świat był zbyt.\n\n---\n\nZa chwilę, gdy świat był zbyt, psia, kaczka i kotka zaczęły wojną. Wojna zaczęła się, a świat był zbyt.",
+  "599eb85dd1d7": "W przestrzeni nieogromnej i niepraktycznie szklanej, w której żadna ścież i czynność nie zmienia się, bycia wykorzystywana do rozmowy. W taki sposób, pojawia się oni, bystynie, pojawia się w taki sposób, że to możliwe.  \nOczywiście, byliśmy na tym."
+ },
+ "runs": [
+  {
+   "temperature": 0.0,
+   "run": 1,
+   "time": "2026-10-21T21:08:30+02:00",
+   "hash": "23cd03276e07",
+   "answer_tokens": 370,
+   "seconds": 1.28
+  },
+  {
+   "temperature": 0.0,
+   "run": 2,
+   "time": "2026-10-21T21:08:31+02:00",
+   "hash": "23cd03276e07",
+   "answer_tokens": 370,
+   "seconds": 1.13
+  },
+  {
+   "temperature": 0.0,
+   "run": 3,
+   "time": "2026-10-21T21:08:32+02:00",
+   "hash": "23cd03276e07",
+   "answer_tokens": 370,
+   "seconds": 1.07
+  },
+  {
+   "temperature": 0.0,
+   "run": 4,
+   "time": "2026-10-21T21:08:33+02:00",
+   "hash": "23cd03276e07",
+   "answer_tokens": 370,
+   "seconds": 1.22
+  },
+  {
+   "temperature": 0.0,
+   "run": 5,
+   "time": "2026-10-21T21:08:34+02:00",
+   "hash": "23cd03276e07",
+   "answer_tokens": 370,
+   "seconds": 1.21
+  },
+  {
+   "temperature": 0.0,
+   "run": 6,
+   "time": "2026-10-21T21:08:36+02:00",
+   "hash": "23cd03276e07",
+   "answer_tokens": 370,
+   "seconds": 1.2
+  },
+  {
+   "temperature": 0.0,
+   "run": 7,
+   "time": "2026-10-21T21:08:37+02:00",
+   "hash": "23cd03276e07",
+   "answer_tokens": 370,
+   "seconds": 1.11
+  },
+  {
+   "temperature": 0.0,
+   "run": 8,
+   "time": "2026-10-21T21:08:38+02:00",
+   "hash": "23cd03276e07",
+   "answer_tokens": 370,
+   "seconds": 1.15
+  },
+  {
+   "temperature": 0.0,
+   "run": 9,
+   "time": "2026-10-21T21:08:39+02:00",
+   "hash": "23cd03276e07",
+   "answer_tokens": 370,
+   "seconds": 1.13
+  },
+  {
+   "temperature": 0.0,
+   "run": 10,
+   "time": "2026-10-21T21:08:40+02:00",
+   "hash": "23cd03276e07",
+   "answer_tokens": 370,
+   "seconds": 1.11
+  },
+  {
+   "temperature": 1.0,
+   "run": 1,
+   "time": "2026-10-21T21:08:40+02:00",
+   "hash": "599eb85dd1d7",
+   "answer_tokens": 90,
+   "seconds": 0.3
+  },
+  {
+   "temperature": 1.0,
+   "run": 2,
+   "time": "2026-10-21T21:08:41+02:00",
+   "hash": "599eb85dd1d7",
+   "answer_tokens": 90,
+   "seconds": 0.3
+  },
+  {
+   "temperature": 1.0,
+   "run": 3,
+   "time": "2026-10-21T21:08:41+02:00",
+   "hash": "599eb85dd1d7",
+   "answer_tokens": 90,
+   "seconds": 0.35
+  },
+  {
+   "temperature": 1.0,
+   "run": 4,
+   "time": "2026-10-21T21:08:41+02:00",
+   "hash": "599eb85dd1d7",
+   "answer_tokens": 90,
+   "seconds": 0.31
+  },
+  {
+   "temperature": 1.0,
+   "run": 5,
+   "time": "2026-10-21T21:08:42+02:00",
+   "hash": "599eb85dd1d7",
+   "answer_tokens": 90,
+   "seconds": 0.29
+  },
+  {
+   "temperature": 1.0,
+   "run": 6,
+   "time": "2026-10-21T21:08:42+02:00",
+   "hash": "599eb85dd1d7",
+   "answer_tokens": 90,
+   "seconds": 0.29
+  },
+  {
+   "temperature": 1.0,
+   "run": 7,
+   "time": "2026-10-21T21:08:42+02:00",
+   "hash": "599eb85dd1d7",
+   "answer_tokens": 90,
+   "seconds": 0.3
+  },
+  {
+   "temperature": 1.0,
+   "run": 8,
+   "time": "2026-10-21T21:08:42+02:00",
+   "hash": "599eb85dd1d7",
+   "answer_tokens": 90,
+   "seconds": 0.3
+  },
+  {
+   "temperature": 1.0,
+   "run": 9,
+   "time": "2026-10-21T21:08:43+02:00",
+   "hash": "599eb85dd1d7",
+   "answer_tokens": 90,
+   "seconds": 0.33
+  },
+  {
+   "temperature": 1.0,
+   "run": 10,
+   "time": "2026-10-21T21:08:43+02:00",
+   "hash": "599eb85dd1d7",
+   "answer_tokens": 90,
+   "seconds": 0.3
+  }
+ ]
+}

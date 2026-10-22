@@ -1,0 +1,262 @@
+{
+ "schema": 1,
+ "label": "origin-pc-2x5090-win11",
+ "profile": "gemma4-26b-q8",
+ "reference_llama_cpp": [
+  "b1-f174553e1"
+ ],
+ "reference_exact": true,
+ "started": "2026-10-22T17:38:29+02:00",
+ "finished": "2026-10-22T17:40:35+02:00",
+ "length": "quick",
+ "runs_per_temperature": 10,
+ "gpu": 0,
+ "note": "Clean rerun on Ollama 0.40.7 (b1-f174553e1) after the CPU-only test had finished (CPU ~3%), to check whether the CPU load changed the previous run.",
+ "machine": {
+  "os": "Windows 11 (10.0.26200)",
+  "arch": "AMD64",
+  "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
+  "ram_gb": 61.6,
+  "gpus": [
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   },
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   }
+  ],
+  "ollama": "0.40.7",
+  "python": "3.13.5",
+  "server": {
+   "build_info": "b1-f174553e1",
+   "model": "sha256-ec528f6d0b7e2d2219d203bea82f4c5b98cbcdcbfaa9153b6d8c36756504c2d5",
+   "n_ctx": 8192,
+   "slots": 1,
+   "sampling": {
+    "top_k": 64,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
+    "samplers": [
+     "penalties",
+     "dry",
+     "top_n_sigma",
+     "top_k",
+     "typ_p",
+     "top_p",
+     "min_p",
+     "xtc",
+     "temperature"
+    ]
+   }
+  }
+ },
+ "temperatures": {
+  "0": {
+   "runs": 10,
+   "hashes": {
+    "179e3c96dff3": 10
+   },
+   "repeatable": true,
+   "reference_hash": "179e3c96dff3",
+   "equals_reference": true,
+   "answer_tokens": [
+    1276
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 181.2,
+   "divergence_vs_reference": null
+  },
+  "1": {
+   "runs": 10,
+   "hashes": {
+    "d4afe73e6d3c": 10
+   },
+   "repeatable": true,
+   "reference_hash": "d4afe73e6d3c",
+   "equals_reference": true,
+   "answer_tokens": [
+    981
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 182.0,
+   "divergence_vs_reference": null
+  }
+ },
+ "warnings": [],
+ "texts": {
+  "179e3c96dff3": "Oto ciepła opowieść o niezwykłej przyjaźni, która narodziła się tam, gdzie nikt się jej nie spodziewał.\n\n***\n\n### Wielka Przygoda na Słonecznej Polanie\n\nNa skraju małego miasteczka, tuż obok szumiącego strumyka, znajdowała się Słoneczna Polana. To właśnie tam mieszkał Burek – duży, puszysty pies rasy golden retriever o sercu ze złota. Burek był spokojny, uwielbiał drzemki w cieniu starej jabłoni i polowanie na kolorowe motyle.\n\nPewnego słonecznego popołudnia, gdy Burek właśnie ziewał, usłyszał dziwne dźwięki dochodzące z krzaków malin. *„Kwa! Kwa! Pomocy!”* – dobiegało ciche, piskliwe wołanie.\n\nBurek, choć z natury leniwy, nie mógł zostawić kogoś w potrzebie. Ostrożnie podszedł do krzaków i zobaczył małą, żółtą kaczuszkę, która zaplątała się w gęste pędy malin. Jej skrzydełka nie mogły się poruszyć, a ona sama wyglądała na bardzo przestraszoną.\n\n– Nie bój się, maluchu – mruknął Burek niskim, ale łagodnym głosem. – Zaraz ci pomogę.\n\nZ wielką delikatnością, używając swojego mokrego nosa i łap, Burek rozsunął gałązki. Kaczuszka, którą okazała się mała Kaczka Klara, otrzepała piórka i spojrzała na psa wielkimi, czarnymi oczkami.\n\n– Dziękuję, wielki piesku! – pisnęła Klara. – Jestem Klara. Myślałam, że zostanę tu na zawsze jako przekąska dla ptaków!\n\nBurek uśmiechnął się szeroko.\n– Jestem Burek. I nie martw się, na tej polanie nikt cię nie skrzywdzi.\n\nWłaśnie wtedy, gdy próbowali nawiązać nową przyjaźń, z wysokiej trawy wysunęła się mała, biała łapka, a zaraz potem pojawiła się głowa z różowym noskiem. To był Mruczek – mały, niezwykle ciekawy świata kotek, który właśnie uciekł z pobliskiego ogrodu, by przeżyć swoją wielką przygodę.\n\nMruczek podszedł do nich z dumnie uniesionym ogonkiem, choć w głębi duszy trząsł się z emocji.\n– Co tu się dzieje? Czy to jakaś tajna narada? – zapytał, mrużąc oczy.\n\n– To nie narada, to ratunek! – zawołała Klara. – Burek uratował mnie z malin!\n\nMruczek, który uważał się za eksperta od wszystkich spraw, natychmiast uznał, że musi dołączyć do grupy.\n– Skoro już tu jesteśmy, musimy sprawdzić, co kryje się za Starym Dębem. Słyszałem, że tam rosną jagody, które smakują jak niebo!\n\nI tak oto powstał najbardziej niezwykły zespół na świecie: wielki, spokojny pies, mała, energiczna kaczka i zwinny, ciekawski kotek.\n\nWyruszyli razem w podróż przez polanę. Burek szedł przodem, torując drogę przez wysoką trawę. Klara płynęła tuż obok jego łap, opowiadając zabawne historie o tym, jak to jest pływać w stawie. Mruczek natomiast wspinał się na kamienie i pnie powalonych drzew, pilnując, by nikt nie został w tyle.\n\nPodczas wyprawy przeżyli wiele przygód. Musieli wspólnie przejść przez płytki strumyk (Burek był mostem, po którym Klara i Mruczek bezpiecznie przeszli na drugą stronę) i ominąć stado bardzo głośnych, ale przyjaznych gęsi.\n\nKiedy słońce zaczęło chować się za horyzontem, malując niebo na pomarańczowo, trójka przyjaciół dotarła do celu – pod Stary Dąb. Znaleźli tam mnóstwo słodkich jagód i miękkiego mchu, który idealnie nadawał się do spania.\n\n– Wiecie co? – powiedział Mruczek, zwijając się w kłębek przy boku Burka. – Myślałem, że przygoda polega na samotnym odkrywaniu świata. Ale z wami jest o wiele fajniej.\n\n– Bo przygoda jest lepsza, gdy masz kogoś, komu możesz zaufać – dodał Burek, kładąc głowę na łapach.\n\nKlara, wtulona w miękkie futro Burka, cichutko kwaknęła:\n– I gdy masz kogoś, kto pomoże ci wyjść z malin.\n\nZasnęli pod gwiazdami, a na Słonecznej Polanie zapanowała błoga cisza. Od tego dnia nikt już nie dziwił się, gdy widział psa, kotka i kaczkę spacerujących razem przez łąkę. Bo prawdziwa przyjaźń nie patrzy na to, czy masz futro, pióra, czy szczekasz, mruczysz czy kwakasz. Liczy się tylko to, że masz obok siebie kogoś, kto zawsze ci pomoże.",
+  "d4afe73e6d3c": "Oto ciepła opowieść o niezwykłej przyjaźni, która narodziła się tam, gdzie nikt się jej nie spodziewał.\n\n***\n\n### Wielka Przygoda na Słonecznej Polanie\n\nNa skraju starego, pachnącego sosnami lasu stał mały, czerwony domek z ogrodem pełnym polnych kwiatów. To właśnie tam mieszkała trójka niezwykłych przyjaciół: Barnaba, wielki i puszysty Golden Retriever o sercu ze złota, Mruczek, mały, czarny kotek o wielkich, zielonych oczach, oraz Kaczka Klops, która – choć była kaczką – miała ambicje znacznie większe niż tylko pływanie w stawie.\n\nWszystko zaczęło się pewnego słonecznego popołudnia. Barnaba, który zazwyczaj przesypiał całe dnie, leżał właśnie na ganku, mrużąc oczy od słońca. Nagle usłyszał głośne „Kwa! Kwa! Ratunku!”.\n\nPodbiegł do brzegu stawu i zobaczył Klopsa. Kaczka utknęła w gęstych, długich trzcinach, a jej ulubiona, niebieska gumowa piłeczka, którą zawsze nosiła ze sobą, zaplątała się w korzenie na samym środku wody. Klops próbował ją wydobyć, ale tylko bardziej się zaplątywał.\n\n– Nie martw się, mały kaczku! – szczeknął Barnaba, próbując delikatnie chwycić trzcinę nosem, ale był na to za duży.\n\nWtedy z dachu domku zeskoczył Mruczek. Kotek, choć był malutki, miał niezwykłą zwinność.\n– Barnabo, ty jesteś za ciężki, a ja za lekki, by walczyć z nurtem – mruknął mądrowanie Mruczek. – Musimy działać razem!\n\nPrzyjaciele szybko opracowali plan. Barnaba, dzięki swojej sile, wszedł do płytkiej części stawu i stanął stabilnie w wodzie, tworząc swego rodzaju „pomost”. Mruczek, wykorzystując grzbiet psa, przeszedł bezpiecznie nad wodą, aż do miejsca, gdzie trzciny były najgęstsze.\n\nKotek, balansując na mokrej sierści Barnaby, wyciągnął łapkę. Był bardzo ostrożny. Z wielkim skupieniem, centymetr po centymetrze, zaczął odplątywać niebieską piłeczkę z korzeni. Klops w tym czasie głośno go zagrzewał:\n– Tak, Mruczku! Jeszcze trochę! Dasz radę!\n\nW końcu – *plum!* – piłeczka wyskoczyła z wody. Mruczek złapał ją w pyszczek i, skacząc zwinnie po plecach Barnaby, wrócił na suchy brzeg.\n\nKlops był wniebowzięty. Przeskakał radosne kółka wokół swoich przyjaciół.\n– Jesteście najdzielniejszymi bohaterami, jakich znam! – zawołał, dumnie wypinając pierś.\n\nZ okazji udanej akcji ratunkowej, przyjaciele postanowili urządzić małe przyjęcie. Barnaba przyniósł swoją ulubioną kość, Mruczek przyniósł miseczkę mleka, a Klops... cóż, Klops przyniósł najpiękniejsze piórko, jakie udało mu się znaleźć w lesie, aby ozdobić ich wspólną budkę.\n\nSiedzieli razem na trawie, patrząc, jak słońce chowa się za drzewami. Barnaba cicho sapnął z zadowolenia, Mruczek zaczął mruczeć, a Klops cicho kwakał. Zrozumieli, że nie liczy się to, czy masz futro, czy pióra, ani czy szczekasz, czy mruczysz. Liczy się tylko to, że w razie kłopotów, zawsze możesz liczyć na przyjaciół.\n\nI tak, pod rozgwieżdżonym niebem, pies, kot i kaczka zasnęli wtuleni w siebie, śniąc o kolejnych, wielkich przygodach."
+ },
+ "runs": [
+  {
+   "temperature": 0.0,
+   "run": 1,
+   "time": "2026-10-22T17:38:36+02:00",
+   "hash": "179e3c96dff3",
+   "answer_tokens": 1276,
+   "seconds": 7.34
+  },
+  {
+   "temperature": 0.0,
+   "run": 2,
+   "time": "2026-10-22T17:38:44+02:00",
+   "hash": "179e3c96dff3",
+   "answer_tokens": 1276,
+   "seconds": 7.14
+  },
+  {
+   "temperature": 0.0,
+   "run": 3,
+   "time": "2026-10-22T17:38:51+02:00",
+   "hash": "179e3c96dff3",
+   "answer_tokens": 1276,
+   "seconds": 7.07
+  },
+  {
+   "temperature": 0.0,
+   "run": 4,
+   "time": "2026-10-22T17:38:58+02:00",
+   "hash": "179e3c96dff3",
+   "answer_tokens": 1276,
+   "seconds": 7.11
+  },
+  {
+   "temperature": 0.0,
+   "run": 5,
+   "time": "2026-10-22T17:39:05+02:00",
+   "hash": "179e3c96dff3",
+   "answer_tokens": 1276,
+   "seconds": 7.09
+  },
+  {
+   "temperature": 0.0,
+   "run": 6,
+   "time": "2026-10-22T17:39:12+02:00",
+   "hash": "179e3c96dff3",
+   "answer_tokens": 1276,
+   "seconds": 7.17
+  },
+  {
+   "temperature": 0.0,
+   "run": 7,
+   "time": "2026-10-22T17:39:19+02:00",
+   "hash": "179e3c96dff3",
+   "answer_tokens": 1276,
+   "seconds": 7.11
+  },
+  {
+   "temperature": 0.0,
+   "run": 8,
+   "time": "2026-10-22T17:39:26+02:00",
+   "hash": "179e3c96dff3",
+   "answer_tokens": 1276,
+   "seconds": 7.13
+  },
+  {
+   "temperature": 0.0,
+   "run": 9,
+   "time": "2026-10-22T17:39:33+02:00",
+   "hash": "179e3c96dff3",
+   "answer_tokens": 1276,
+   "seconds": 7.13
+  },
+  {
+   "temperature": 0.0,
+   "run": 10,
+   "time": "2026-10-22T17:39:40+02:00",
+   "hash": "179e3c96dff3",
+   "answer_tokens": 1276,
+   "seconds": 7.08
+  },
+  {
+   "temperature": 1.0,
+   "run": 1,
+   "time": "2026-10-22T17:39:46+02:00",
+   "hash": "d4afe73e6d3c",
+   "answer_tokens": 981,
+   "seconds": 5.42
+  },
+  {
+   "temperature": 1.0,
+   "run": 2,
+   "time": "2026-10-22T17:39:51+02:00",
+   "hash": "d4afe73e6d3c",
+   "answer_tokens": 981,
+   "seconds": 5.56
+  },
+  {
+   "temperature": 1.0,
+   "run": 3,
+   "time": "2026-10-22T17:39:57+02:00",
+   "hash": "d4afe73e6d3c",
+   "answer_tokens": 981,
+   "seconds": 5.47
+  },
+  {
+   "temperature": 1.0,
+   "run": 4,
+   "time": "2026-10-22T17:40:02+02:00",
+   "hash": "d4afe73e6d3c",
+   "answer_tokens": 981,
+   "seconds": 5.43
+  },
+  {
+   "temperature": 1.0,
+   "run": 5,
+   "time": "2026-10-22T17:40:08+02:00",
+   "hash": "d4afe73e6d3c",
+   "answer_tokens": 981,
+   "seconds": 5.5
+  },
+  {
+   "temperature": 1.0,
+   "run": 6,
+   "time": "2026-10-22T17:40:13+02:00",
+   "hash": "d4afe73e6d3c",
+   "answer_tokens": 981,
+   "seconds": 5.46
+  },
+  {
+   "temperature": 1.0,
+   "run": 7,
+   "time": "2026-10-22T17:40:19+02:00",
+   "hash": "d4afe73e6d3c",
+   "answer_tokens": 981,
+   "seconds": 5.43
+  },
+  {
+   "temperature": 1.0,
+   "run": 8,
+   "time": "2026-10-22T17:40:24+02:00",
+   "hash": "d4afe73e6d3c",
+   "answer_tokens": 981,
+   "seconds": 5.48
+  },
+  {
+   "temperature": 1.0,
+   "run": 9,
+   "time": "2026-10-22T17:40:30+02:00",
+   "hash": "d4afe73e6d3c",
+   "answer_tokens": 981,
+   "seconds": 5.46
+  },
+  {
+   "temperature": 1.0,
+   "run": 10,
+   "time": "2026-10-22T17:40:35+02:00",
+   "hash": "d4afe73e6d3c",
+   "answer_tokens": 981,
+   "seconds": 5.45
+  }
+ ]
+}

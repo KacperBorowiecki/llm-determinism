@@ -1,0 +1,262 @@
+{
+ "schema": 1,
+ "label": "origin-pc-2x5090-win11",
+ "profile": "qwen3-0.6b-q8",
+ "reference_llama_cpp": [
+  "b1-620d2225c"
+ ],
+ "reference_exact": true,
+ "started": "2026-10-21T18:59:08+02:00",
+ "finished": "2026-10-21T18:59:28+02:00",
+ "length": "quick",
+ "runs_per_temperature": 10,
+ "gpu": 0,
+ "note": "qwen3:0.6b-q8_0; -ngl 999, all layers on GPU 0",
+ "machine": {
+  "os": "Windows 11 (10.0.26200)",
+  "arch": "AMD64",
+  "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
+  "ram_gb": 61.6,
+  "gpus": [
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   },
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   }
+  ],
+  "ollama": "0.40.6",
+  "python": "3.13.5",
+  "server": {
+   "build_info": "b1-620d2225c",
+   "model": "sha256-31db9797248620627b127c47c75caa76ec2ce9b7de9dc0f2faca02ba59615818",
+   "n_ctx": 8192,
+   "slots": 1,
+   "sampling": {
+    "top_k": 40,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
+    "samplers": [
+     "penalties",
+     "dry",
+     "top_n_sigma",
+     "top_k",
+     "typ_p",
+     "top_p",
+     "min_p",
+     "xtc",
+     "temperature"
+    ]
+   }
+  }
+ },
+ "temperatures": {
+  "0": {
+   "runs": 10,
+   "hashes": {
+    "8cc886e38b1a": 10
+   },
+   "repeatable": true,
+   "reference_hash": "8cc886e38b1a",
+   "equals_reference": true,
+   "answer_tokens": [
+    536
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 506.2,
+   "divergence_vs_reference": null
+  },
+  "1": {
+   "runs": 10,
+   "hashes": {
+    "e94074591fd4": 10
+   },
+   "repeatable": true,
+   "reference_hash": "e94074591fd4",
+   "equals_reference": true,
+   "answer_tokens": [
+    434
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 524.1,
+   "divergence_vs_reference": null
+  }
+ },
+ "warnings": [],
+ "texts": {
+  "8cc886e38b1a": "Oczywiście! Oto historię o psie, kaczce i kotku:\n\n---\n\nW nocy, gdy świat był zbyt zbyt, wznosząc się z powietrza, pojawiały się na niej trzy figury: psia, kaczce i kotka. Oto ich historia.\n\n**Psia** – to jedno z najbardziej znałych i znałych zmysłów. Jego głos był zbyt głębokim, a jego ruch był zbyt szybki. Jego ciało, jakby zaczęło się rozszerzać, zaczęło się rozszerzać. Jego ciało, jakby zaczęło się rozszerzać, zaczęło się rozszerzać. Jego ciało, jakby zaczęło się rozszerzać, zaczęło się rozszerzać.\n\n**Kaczce** – to jedna z najbardziej znałych i znałych zmysłów. Jąż w nocy, gdy świat był zbyt zbyt, kaczce zaczęło się rozszerzać. Jąż w nocy, gdy świat był zbyt zbyt, kaczce zaczęło się rozszerzać. Jąż w nocy, gdy świat był zbyt zbyt, kaczce zaczęło się rozszerzać.\n\n**Kotka** – to jedna z najbardziej znałych i znałych zmysłów. Jąż w nocy, gdy świat był zbyt zbyt, kotka zaczęła się rozszerzać. Jąż w nocy, gdy świat był zbyt zbyt, kotka zaczęła się rozszerzać.\n\nWtedy, gdy świat był zbyt zbyt, trzy figury zaczęły się rozszerzać, a świat zaczęł się rozszerzać. Wtedy, gdy świat był zbyt zbyt, trzy figury zaczęły się rozszerzać, a świat zaczęł się rozszerzać.\n\n---\n\nZa chętnie! Jeśli chcesz, mogę też podać historię w formie tekstu lub w formie graficznej.",
+  "e94074591fd4": "W lata 1970 roku w Polsce na terenie małopolskiej mieszkały dwie znaemieści – psia i kaczka, oraz kotki. Szczególnie w miastach jak Częstochowa, Bytom, Łódź oraz Warszawa, gdzie była często zasiedliwka, była święta w czasach powszechnego morskiego zaboru.  \n\nW czwartek dnia 16. sierpnia 1970 roku, w zasadzie na terenie małopolskiej, w chustku Częstochowskiej, spotkali się psia i kaczka. Znając, że na terenie małopolskiej były zasiedliwki, po kilku dniach spadli w zasiedliwki, i ulegli zgodności odzenia.  \n\nOdbiorczości psia i kaczki odrzucili odkrycia, wtedy uciekły do skórz, gdzie po podpisie przez wywiadzanie zasiedliwki o ich zasiedliwce, uciekły z niej.  \n\nZasiedliwka, przez które odkrywano pozycję psia i kaczki, została zatrudniona za niego, a po podpisaniu przez wywiadzanie zasiedliwki, zasiedliwka została zatrudniona na chwilę, a kaczka i psia, który odnalżył do chustki, zostali uciekli.  \n\nW końcu, po podpisaniu przez wywiadzanie zasiedliwki, uciekły w zasiedliwki, i wtedy zasiedliwka zatrudniona była zamyta na kilka lat, przez które uciekły."
+ },
+ "runs": [
+  {
+   "temperature": 0.0,
+   "run": 1,
+   "time": "2026-10-21T18:59:09+02:00",
+   "hash": "8cc886e38b1a",
+   "answer_tokens": 536,
+   "seconds": 1.1
+  },
+  {
+   "temperature": 0.0,
+   "run": 2,
+   "time": "2026-10-21T18:59:11+02:00",
+   "hash": "8cc886e38b1a",
+   "answer_tokens": 536,
+   "seconds": 1.13
+  },
+  {
+   "temperature": 0.0,
+   "run": 3,
+   "time": "2026-10-21T18:59:12+02:00",
+   "hash": "8cc886e38b1a",
+   "answer_tokens": 536,
+   "seconds": 1.09
+  },
+  {
+   "temperature": 0.0,
+   "run": 4,
+   "time": "2026-10-21T18:59:13+02:00",
+   "hash": "8cc886e38b1a",
+   "answer_tokens": 536,
+   "seconds": 1.05
+  },
+  {
+   "temperature": 0.0,
+   "run": 5,
+   "time": "2026-10-21T18:59:14+02:00",
+   "hash": "8cc886e38b1a",
+   "answer_tokens": 536,
+   "seconds": 1.05
+  },
+  {
+   "temperature": 0.0,
+   "run": 6,
+   "time": "2026-10-21T18:59:15+02:00",
+   "hash": "8cc886e38b1a",
+   "answer_tokens": 536,
+   "seconds": 1.05
+  },
+  {
+   "temperature": 0.0,
+   "run": 7,
+   "time": "2026-10-21T18:59:16+02:00",
+   "hash": "8cc886e38b1a",
+   "answer_tokens": 536,
+   "seconds": 1.05
+  },
+  {
+   "temperature": 0.0,
+   "run": 8,
+   "time": "2026-10-21T18:59:17+02:00",
+   "hash": "8cc886e38b1a",
+   "answer_tokens": 536,
+   "seconds": 1.13
+  },
+  {
+   "temperature": 0.0,
+   "run": 9,
+   "time": "2026-10-21T18:59:18+02:00",
+   "hash": "8cc886e38b1a",
+   "answer_tokens": 536,
+   "seconds": 1.1
+  },
+  {
+   "temperature": 0.0,
+   "run": 10,
+   "time": "2026-10-21T18:59:19+02:00",
+   "hash": "8cc886e38b1a",
+   "answer_tokens": 536,
+   "seconds": 1.12
+  },
+  {
+   "temperature": 1.0,
+   "run": 1,
+   "time": "2026-10-21T18:59:20+02:00",
+   "hash": "e94074591fd4",
+   "answer_tokens": 434,
+   "seconds": 0.86
+  },
+  {
+   "temperature": 1.0,
+   "run": 2,
+   "time": "2026-10-21T18:59:21+02:00",
+   "hash": "e94074591fd4",
+   "answer_tokens": 434,
+   "seconds": 0.87
+  },
+  {
+   "temperature": 1.0,
+   "run": 3,
+   "time": "2026-10-21T18:59:22+02:00",
+   "hash": "e94074591fd4",
+   "answer_tokens": 434,
+   "seconds": 0.85
+  },
+  {
+   "temperature": 1.0,
+   "run": 4,
+   "time": "2026-10-21T18:59:23+02:00",
+   "hash": "e94074591fd4",
+   "answer_tokens": 434,
+   "seconds": 0.85
+  },
+  {
+   "temperature": 1.0,
+   "run": 5,
+   "time": "2026-10-21T18:59:23+02:00",
+   "hash": "e94074591fd4",
+   "answer_tokens": 434,
+   "seconds": 0.86
+  },
+  {
+   "temperature": 1.0,
+   "run": 6,
+   "time": "2026-10-21T18:59:24+02:00",
+   "hash": "e94074591fd4",
+   "answer_tokens": 434,
+   "seconds": 0.85
+  },
+  {
+   "temperature": 1.0,
+   "run": 7,
+   "time": "2026-10-21T18:59:25+02:00",
+   "hash": "e94074591fd4",
+   "answer_tokens": 434,
+   "seconds": 0.88
+  },
+  {
+   "temperature": 1.0,
+   "run": 8,
+   "time": "2026-10-21T18:59:26+02:00",
+   "hash": "e94074591fd4",
+   "answer_tokens": 434,
+   "seconds": 0.87
+  },
+  {
+   "temperature": 1.0,
+   "run": 9,
+   "time": "2026-10-21T18:59:27+02:00",
+   "hash": "e94074591fd4",
+   "answer_tokens": 434,
+   "seconds": 0.89
+  },
+  {
+   "temperature": 1.0,
+   "run": 10,
+   "time": "2026-10-21T18:59:28+02:00",
+   "hash": "e94074591fd4",
+   "answer_tokens": 434,
+   "seconds": 0.91
+  }
+ ]
+}

@@ -8,8 +8,11 @@ this machine (repeatability) and compared with the reference machine (same hash?
   labels already in `results/` are only suggestions – wait for the user's confirmation.
 - **Never `git push`, `gh pr create` or upload anything** unless the user asks for that specific action. The repo is
   local-only.
-- **Before pulling the model** (`gemma4:26b-a4b-it-q8_0`, ~28 GB): ask, check free disk space and check that it can
-  fit at all (~30 GB of GPU memory, Apple unified memory, or GPU + RAM together). If it cannot, say so and stop.
+- **Two model profiles** (`reference.json`): `qwen3-0.6b-q8` – the default, small and fast; `gemma4-26b-q8` – the
+  main experiment, needs ~30 GB of memory. Ask which one (`run_test.py --profile`).
+- **Before pulling a model** (sizes in `reference.json`: ~0.8 GB / ~28 GB): ask, check free disk space and check
+  that it can fit at all (`memory_gb`: GPU memory, Apple unified memory, or GPU + RAM). If it cannot, say so and
+  stop.
 - **Do not start anything while the GPU is busy** (another `llama-server`, other GPU load). A test started directly
   with `llama-server` does not show in `ollama ps`.
 - Python only in the repo's `.venv` (`python -m venv .venv`, then `pip install -r requirements.txt`);
@@ -21,7 +24,9 @@ this machine (repeatability) and compared with the reference machine (same hash?
 ## Known pitfalls
 - Ollama's `llama-server` starter without Ollama's library path **silently runs on CPU** (Windows:
   `OLLAMA_LIBRARY_PATH`, `GGML_BACKEND_PATH`) – always check the model is on the GPU after start.
-- The Gemma 4 chat template **enables thinking by default** – `run_test.py` sends `enable_thinking: false`.
+- The Gemma 4 and Qwen3 chat templates **enable thinking by default** – `run_test.py` sends `enable_thinking: false`.
+- **Reference hashes are per llama.cpp build:** an Ollama update can change the text (0.40.6 → 0.40.7 changed both
+  models). Compare machines on the same build; a new build needs its reference generated on the origin PC.
 - Use `127.0.0.1`, not `localhost` (IPv6 delay on Windows).
 - Partial offload (`-ngl` lower than all layers) or CPU will most likely change the hash – that is a result, write it
   into `--note`.

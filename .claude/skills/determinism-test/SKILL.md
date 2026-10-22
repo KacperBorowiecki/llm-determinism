@@ -11,10 +11,14 @@ Follow CLAUDE.md. Talk to the user in their language.
    into it; run scripts with the `.venv` interpreter; Windows: `PYTHONUTF8=1`.
 2. **Label:** ask for this machine's label (lowercase, digits, `.`, `_`, `-`). Propose one from the hardware.
    Wait for confirmation.
-3. **Can it run?** Check RAM and GPU memory (NVIDIA: `nvidia-smi`; Apple: unified memory). The model needs ~30 GB
-   (GPU, unified, or GPU + RAM). If clearly not enough: tell the user and stop. Check `ollama --version`.
-4. **Model:** `ollama list`. If `gemma4:26b-a4b-it-q8_0` is missing: check free disk space and ask before
-   `ollama pull gemma4:26b-a4b-it-q8_0` (~28 GB).
+3. **Model and whether it can run:** ask which model profile (`reference.json` → `profiles`):
+   `qwen3-0.6b-q8` – the default: ~0.8 GB download, ~2 GB memory, ~1 s per generation, runs on almost any
+   machine (also CPU-only); `gemma4-26b-q8` – the main experiment: ~28 GB download, ~30 GB of GPU, unified, or
+   GPU + RAM memory, ~8 s per generation on an RTX 5090. Check RAM and GPU memory (NVIDIA: `nvidia-smi`; Apple:
+   unified memory) against `memory_gb` of the profile; if clearly not enough: say so, offer the smaller model,
+   stop. Check `ollama --version`.
+4. **Model file:** `ollama list`. If the profile's `model` is missing: check free disk space and ask before
+   `ollama pull <model>` (`download_gb` of the profile).
 5. **GPU free?** No other `llama-server` process, nothing in `ollama ps`, no other heavy GPU load. If busy: stop and
    ask.
 6. **Start llama-server from Ollama's installation:**
@@ -23,7 +27,7 @@ Follow CLAUDE.md. Talk to the user in their language.
      `%LOCALAPPDATA%\Ollama\server.log`; macOS: `~/.ollama/logs/server.log`; Linux: `journalctl -u ollama`).
      Otherwise look in the install directory (Windows: `%LOCALAPPDATA%\Programs\Ollama\lib\ollama\llama-server.exe`).
      Not found: stop and ask – never use another binary silently.
-   - Model file: the path in the **first** `FROM` line of `ollama show gemma4:26b-a4b-it-q8_0 --modelfile`.
+   - Model file: the path in the **first** `FROM` line of `ollama show <model of the profile> --modelfile`.
    - Environment, as Ollama sets it (the log line with `OLLAMA_LIBRARY_PATH` shows the folders). Windows + NVIDIA:
      `PATH` += `<ollama>\lib\ollama;<ollama>\lib\ollama\cuda_v13` (the GPU folder Ollama uses),
      `OLLAMA_LIBRARY_PATH` = the same two folders, `GGML_BACKEND_PATH` = `<GPU folder>\ggml-cuda.dll`,
@@ -32,13 +36,17 @@ Follow CLAUDE.md. Talk to the user in their language.
      `reference.json`. If the model does not fit on the GPU, use a lower `-ngl`, tell the user, and put it into
      `--note`.
    - Start it in the background; wait until `http://127.0.0.1:8090/health` returns 200; check the model is on the GPU
-     (NVIDIA: ~28 GB used in `nvidia-smi`; otherwise generation speed). Unexpected CPU: stop and report.
+     (NVIDIA: GPU memory in `nvidia-smi` grows by about the model size; otherwise generation speed).
+     Unexpected CPU: stop and report.
 7. **Length:** ask – quick (10 + 10, default), standard (100 + 100), long (1000 + 1000). Give the expected time
-   (RTX 5090 ≈ 8 s per generation; much slower with partial offload or CPU). For more than ~10 minutes remind the
+   (RTX 5090: ≈ 1 s per generation for qwen3-0.6b-q8, ≈ 8 s for gemma4-26b-q8; much slower with partial
+   offload or CPU). For more than ~10 minutes remind the
    user to disable sleep.
-8. **Run:** `python run_test.py --label <label> --length <length> --gpu <index> --note "<context>"` – the note
+8. **Run:** `python run_test.py --label <label> --profile <profile> --length <length> --gpu <index> --note "<context>"` – the note
    says what is special about this run: GPU/RAM split, other things running, and what happened since the last
    test on this machine (restart, Ollama or driver update, date change, sleep during the run).
 9. **Stop the server.**
-10. **Report:** per temperature – repeatable? equal to the reference? warnings? If something differs, explain what is
-    known (warnings, divergence position) and offer to investigate. Suggest `determinism-submit` to keep the result.
+10. **Report:** per temperature – repeatable? equal to the reference? warnings? The reference is the one for the
+    same llama.cpp build; if the build has no reference yet (a newer or older Ollama), the warning says so – the
+    repeatability result still holds, but a different hash is expected and is not a hardware difference.
+    If something differs, explain what is known (warnings, divergence position) and offer to investigate. Suggest `determinism-submit` to keep the result.

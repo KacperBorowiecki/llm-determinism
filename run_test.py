@@ -1,10 +1,11 @@
 """Determinism test for llama-server: the same prompt and seed, N runs at temperature 0 and N at temperature 1.
 
 Talks to an already running llama-server (started from Ollama's installation, see README). Prints a summary and
-writes one result file: results/<label>/<start time>_<length>.json.
+writes one result file: results/<label>/<start time>_<profile>_<length>.json. Model profiles and their reference
+hashes (one set per llama.cpp build) are in reference.json.
 
-  python run_test.py --label my-pc                       # quick: 10 + 10
-  python run_test.py --label my-pc --length standard     # 100 + 100
+  python run_test.py --label my-pc                       # default model, quick: 10 + 10
+  python run_test.py --label my-pc --profile gemma4-26b-q8 --length standard     # 100 + 100
   python run_test.py --label my-pc --runs 3 --note "-ngl 30 (partial offload)"
 """
 import argparse
@@ -36,6 +37,20 @@ def text_hash(text: str) -> tuple[str, str]:
 
 def load_reference() -> dict:
     return json.loads((ROOT / "reference.json").read_text(encoding="utf-8"))
+
+
+def get_profile(reference: dict, name: str | None = None) -> tuple[str, dict]:
+    """Model profile from reference.json (default: reference["default_profile"])."""
+    name = name or reference["default_profile"]
+    return name, reference["profiles"][name]
+
+
+def pick_reference(profile: dict, build: str | None) -> tuple[dict, bool]:
+    """Reference hashes for this llama.cpp build. Unknown build -> the newest reference, exact=False."""
+    for entry in profile["references"]:
+        if build in entry["llama_cpp"]:
+            return entry, True
+    return profile["references"][-1], False
 
 
 def reference_text(short_hash: str | None) -> str | None:
@@ -182,6 +197,7 @@ def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--label", required=True, help="machine label – Claude always asks the user for it")
+    ap.add_argument("--profile", help="model profile from reference.json (default: its default_profile)")
     ap.add_argument("--url", default="http://127.0.0.1:8090", help="llama-server address (default %(default)s)")
     ap.add_argument("--length", choices=LENGTHS, default="quick", help="quick 10, standard 100, long 1000 runs")
     ap.add_argument("--runs", type=int, help="runs per temperature (overrides --length)")
@@ -192,16 +208,22 @@ def main() -> None:
         ap.error("label: lowercase letters, digits, '.', '_' and '-' only")
 
     reference = load_reference()
+    if args.profile and args.profile not in reference["profiles"]:
+        ap.error(f"profile: one of {', '.join(reference['profiles'])}")
     protocol = reference["protocol"]
+    profile_name, profile = get_profile(reference, args.profile)
     n = args.runs or LENGTHS[args.length]
     length = f"custom{n}" if args.runs else args.length
     machine = machine_info(args.url)
+    build = machine["server"]["build_info"]
+    ref, exact = pick_reference(profile, build)
     started = datetime.now().astimezone()
-    print(f"{args.label}: llama-server {machine['server']['build_info']}, {n} runs per temperature")
+    print(f"{args.label}: {profile_name}, llama-server {build}, {n} runs per temperature; reference: "
+          f"{'this build' if exact else 'none for this build – compared with ' + ', '.join(ref['llama_cpp'])}")
 
     results = []
     for temp in protocol["temperatures"]:
-        ref_hash = reference["hashes"].get(f"{temp:g}")
+        ref_hash = ref["hashes"].get(f"{temp:g}")
         for i in range(1, n + 1):
             r = ask(args.url, protocol, float(temp))
             r.update(temperature=float(temp), run=i, time=datetime.now().astimezone().isoformat(timespec="seconds"))
@@ -211,15 +233,20 @@ def main() -> None:
                   f"{r['seconds']} s", flush=True)
     build_after = requests.get(f"{args.url}/props", timeout=10).json().get("build_info")
 
-    summary = summarize(results, reference)
-    record = {"schema": 1, "label": args.label, "started": started.isoformat(timespec="seconds"),
+    summary = summarize(results, ref)
+    warnings = warnings_for(machine, summary, profile, build_after)
+    if not exact:
+        warnings.append(f"no reference hashes for llama.cpp build {build} ({profile_name}); compared with the "
+                        f"reference for {', '.join(ref['llama_cpp'])}")
+    record = {"schema": 1, "label": args.label, "profile": profile_name, "reference_llama_cpp": ref["llama_cpp"],
+              "reference_exact": exact, "started": started.isoformat(timespec="seconds"),
               "finished": datetime.now().astimezone().isoformat(timespec="seconds"), "length": length,
               "runs_per_temperature": n, "gpu": args.gpu, "note": args.note, "machine": machine, "temperatures": summary,
-              "warnings": warnings_for(machine, summary, reference, build_after),
+              "warnings": warnings,
               "texts": {r["hash"]: r["text"] for r in results},
               "runs": [{k: r[k] for k in ("temperature", "run", "time", "hash", "answer_tokens", "seconds")}
                        for r in results]}
-    out = ROOT / "results" / args.label / f"{started:%Y-%m-%dT%H%M}_{length}.json"
+    out = ROOT / "results" / args.label / f"{started:%Y-%m-%dT%H%M}_{profile_name}_{length}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     with out.open("w", encoding="utf-8", newline="\n") as f:
         json.dump(record, f, ensure_ascii=False, indent=1)

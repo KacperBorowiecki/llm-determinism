@@ -12,8 +12,12 @@ repeat the test on their own hardware and collect the results in one table.
 
 ## Requirements
 
-- [Ollama](https://ollama.com) with the model `gemma4:26b-a4b-it-q8_0` (~28 GB download) and ~30 GB of GPU memory,
-  Apple unified memory, or GPU + RAM together. The kit uses the `llama-server` that ships with Ollama.
+- [Ollama](https://ollama.com) with one of the two test models (profiles in `reference.json`):
+  - `qwen3:0.6b-q8_0` – **default**: ~0.8 GB download, ~2 GB of memory, runs on almost any machine, ~20 s for a
+    quick test on a modern GPU;
+  - `gemma4:26b-a4b-it-q8_0` – the main experiment: ~28 GB download, ~30 GB of GPU memory, Apple unified memory,
+    or GPU + RAM together.
+  The kit uses the `llama-server` that ships with Ollama.
 - Python ≥ 3.10.
 - [Claude Code](https://claude.com/claude-code) – recommended: the skills in `.claude/skills/` walk through
   everything machine-specific.
@@ -29,7 +33,7 @@ result. Then say *"save the result"* (skill `determinism-submit`).
 1. Python: `python -m venv .venv`, then `.venv/bin/pip install -r requirements.txt`
    (Windows: `.venv\Scripts\pip install -r requirements.txt`).
 2. Start `llama-server` from Ollama's installation with the model file from
-   `ollama show gemma4:26b-a4b-it-q8_0 --modelfile` (path in the first `FROM` line) and the arguments from
+   `ollama show <model> --modelfile` (path in the first `FROM` line) and the arguments from
    `reference.json`. Windows + NVIDIA example (PowerShell):
 
    ```powershell
@@ -47,7 +51,8 @@ result. Then say *"save the result"* (skill `determinism-submit`).
 3. Run the test (Windows: set `PYTHONUTF8=1` first):
 
    ```
-   python run_test.py --label <your-machine-label> --length quick     # 10 + 10 runs; standard = 100, long = 1000
+   python run_test.py --label <your-machine-label> --length quick     # default model, 10 + 10 runs
+   python run_test.py --label <your-machine-label> --profile gemma4-26b-q8 --length standard   # 100 + 100
    ```
 
 ## How the hash is computed
@@ -61,7 +66,16 @@ result. Then say *"save the result"* (skill `determinism-submit`).
 so a hash can only differ if the text differs. `pytest` re-hashes the two reference texts in `reference/texts/` on
 your machine – if that fails, something changed the files (e.g. line endings), not the model.
 
-Reference hashes: temperature 0 = `138e66a98238`, temperature 1 = `0e661f14a480`.
+Reference hashes come from the origin PC and are stored **per model and per llama.cpp build** – an Ollama update
+can change the text (0.40.6 → 0.40.7 changed both models), so results are compared with the reference of the
+same build:
+
+| model | Ollama (llama.cpp build) | temperature 0 | temperature 1 |
+|---|---|---|---|
+| qwen3-0.6b-q8 | 0.40.6 (`b1-620d2225c`) | `8cc886e38b1a` | `e94074591fd4` |
+| qwen3-0.6b-q8 | 0.40.7 (`b1-f174553e1`) | `23cd03276e07` | `599eb85dd1d7` |
+| gemma4-26b-q8 | 0.40.4, 0.40.6 (`b1-b42b7e6d3`, `b1-620d2225c`) | `138e66a98238` | `0e661f14a480` |
+| gemma4-26b-q8 | 0.40.7 (`b1-f174553e1`) | `179e3c96dff3` | `d4afe73e6d3c` |
 
 ## Results
 

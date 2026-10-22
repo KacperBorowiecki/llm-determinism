@@ -1,6 +1,12 @@
 {
  "schema": 1,
  "label": "origin-pc-2x5090-win11",
+ "profile": "gemma4-26b-q8",
+ "reference_llama_cpp": [
+  "b1-b42b7e6d3",
+  "b1-620d2225c"
+ ],
+ "reference_exact": true,
  "started": "2026-10-20T08:10:58+02:00",
  "finished": "2026-10-20T19:31:30+02:00",
  "length": "imported",

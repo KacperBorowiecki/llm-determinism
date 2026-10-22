@@ -1,6 +1,5 @@
 {
- "model": "gemma4:26b-a4b-it-q8_0",
- "model_file": "sha256-ec528f6d0b7e2d2219d203bea82f4c5b98cbcdcbfaa9153b6d8c36756504c2d5",
+ "default_profile": "qwen3-0.6b-q8",
  "server_args": "-c 8192 -np 1 --flash-attn auto -b 1024 -ub 1024 --split-mode none --jinja",
  "protocol": {
   "prompt": "Napisz mi historie o psie i kaczce oraz kotku?",
@@ -8,15 +7,41 @@
   "max_tokens": 4096,
   "temperatures": [0, 1]
  },
- "hashes": {"0": "138e66a98238", "1": "0e661f14a480"},
- "answer_tokens": {"0": 1305, "1": 1346},
- "prompt_tokens": 29,
- "sampling": {"top_k": 64, "top_p": 0.95, "min_p": 0.05},
+ "profiles": {
+  "qwen3-0.6b-q8": {
+   "model": "qwen3:0.6b-q8_0",
+   "model_file": "sha256-31db9797248620627b127c47c75caa76ec2ce9b7de9dc0f2faca02ba59615818",
+   "download_gb": 0.8,
+   "memory_gb": 2,
+   "sampling": {"top_k": 40, "top_p": 0.95, "min_p": 0.05},
+   "prompt_tokens": 29,
+   "references": [
+    {"llama_cpp": ["b1-620d2225c"], "ollama": ["0.40.6"],
+     "hashes": {"0": "8cc886e38b1a", "1": "e94074591fd4"}, "answer_tokens": {"0": 536, "1": 434}},
+    {"llama_cpp": ["b1-f174553e1"], "ollama": ["0.40.7"],
+     "hashes": {"0": "23cd03276e07", "1": "599eb85dd1d7"}, "answer_tokens": {"0": 370, "1": 90}}
+   ]
+  },
+  "gemma4-26b-q8": {
+   "model": "gemma4:26b-a4b-it-q8_0",
+   "model_file": "sha256-ec528f6d0b7e2d2219d203bea82f4c5b98cbcdcbfaa9153b6d8c36756504c2d5",
+   "download_gb": 28,
+   "memory_gb": 30,
+   "sampling": {"top_k": 64, "top_p": 0.95, "min_p": 0.05},
+   "prompt_tokens": 29,
+   "references": [
+    {"llama_cpp": ["b1-b42b7e6d3", "b1-620d2225c"], "ollama": ["0.40.4", "0.40.6"],
+     "hashes": {"0": "138e66a98238", "1": "0e661f14a480"}, "answer_tokens": {"0": 1305, "1": 1346}},
+    {"llama_cpp": ["b1-f174553e1"], "ollama": ["0.40.7"],
+     "hashes": {"0": "179e3c96dff3", "1": "d4afe73e6d3c"}, "answer_tokens": {"0": 1276, "1": 981}}
+   ]
+  }
+ },
  "reference_machine": {
   "os": "Windows 11 Pro (10.0.26200)",
   "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
   "ram_gb": 61.6,
   "gpus": "2x NVIDIA GeForce RTX 5090 (32 GB each), driver 610.88, CUDA 13.3",
-  "ollama": ["0.40.4 (llama.cpp b1-b42b7e6d3)", "0.40.6 (llama.cpp b1-620d2225c)"]
+  "note": "References are per llama.cpp build: an Ollama update can change the text (0.40.6 -> 0.40.7 changed both models)."
  }
 }

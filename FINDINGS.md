@@ -4,10 +4,12 @@ Facts come from result files in `results/`; hypotheses are marked as such.
 
 ## Results so far
 
-### origin-pc-2x5090-win11 (reference machine, 19–21 Oct 2026)
+### origin-pc-2x5090-win11 (reference machine, 19–22 Oct 2026)
 
 Windows 11 Pro, AMD Ryzen 9 9950X, 61.6 GB RAM, 2× RTX 5090 (driver 610.88, CUDA 13.3), `llama-server` from Ollama
-0.40.4 (`b1-b42b7e6d3`) and 0.40.6 (`b1-620d2225c`), one request at a time, prompt cache off.
+0.40.4 (`b1-b42b7e6d3`), 0.40.6 (`b1-620d2225c`) and 0.40.7 (`b1-f174553e1`), one request at a time, prompt cache off.
+
+**gemma4-26b-q8** (the main experiment):
 
 - **Temperature 0:** 100 runs on GPU 0 + 5 on GPU 1 (Ollama 0.40.4), 3 after a restart and an automatic Ollama
   update (0.40.6), then 1000 + 1000 runs on both GPUs at the same time (one server per GPU) – **all
@@ -21,11 +23,43 @@ Windows 11 Pro, AMD Ryzen 9 9950X, 61.6 GB RAM, 2× RTX 5090 (driver 610.88, CUD
 - **Near-ties:** the temperature-0 answer has 8 tokens where the top two candidates are within 0.05 nat; the closest:
   "…Golden Retrieverem, którego" → "główn" p = 0.4210 vs "ul" p = 0.4205. In single requests it is always resolved
   the same way.
-- The restart and the silent Ollama update (new llama.cpp build) did not change either hash for this model.
+- The restart and the first silent Ollama update (0.40.4 → 0.40.6, new llama.cpp build) did not change either hash;
+  the second update (0.40.7) did – see below.
+
+### Ollama update 0.40.6 → 0.40.7 (21 Oct): new text for both models
+
+- Ollama updated itself to 0.40.7: new llama.cpp build `b1-f174553e1` and new `ggml-cuda.dll`, `libllama.dll`,
+  `libllama-server-impl.dll`. Driver, model files, sampling parameters and the 29 prompt tokens unchanged.
+- **gemma4-26b-q8:** still repeatable (10/10 at both temperatures, in two separate tests), but a **different text**:
+  temperature 0 `179e3c96dff3` (1 276 tokens) instead of `138e66a98238`, temperature 1 `d4afe73e6d3c` (981 tokens)
+  instead of `0e661f14a480`. Both split from the old text at character 133, in the title: "Wielka Przygoda na
+  **Podwórku**" → "na **Słonecznej Polanie**" – token 43, a known near-tie ("Pod" 0.44 vs "S" 0.37) that also flipped
+  in the batching test below.
+- **qwen3-0.6b-q8:** also a different text, also repeatable: `23cd03276e07` / `599eb85dd1d7` instead of
+  `8cc886e38b1a` / `e94074591fd4`.
+- **Not caused by CPU load:** the first 0.40.7 test ran while a CPU-only `llama-server` test (the same Gemma model,
+  `-ngl 0`, ~80 % CPU) was running in another process; a clean rerun the next day (CPU ~3 %) gave exactly the same
+  new hashes for both models. The CPU load only slowed the GPU generation (114 instead of ~174 tok/s).
+- *An update can change the text, but does not have to* (0.40.4 → 0.40.6 did not). Therefore `reference.json`
+  stores reference hashes **per model and per llama.cpp build**, and machines should be compared on the same build.
+
+## Second model: qwen3-0.6b-q8 (default since 22 Oct)
+
+`qwen3:0.6b-q8_0` (752M parameters, 0.8 GB download): ~500 tok/s on an RTX 5090, ~1 s per generation, runs on almost
+any machine – so many more people can take part.
+
+- Ollama 0.40.6: `8cc886e38b1a` (536 tokens) / `e94074591fd4` (434 tokens), 10/10 each.
+  Ollama 0.40.7: `23cd03276e07` (370 tokens) / `599eb85dd1d7` (90 tokens), 10/10 each, in two separate tests.
+- **Thinking on** (a trial outside the protocol, Ollama 0.40.6): also repeatable – both the answer and the thinking
+  10/10 at both temperatures. The text differs from the thinking-off text (the prompt differs). The thinking shows
+  that the model misunderstood the Polish prompt, differently at each temperature ("a story about a fox, a rabbit,
+  and a cat" / "a wolf and a mouse, plus a cat") – and repeats the misunderstanding exactly. Repeatable ≠ correct.
+- The Polish text quality is very poor (invented words) – irrelevant for the test.
+- Its default sampling differs from Gemma's (`top_k` 40 instead of 64) – stored per profile in `reference.json`.
 
 ## Curiosity: 10 requests at once (batching)
 
-Same machine and model, one server with `-np 10 -c 20480`, prompt cache off, seed 42.
+Origin PC, gemma4-26b-q8 (Ollama 0.40.6), one server with `-np 10 -c 20480`, prompt cache off, seed 42.
 
 - **10 copies of the prompt, 10 rounds:** temperature 0 → 15 different texts, **0/100 equal to the single-request
   text**; temperature 1 → 20 different texts, 0/100.
@@ -46,19 +80,19 @@ Same machine and model, one server with `-np 10 -c 20480`, prompt cache off, see
 From the origin project (Ollama's own API, not `llama-server` directly):
 - With Ollama's prefix cache, the first call and later calls of the same prompt at temperature 0 gave different
   texts (e4b Q4_K_M).
-- After the automatic Ollama update, one model (e4b Q4_K_M with speculative decoding, in Ollama) changed its
-  first-call text; the 26B Q8_0 in `llama-server` did not. An update *can* change the text – not necessarily.
+- After the 0.40.4 → 0.40.6 update, one model (e4b Q4_K_M with speculative decoding, in Ollama) changed its
+  first-call text while the 26B Q8_0 in `llama-server` did not; after 0.40.7 the 26B Q8_0 changed too.
 
 ## What determinism is good for – and its limits
 
 Useful wherever a result must be *reproduced* or a *change detected*: debugging (reproduce exactly the answer a
-user got – if seed, version and environment are logged), a "canary" after updates (fixed prompts with known hashes),
-regression tests of prompts and pipelines, fair A/B comparisons (same seed on both sides), audit, reproducible
-synthetic data, safe caching and resuming of pipelines, red teaming, demos.
+user got – if seed, version and environment are logged), a "canary" after updates (fixed prompts with known hashes –
+exactly what caught the 0.40.7 change), regression tests of prompts and pipelines, fair A/B comparisons (same seed on
+both sides), audit, reproducible synthetic data, safe caching and resuming of pipelines, red teaming, demos.
 
 Limits: repeatable ≠ correct (a wrong answer is repeatably wrong); one seed is one sample, not the model's
 variability; a tiny prompt change gives a different text; batching for throughput breaks it (here ~3× more text
-per second); versions must be frozen; cloud APIs usually cannot guarantee it.
+per second); versions must be frozen (an update can change the text); cloud APIs usually cannot guarantee it.
 
 ## Changelog
 
@@ -66,3 +100,6 @@ per second); versions must be frozen; cloud APIs usually cannot guarantee it.
 - 2026-10-21: origin PC temperature 1 – 5000 + 5000 runs added (10 108 runs in total, all identical).
 - 2026-10-21: end-to-end test of the kit on the origin PC (quick, 10 + 10, GPU 0): both reference hashes reproduced.
 - 2026-10-21: origin PC results split into one result file per test session (8 rows in RESULTS.md, with the context of each session in the note); `run_test.py --gpu` records which GPU was used.
+- 2026-10-22: Ollama 0.40.7 changed the text of both models (still repeatable; not caused by a parallel CPU load –
+  clean rerun). Reference hashes are now stored per model and llama.cpp build; `qwen3-0.6b-q8` added as a second
+  model profile and made the default (`run_test.py --profile`).

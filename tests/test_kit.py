@@ -2,17 +2,25 @@ import json
 from pathlib import Path
 
 import results_table
-from run_test import divergence, load_reference, summarize, text_hash, warnings_for
+from run_test import (divergence, get_profile, load_reference, pick_reference, summarize, text_hash,
+                      warnings_for)
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_reference_texts_rehash_to_reference_hashes():
+def all_references():
     reference = load_reference()
-    for key, short in reference["hashes"].items():
-        data = json.loads((ROOT / "reference" / "texts" / f"{short}.json").read_text(encoding="utf-8"))
-        assert text_hash(data["text"]) == (short, data["sha256"]), f"temperature {key}"
-        assert "\r" not in data["text"]
+    for name, profile in reference["profiles"].items():
+        for entry in profile["references"]:
+            yield name, entry
+
+
+def test_reference_texts_rehash_to_reference_hashes():
+    for name, entry in all_references():
+        for key, short in entry["hashes"].items():
+            data = json.loads((ROOT / "reference" / "texts" / f"{short}.json").read_text(encoding="utf-8"))
+            assert text_hash(data["text"]) == (short, data["sha256"]), f"{name} temperature {key}"
+            assert "\r" not in data["text"]
 
 
 def test_text_hash_uses_exact_bytes():
@@ -20,6 +28,17 @@ def test_text_hash_uses_exact_bytes():
     assert text_hash("a")[0] != text_hash("a ")[0]
     short, full = text_hash("x")
     assert len(short) == 12 and len(full) == 64 and full.startswith(short)
+
+
+def test_profiles_and_reference_per_build():
+    reference = load_reference()
+    name, profile = get_profile(reference)
+    assert name == reference["default_profile"] and profile["references"]
+    _, gemma = get_profile(reference, "gemma4-26b-q8")
+    entry, exact = pick_reference(gemma, "b1-620d2225c")
+    assert exact and entry["hashes"]["0"] == "138e66a98238"
+    entry, exact = pick_reference(gemma, "b1-unknown")
+    assert not exact and entry is gemma["references"][-1]
 
 
 def fake(temp, text, prompt_tokens=29):
@@ -45,11 +64,11 @@ def test_summarize_not_repeatable_and_not_reference():
 
 
 def test_divergence_against_real_reference_text():
-    reference = load_reference()
-    ref_hash = reference["hashes"]["0"]
-    text = json.loads((ROOT / "reference" / "texts" / f"{ref_hash}.json").read_text(encoding="utf-8"))["text"]
+    _, gemma = get_profile(load_reference(), "gemma4-26b-q8")
+    entry = gemma["references"][0]
+    text = json.loads((ROOT / "reference" / "texts" / f"{entry['hashes']['0']}.json").read_text(encoding="utf-8"))["text"]
     changed = text[:100] + "X" + text[101:]
-    s = summarize([fake(0.0, changed)], reference)["0"]
+    s = summarize([fake(0.0, changed)], entry)["0"]
     assert s["divergence_vs_reference"]["char"] == 100
 
 
@@ -69,18 +88,19 @@ def test_warnings_flag_factors_that_change_the_hash():
     assert any("prompt tokens" in x for x in w) and any("build changed" in x for x in w)
 
 
-def test_results_table_lists_every_result(tmp_path):
-    record = {"label": "test-pc", "started": "2026-10-21T10:00:00+02:00", "note": "", "gpu": 0,
-              "machine": {"os": "Linux", "gpus": [{"name": "GPU X"}], "ollama": "0.40.6",
-                          "server": {"build_info": "b1-abc"}},
-              "temperatures": {"0": {"runs": 10, "hashes": {"138e66a98238": 10}, "repeatable": True,
-                                     "equals_reference": True},
-                               "1": {"runs": 10, "hashes": {"aaa": 6, "bbb": 4}, "repeatable": False,
-                                     "equals_reference": False}},
-              "warnings": ["x"]}
-    (tmp_path / "results" / "test-pc").mkdir(parents=True)
-    (tmp_path / "results" / "test-pc" / "r.json").write_text(json.dumps(record), encoding="utf-8")
+def test_results_table_compares_with_the_reference_of_the_same_build(tmp_path):
+    def record(label, build, hashes0):
+        return {"label": label, "profile": "gemma4-26b-q8", "started": "2026-10-21T10:00:00+02:00", "note": "",
+                "gpu": 0, "machine": {"os": "Linux", "gpus": [{"name": "GPU X"}], "ollama": "0.40.6",
+                                      "server": {"build_info": build}},
+                "temperatures": {"0": {"runs": 10, "hashes": hashes0, "repeatable": len(hashes0) == 1},
+                                 "1": {"runs": 10, "hashes": {"aaa": 6, "bbb": 4}, "repeatable": False}},
+                "warnings": ["x"]}
+    (tmp_path / "results" / "pc").mkdir(parents=True)
+    for i, (build, h) in enumerate([("b1-620d2225c", {"138e66a98238": 10}), ("b1-unknown", {"138e66a98238": 10})]):
+        (tmp_path / "results" / "pc" / f"r{i}.json").write_text(json.dumps(record("pc", build, h)), encoding="utf-8")
     (tmp_path / "reference.json").write_text((ROOT / "reference.json").read_text(encoding="utf-8"), encoding="utf-8")
     md = results_table.build(tmp_path)
-    assert "| test-pc |" in md and "`138e66a98238`×10" in md and "not repeatable" in md and "≠ ref" in md
+    assert "| gemma4-26b-q8 | pc |" in md and "`138e66a98238`×10 – repeatable, = ref" in md
+    assert "not repeatable" in md and "≠ ref" in md and "no ref for this build" in md
     assert "| 0 |" in md and "| 10 / 10 |" in md
