@@ -1,0 +1,312 @@
+{
+ "schema": 1,
+ "label": "mac-m5pro-64gb",
+ "profile": "qwen3:0.6b-q4_K_M",
+ "thinking": false,
+ "reference_llama_cpp": [
+  "b1-f174553e1"
+ ],
+ "reference_exact": false,
+ "started": "2026-10-22T20:03:29+02:00",
+ "finished": "2026-10-22T20:04:05+02:00",
+ "length": "quick",
+ "runs_per_temperature": 10,
+ "device": "gpu",
+ "gpu": 0,
+ "note": "Apple M5 Pro 64 GB unified, Metal, all layers on GPU (-ngl 999). Ollama 0.40.4 (llama.cpp b1-b42b7e6d3, no Qwen reference for this build). Model file from tag qwen3:0.6b (same file as qwen3:0.6b-q4_K_M). One unrelated warm-up request before the test (GPU check). Python 3.14 in .venv-mac. First test on this machine.",
+ "machine": {
+  "os": "Darwin 27.0.0 (Darwin Kernel Version 27.0.0: Tue Aug 11 21:06:40 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T6050)",
+  "arch": "arm64",
+  "cpu": "Apple M5 Pro",
+  "ram_gb": 64.0,
+  "gpus": [
+   {
+    "name": "Apple M5 Pro",
+    "memory": "unified"
+   }
+  ],
+  "ollama": "0.40.4",
+  "python": "3.14.7",
+  "server": {
+   "build_info": "b1-b42b7e6d3",
+   "model": "sha256-7f4030143c1c477224c5434f8272c662a8b042079a0a584f0a27a1684fe2e1fa",
+   "n_ctx": 8192,
+   "slots": 1,
+   "sampling": {
+    "top_k": 40,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
+    "samplers": [
+     "penalties",
+     "dry",
+     "top_n_sigma",
+     "top_k",
+     "typ_p",
+     "top_p",
+     "min_p",
+     "xtc",
+     "temperature"
+    ]
+   }
+  }
+ },
+ "temperatures": {
+  "0": {
+   "runs": 10,
+   "hashes": {
+    "631ab4fa9203": 10
+   },
+   "repeatable": true,
+   "reference_hash": "0ac50154a638",
+   "equals_reference": false,
+   "answer_tokens": [
+    498
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 299.1,
+   "finish_reasons": {
+    "stop": 10
+   },
+   "divergence_vs_reference": {
+    "char": 128,
+    "reference": "znałe, które zaczęły się w samej jednej z jednostek, a potem zaczęły się w trzec",
+    "this": "znałe, które zaczęły się w samej jednej i zaczynają się w samej jednej. W tym cz"
+   }
+  },
+  "1": {
+   "runs": 10,
+   "hashes": {
+    "ccacc3b1968b": 10
+   },
+   "repeatable": true,
+   "reference_hash": "872d20cd2d2e",
+   "equals_reference": false,
+   "answer_tokens": [
+    568
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 297.6,
+   "finish_reasons": {
+    "stop": 10
+   },
+   "divergence_vs_reference": {
+    "char": 77,
+    "reference": " kotku:\n\n---\n\n**Historia o psie i kaczce – Wątki w głowie**\n\nW niepokojnym czasi",
+    "this": " kotku:\n\n---\n\n**Historia o psie i kaczce:**\n\nPanika, co zaczynała w niewielu rok"
+   }
+  }
+ },
+ "warnings": [
+  "no reference hashes for llama.cpp build b1-b42b7e6d3 (qwen3:0.6b-q4_K_M, thinking off); known: b1-f174553e1"
+ ],
+ "texts": {
+  "631ab4fa9203": "Oczywiście! Oto historię o psie, kaczce i kotku:\n\n---\n\n**Psie, kaczce i kot** – trzy nieznałe, które zaczęły się w samej jednej i zaczynają się w samej jednej. W tym czasie, gdy świat się zaczynał, trzy nieznałe zaczynają się w samej jednej i zaczynają się w samej jednej. W tym czasie, gdy świat się zaczynał, trzy nieznałe zaczynają się w samej jednej i zaczynają się w samej jednej.\n\n**Psie** – nieznałe, które zaczynają się w samej jednej. W tym czasie, gdy świat się zaczynał, trzy nieznałe zaczynają się w samej jednej i zaczynają się w samej jednej. W tym czasie, gdy świat się zaczynał, trzy nieznałe zaczynają się w samej jednej i zaczynają się w samej jednej.\n\n**Kaczce** – nieznałe, które zaczynają się w samej jednej. W tym czasie, gdy świat się zaczynał, trzy nieznałe zaczynają się w samej jednej i zaczynają się w samej jednej. W tym czasie, gdy świat się zaczynał, trzy nieznałe zaczynają się w samej jednej i zaczynają się w samej jednej.\n\n**Kot** – nieznałe, które zaczynają się w samej jednej. W tym czasie, gdy świat się zaczynał, trzy nieznałe zaczynają się w samej jednej i zaczynają się w samej jednej. W tym czasie, gdy świat się zaczynał, trzy nieznałe zaczynają się w samej jednej i zaczynają się w samej jednej.\n\nW tym czasie, gdy świat się zaczynał, trzy nieznałe zaczynają się w samej jednej i zaczynają się w samej jednej.",
+  "ccacc3b1968b": "Napiszę historię o psie i kaczce oraz kotku:\n\n---\n\n**Historia o psie i kaczce:**\n\nPanika, co zaczynała w niewielu roku, odgrywała bardzo ważną rolę w życiu swoich pracek. Panika była bardzo inteligentna i bardzo zainteresowana w psychologii i psiedy. Wtedy połomka, która byłaby psie i kaczce, miała swoje życiowe naciski i potencjali. W pierwszych miesiącach, gdy kaczka zaczynała się zatrzymać, przez nią oszłośiły również niektóre koki i też psia.\n\nPo roku zaczynała kaczka, i towarzysowała jej, co zaczynała połomkę. W czasie tych miesięcy, przez niego, które pozwalało oszłośiwać też kaczkę, by zacząć się połomka, mogły dojść do swojego zaczynania. Oto, kiedy, po roku, oszłośiły też kaczka i psia, aż zaczynali się połomka, co wtedy pozwalało na połączenie dwóch, aż połączenie odbiegało, co było bardzo ważne i trudno.\n\nAby zacząć się połomka, zaczynali się również kaczka i psia, co oznaczało, że odbiorca, który była psia i kaczca, zaczynał się z odbiórą, co było bardzo ważne i trudno. Wtedy, w czasie oszłośi, połomka zaczynała się zatrzymać, co było bardzo ważne i trudno.\n\nAby zacząć się połomka, zaczynali się także kaczka i psia, co oznaczało, że odbiorca, który była psia i kaczca, zaczynał się z odbiórą, co było bardzo ważne i trudno.\n\nI to, co zrobiło, było bardzo ważne i trudno.\n\n--- \n\nAby zacząć się połomka, zaczynali się także kaczka i psia, co oznaczało, że odbiorca, który była psia i kaczca, zaczynał się z odbiórą, co było bardzo ważne i trudno."
+ },
+ "runs": [
+  {
+   "temperature": 0.0,
+   "run": 1,
+   "time": "2026-10-22T20:03:30+02:00",
+   "hash": "631ab4fa9203",
+   "thinking_hash": null,
+   "answer_tokens": 498,
+   "finish_reason": "stop",
+   "seconds": 1.79
+  },
+  {
+   "temperature": 0.0,
+   "run": 2,
+   "time": "2026-10-22T20:03:32+02:00",
+   "hash": "631ab4fa9203",
+   "thinking_hash": null,
+   "answer_tokens": 498,
+   "finish_reason": "stop",
+   "seconds": 1.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 3,
+   "time": "2026-10-22T20:03:34+02:00",
+   "hash": "631ab4fa9203",
+   "thinking_hash": null,
+   "answer_tokens": 498,
+   "finish_reason": "stop",
+   "seconds": 1.67
+  },
+  {
+   "temperature": 0.0,
+   "run": 4,
+   "time": "2026-10-22T20:03:35+02:00",
+   "hash": "631ab4fa9203",
+   "thinking_hash": null,
+   "answer_tokens": 498,
+   "finish_reason": "stop",
+   "seconds": 1.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 5,
+   "time": "2026-10-22T20:03:37+02:00",
+   "hash": "631ab4fa9203",
+   "thinking_hash": null,
+   "answer_tokens": 498,
+   "finish_reason": "stop",
+   "seconds": 1.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 6,
+   "time": "2026-10-22T20:03:39+02:00",
+   "hash": "631ab4fa9203",
+   "thinking_hash": null,
+   "answer_tokens": 498,
+   "finish_reason": "stop",
+   "seconds": 1.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 7,
+   "time": "2026-10-22T20:03:40+02:00",
+   "hash": "631ab4fa9203",
+   "thinking_hash": null,
+   "answer_tokens": 498,
+   "finish_reason": "stop",
+   "seconds": 1.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 8,
+   "time": "2026-10-22T20:03:42+02:00",
+   "hash": "631ab4fa9203",
+   "thinking_hash": null,
+   "answer_tokens": 498,
+   "finish_reason": "stop",
+   "seconds": 1.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 9,
+   "time": "2026-10-22T20:03:44+02:00",
+   "hash": "631ab4fa9203",
+   "thinking_hash": null,
+   "answer_tokens": 498,
+   "finish_reason": "stop",
+   "seconds": 1.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 10,
+   "time": "2026-10-22T20:03:45+02:00",
+   "hash": "631ab4fa9203",
+   "thinking_hash": null,
+   "answer_tokens": 498,
+   "finish_reason": "stop",
+   "seconds": 1.68
+  },
+  {
+   "temperature": 1.0,
+   "run": 1,
+   "time": "2026-10-22T20:03:47+02:00",
+   "hash": "ccacc3b1968b",
+   "thinking_hash": null,
+   "answer_tokens": 568,
+   "finish_reason": "stop",
+   "seconds": 1.92
+  },
+  {
+   "temperature": 1.0,
+   "run": 2,
+   "time": "2026-10-22T20:03:49+02:00",
+   "hash": "ccacc3b1968b",
+   "thinking_hash": null,
+   "answer_tokens": 568,
+   "finish_reason": "stop",
+   "seconds": 1.93
+  },
+  {
+   "temperature": 1.0,
+   "run": 3,
+   "time": "2026-10-22T20:03:51+02:00",
+   "hash": "ccacc3b1968b",
+   "thinking_hash": null,
+   "answer_tokens": 568,
+   "finish_reason": "stop",
+   "seconds": 1.92
+  },
+  {
+   "temperature": 1.0,
+   "run": 4,
+   "time": "2026-10-22T20:03:53+02:00",
+   "hash": "ccacc3b1968b",
+   "thinking_hash": null,
+   "answer_tokens": 568,
+   "finish_reason": "stop",
+   "seconds": 1.93
+  },
+  {
+   "temperature": 1.0,
+   "run": 5,
+   "time": "2026-10-22T20:03:55+02:00",
+   "hash": "ccacc3b1968b",
+   "thinking_hash": null,
+   "answer_tokens": 568,
+   "finish_reason": "stop",
+   "seconds": 1.93
+  },
+  {
+   "temperature": 1.0,
+   "run": 6,
+   "time": "2026-10-22T20:03:57+02:00",
+   "hash": "ccacc3b1968b",
+   "thinking_hash": null,
+   "answer_tokens": 568,
+   "finish_reason": "stop",
+   "seconds": 1.93
+  },
+  {
+   "temperature": 1.0,
+   "run": 7,
+   "time": "2026-10-22T20:03:59+02:00",
+   "hash": "ccacc3b1968b",
+   "thinking_hash": null,
+   "answer_tokens": 568,
+   "finish_reason": "stop",
+   "seconds": 1.92
+  },
+  {
+   "temperature": 1.0,
+   "run": 8,
+   "time": "2026-10-22T20:04:01+02:00",
+   "hash": "ccacc3b1968b",
+   "thinking_hash": null,
+   "answer_tokens": 568,
+   "finish_reason": "stop",
+   "seconds": 1.93
+  },
+  {
+   "temperature": 1.0,
+   "run": 9,
+   "time": "2026-10-22T20:04:03+02:00",
+   "hash": "ccacc3b1968b",
+   "thinking_hash": null,
+   "answer_tokens": 568,
+   "finish_reason": "stop",
+   "seconds": 1.93
+  },
+  {
+   "temperature": 1.0,
+   "run": 10,
+   "time": "2026-10-22T20:04:05+02:00",
+   "hash": "ccacc3b1968b",
+   "thinking_hash": null,
+   "answer_tokens": 568,
+   "finish_reason": "stop",
+   "seconds": 1.91
+  }
+ ]
+}

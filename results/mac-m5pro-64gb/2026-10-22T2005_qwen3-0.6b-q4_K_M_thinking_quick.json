@@ -1,0 +1,325 @@
+{
+ "schema": 1,
+ "label": "mac-m5pro-64gb",
+ "profile": "qwen3:0.6b-q4_K_M",
+ "thinking": true,
+ "reference_llama_cpp": [
+  "b1-f174553e1"
+ ],
+ "reference_exact": false,
+ "started": "2026-10-22T20:05:13+02:00",
+ "finished": "2026-10-22T20:12:38+02:00",
+ "length": "quick",
+ "runs_per_temperature": 10,
+ "device": "gpu",
+ "gpu": 0,
+ "note": "Apple M5 Pro 64 GB unified, Metal, all layers on GPU (-ngl 999). Ollama 0.40.4 (llama.cpp b1-b42b7e6d3, no Qwen reference for this build). Model file from tag qwen3:0.6b (same file as qwen3:0.6b-q4_K_M). Fresh llama-server start, no warm-up request. Python 3.14 in .venv-mac. Second test on this machine, right after the thinking-off quick test (same session, no restart or update).",
+ "machine": {
+  "os": "Darwin 27.0.0 (Darwin Kernel Version 27.0.0: Tue Aug 11 21:06:40 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T6050)",
+  "arch": "arm64",
+  "cpu": "Apple M5 Pro",
+  "ram_gb": 64.0,
+  "gpus": [
+   {
+    "name": "Apple M5 Pro",
+    "memory": "unified"
+   }
+  ],
+  "ollama": "0.40.4",
+  "python": "3.14.7",
+  "server": {
+   "build_info": "b1-b42b7e6d3",
+   "model": "sha256-7f4030143c1c477224c5434f8272c662a8b042079a0a584f0a27a1684fe2e1fa",
+   "n_ctx": 8192,
+   "slots": 1,
+   "sampling": {
+    "top_k": 40,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
+    "samplers": [
+     "penalties",
+     "dry",
+     "top_n_sigma",
+     "top_k",
+     "typ_p",
+     "top_p",
+     "min_p",
+     "xtc",
+     "temperature"
+    ]
+   }
+  }
+ },
+ "temperatures": {
+  "0": {
+   "runs": 10,
+   "hashes": {
+    "4c655c49d7b9": 10
+   },
+   "repeatable": true,
+   "reference_hash": "1f701b198097",
+   "equals_reference": false,
+   "answer_tokens": [
+    8000
+   ],
+   "prompt_tokens": [
+    25
+   ],
+   "tok_per_s_median": 197.1,
+   "finish_reasons": {
+    "length": 10
+   },
+   "divergence_vs_reference": {
+    "char": 50,
+    "reference": " o psie, kaczce i kotku**  \n\nW bosom bosomia, gdzie światło zaszczyło i zimno za",
+    "this": " o psie, kaczce i kotku**  \n\nW bosom boskiego boskiego boskiego boskiego boskieg"
+   },
+   "thinking_hashes": {
+    "c2e8cd6366bc": 10
+   },
+   "thinking_reference_hash": "227ff26f211c"
+  },
+  "1": {
+   "runs": 10,
+   "hashes": {
+    "1f65549427df": 10
+   },
+   "repeatable": true,
+   "reference_hash": "14b5be25f98e",
+   "equals_reference": false,
+   "answer_tokens": [
+    1041
+   ],
+   "prompt_tokens": [
+    25
+   ],
+   "tok_per_s_median": 270.9,
+   "finish_reasons": {
+    "stop": 10
+   },
+   "divergence_vs_reference": {
+    "char": 0,
+    "reference": "Oto historia o psie i kaczce, a także ko",
+    "this": "Następuje kilka możliwości do tej nowej "
+   },
+   "thinking_hashes": {
+    "e922edce0c4d": 10
+   },
+   "thinking_reference_hash": "ac573c3b004d"
+  }
+ },
+ "warnings": [
+  "temperature 0: 10 generation(s) hit max_tokens (text cut off)",
+  "no reference hashes for llama.cpp build b1-b42b7e6d3 (qwen3:0.6b-q4_K_M, thinking on); known: b1-f174553e1"
+ ],
+ "texts": {
+  "4c655c49d7b9": "**Historia o psie, kaczce i kotku**  \n\nW bosom boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego boskiego",
+  "1f65549427df": "Następuje kilka możliwości do tej nowej zstory. Oto przykład o psie i kaczce:\n\nW kalendorze boskiego południa w podziedzii Gorykowygo pojawiały się trzy trudnościa: psa, kaczka i kot. Ostatnia stawała się tak, że ich duchy wyrzucły się do niego. W tym południu szkielecie przez kalendorze rozszerzali się kolorowe pęknięcia. Kaczka, jak złądwo, wycisknęła się na tle, pod kątem podobnym do psa, a kot, który nie miał nawet jednego szwaku, pozwolił osiągnąć świat.\n\nW kierunku tych pęknięć pojawili się trzy kroki wokół osiedli. Kaczka, w tym czasie, rozważała, że klasę wykorzystała, i poszła z nią po niewielkimi dalej. Po co dzień, kiedy zacząłabym zawsze wykorzystać nowo, pozwoliły by jej na ręce, a kot, który miał jedno szwaku, rozszerzał się, jak jeśli miał dwa. Trzy trudności, trzy światła, i trzy duchy – co to ma z tym?\n\nPonieważ pojawiały się trzy trudności, które mogły wykorzystać się w światle, w końcu wszystko wiedzieć, i południowe światło, które przetrwało wszystko, było dawnem."
+ },
+ "runs": [
+  {
+   "temperature": 0.0,
+   "run": 1,
+   "time": "2026-10-22T20:05:52+02:00",
+   "hash": "4c655c49d7b9",
+   "thinking_hash": "c2e8cd6366bc",
+   "answer_tokens": 8000,
+   "finish_reason": "length",
+   "seconds": 39.08
+  },
+  {
+   "temperature": 0.0,
+   "run": 2,
+   "time": "2026-10-22T20:06:32+02:00",
+   "hash": "4c655c49d7b9",
+   "thinking_hash": "c2e8cd6366bc",
+   "answer_tokens": 8000,
+   "finish_reason": "length",
+   "seconds": 40.03
+  },
+  {
+   "temperature": 0.0,
+   "run": 3,
+   "time": "2026-10-22T20:07:11+02:00",
+   "hash": "4c655c49d7b9",
+   "thinking_hash": "c2e8cd6366bc",
+   "answer_tokens": 8000,
+   "finish_reason": "length",
+   "seconds": 39.61
+  },
+  {
+   "temperature": 0.0,
+   "run": 4,
+   "time": "2026-10-22T20:07:51+02:00",
+   "hash": "4c655c49d7b9",
+   "thinking_hash": "c2e8cd6366bc",
+   "answer_tokens": 8000,
+   "finish_reason": "length",
+   "seconds": 39.54
+  },
+  {
+   "temperature": 0.0,
+   "run": 5,
+   "time": "2026-10-22T20:08:32+02:00",
+   "hash": "4c655c49d7b9",
+   "thinking_hash": "c2e8cd6366bc",
+   "answer_tokens": 8000,
+   "finish_reason": "length",
+   "seconds": 41.36
+  },
+  {
+   "temperature": 0.0,
+   "run": 6,
+   "time": "2026-10-22T20:09:13+02:00",
+   "hash": "4c655c49d7b9",
+   "thinking_hash": "c2e8cd6366bc",
+   "answer_tokens": 8000,
+   "finish_reason": "length",
+   "seconds": 40.36
+  },
+  {
+   "temperature": 0.0,
+   "run": 7,
+   "time": "2026-10-22T20:09:54+02:00",
+   "hash": "4c655c49d7b9",
+   "thinking_hash": "c2e8cd6366bc",
+   "answer_tokens": 8000,
+   "finish_reason": "length",
+   "seconds": 40.97
+  },
+  {
+   "temperature": 0.0,
+   "run": 8,
+   "time": "2026-10-22T20:10:35+02:00",
+   "hash": "4c655c49d7b9",
+   "thinking_hash": "c2e8cd6366bc",
+   "answer_tokens": 8000,
+   "finish_reason": "length",
+   "seconds": 41.84
+  },
+  {
+   "temperature": 0.0,
+   "run": 9,
+   "time": "2026-10-22T20:11:17+02:00",
+   "hash": "4c655c49d7b9",
+   "thinking_hash": "c2e8cd6366bc",
+   "answer_tokens": 8000,
+   "finish_reason": "length",
+   "seconds": 41.37
+  },
+  {
+   "temperature": 0.0,
+   "run": 10,
+   "time": "2026-10-22T20:11:59+02:00",
+   "hash": "4c655c49d7b9",
+   "thinking_hash": "c2e8cd6366bc",
+   "answer_tokens": 8000,
+   "finish_reason": "length",
+   "seconds": 42.25
+  },
+  {
+   "temperature": 1.0,
+   "run": 1,
+   "time": "2026-10-22T20:12:03+02:00",
+   "hash": "1f65549427df",
+   "thinking_hash": "e922edce0c4d",
+   "answer_tokens": 1041,
+   "finish_reason": "stop",
+   "seconds": 4.12
+  },
+  {
+   "temperature": 1.0,
+   "run": 2,
+   "time": "2026-10-22T20:12:07+02:00",
+   "hash": "1f65549427df",
+   "thinking_hash": "e922edce0c4d",
+   "answer_tokens": 1041,
+   "finish_reason": "stop",
+   "seconds": 3.68
+  },
+  {
+   "temperature": 1.0,
+   "run": 3,
+   "time": "2026-10-22T20:12:11+02:00",
+   "hash": "1f65549427df",
+   "thinking_hash": "e922edce0c4d",
+   "answer_tokens": 1041,
+   "finish_reason": "stop",
+   "seconds": 3.93
+  },
+  {
+   "temperature": 1.0,
+   "run": 4,
+   "time": "2026-10-22T20:12:15+02:00",
+   "hash": "1f65549427df",
+   "thinking_hash": "e922edce0c4d",
+   "answer_tokens": 1041,
+   "finish_reason": "stop",
+   "seconds": 3.88
+  },
+  {
+   "temperature": 1.0,
+   "run": 5,
+   "time": "2026-10-22T20:12:18+02:00",
+   "hash": "1f65549427df",
+   "thinking_hash": "e922edce0c4d",
+   "answer_tokens": 1041,
+   "finish_reason": "stop",
+   "seconds": 3.83
+  },
+  {
+   "temperature": 1.0,
+   "run": 6,
+   "time": "2026-10-22T20:12:22+02:00",
+   "hash": "1f65549427df",
+   "thinking_hash": "e922edce0c4d",
+   "answer_tokens": 1041,
+   "finish_reason": "stop",
+   "seconds": 3.88
+  },
+  {
+   "temperature": 1.0,
+   "run": 7,
+   "time": "2026-10-22T20:12:26+02:00",
+   "hash": "1f65549427df",
+   "thinking_hash": "e922edce0c4d",
+   "answer_tokens": 1041,
+   "finish_reason": "stop",
+   "seconds": 3.87
+  },
+  {
+   "temperature": 1.0,
+   "run": 8,
+   "time": "2026-10-22T20:12:30+02:00",
+   "hash": "1f65549427df",
+   "thinking_hash": "e922edce0c4d",
+   "answer_tokens": 1041,
+   "finish_reason": "stop",
+   "seconds": 3.86
+  },
+  {
+   "temperature": 1.0,
+   "run": 9,
+   "time": "2026-10-22T20:12:34+02:00",
+   "hash": "1f65549427df",
+   "thinking_hash": "e922edce0c4d",
+   "answer_tokens": 1041,
+   "finish_reason": "stop",
+   "seconds": 3.86
+  },
+  {
+   "temperature": 1.0,
+   "run": 10,
+   "time": "2026-10-22T20:12:38+02:00",
+   "hash": "1f65549427df",
+   "thinking_hash": "e922edce0c4d",
+   "answer_tokens": 1041,
+   "finish_reason": "stop",
+   "seconds": 3.84
+  }
+ ],
+ "thinking_texts": {
+  "c2e8cd6366bc": "Okay, the user wants a story about a fox, a rabbit, and a rabbit. Wait, there's a rabbit and a rabbit? That's confusing. Maybe they meant a fox, a rabbit, and a rabbit? Or perhaps a fox, a rabbit, and a rabbit? Let me check again. The user wrote \"psie i kaczce oraz kotku\". Oh, right, \"psie\" is a fox, \"kaczce\" is a rabbit, and \"kotku\" is a rabbit. So the story should include a fox, a rabbit, and a rabbit. But maybe the user made a typo, and they meant a fox, a rabbit, and a rabbit. Alternatively, maybe they meant a fox, a rabbit, and a rabbit. Either way, I need to make sure the story includes all three.\n\nFirst, I should set the scene. Maybe a forest or a village. The fox is the main character, the rabbits are the companions. The rabbit and rabbit could be the same, but maybe they are different. Let me think of a plot. The fox is curious, the rabbits are friendly, and they have some adventures. Maybe the fox helps the rabbits find food, or they face a challenge together. The rabbit and rabbit could be the same, but maybe the user intended two different rabbits. Alternatively, maybe the user made a mistake, and the story should have a fox, a rabbit, and a rabbit. Either way, I need to create a story that includes all three.\n\nI should start with the setting, introduce the characters, develop their interactions, and end with a resolution. Make sure the story flows and includes all three elements. Let me draft it now.\n",
+  "e922edce0c4d": "Okay, the user wants a story about a mouse, a mouse, and a cat. Wait, maybe there's a typo, but let me focus. Let me start by setting the scene. Maybe a quiet forest? A mouse in the garden, a cat, and a cat... Oh, maybe I made a mistake. Let me correct that. The user probably meant a mouse, a mouse, and a cat. But that's redundant. Alternatively, maybe they meant a mouse, a mouse, and a cat. But that's three things. Let me check again. Oh, maybe they meant three different animals: a mouse, a cat, and a dog? Or a mouse, a cat, and a dog? Or a mouse, a cat, and a dog. Alternatively, maybe it's a mistake and they meant three different animals. But since the user wrote \"psie i kaczce oraz kotku\", which is plural, but the user might have made a typo. Maybe it's a mouse, a cat, and a cat? Or a mouse, a cat, and a cat. Wait, maybe it's a mouse, a cat, and a dog? Or a cat, a mouse, and a dog? Or a mouse, a cat, and a dog. Alternatively, maybe they meant three different animals: a mouse, a cat, and a dog. Let me proceed with that. Let's have a mouse, a cat, and a dog. Or a mouse, a cat, and a cat. Wait, but the user wrote \"psie i kaczce oraz kotku\". Maybe it's a typo and they meant mouse, cat, and dog. Alternatively, perhaps a mouse, a cat, and a mouse? That's not making sense. Alternatively, maybe a mouse, a cat, and a cat. But the user wrote \"psie i kaczce oraz kotku\", which is plural, so maybe they meant three different animals: a mouse, a cat, and a mouse? But that's redundant. Maybe the original message had a mistake and they meant a mouse, a cat, and a dog. Alternatively, maybe it's a typo and the user meant three different animals: a mouse, a cat, and a mouse. Hmm. Let me proceed with a mouse, a cat, and a dog. Or a mouse, a cat, and a mouse. Wait, but the user wrote \"psie i kaczce oraz kotku\". Maybe \"psie\" is plural, so \"mice, cats, and crows\"? Or maybe a typo. Alternatively, perhaps the user is referring to a mouse, a cat, and a cat. But the user might not have made a typo. Since the user provided the request, I'll proceed with a mouse, a cat, and a dog. Let me start by setting the scene in a forest, a mouse, a cat, and a dog. Then describe their interactions, maybe the mouse is curious, the cat is cautious, and the dog is a bit more playful. Maybe they find something interesting, or there's a problem they need to solve. That way, the story can flow. Let me write that out.\n"
+ }
+}

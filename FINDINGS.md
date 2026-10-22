@@ -43,6 +43,27 @@ Windows 11 Pro, AMD Ryzen 9 9950X, 61.6 GB RAM, 2× RTX 5090 (driver 610.88, CUD
 - *An update can change the text, but does not have to* (0.40.4 → 0.40.6 did not). Therefore `reference.json`
   stores reference hashes **per model and per llama.cpp build**, and machines should be compared on the same build.
 
+### mac-m5pro-64gb (first machine outside the origin PC, 22 Oct 2026)
+
+macOS (Darwin 27.0.0, arm64), Apple M5 Pro, 64 GB unified memory, Metal (all layers on the GPU), `llama-server` from
+Ollama 0.40.4 (`b1-b42b7e6d3`), the model file of the `qwen3:0.6b` tag (= `qwen3:0.6b-q4_K_M`).
+
+- **qwen3:0.6b-q4_K_M, thinking off:** `631ab4fa9203` (498 tokens) / `ccacc3b1968b` (568 tokens), 10/10 each,
+  ~1.7–1.9 s per generation. **Not comparable with the PC:** the Q4_K_M references exist only for build
+  `b1-f174553e1` (Ollama 0.40.7); on another build a different hash is expected and says nothing about the hardware.
+- **Thinking on – a repetition loop, reproduced exactly:** temperature 0 `4c655c49d7b9` + thinking `c2e8cd6366bc`,
+  10/10, but **every run hit the 8 000-token limit**. The thinking ends normally (~1 400 characters; the prompt is
+  misunderstood again: "a fox, a rabbit, and a rabbit"), then the answer starts "W bosom boskiego…" and repeats
+  "boskiego" until the limit – ~40 s per run. Temperature 1: `1f65549427df` + thinking `e922edce0c4d` (1 041 tokens,
+  ~4 s), 10/10, ended normally. On the origin PC (Ollama 0.40.7) the same profile ended normally at both temperatures
+  (768 / 795 tokens).
+- *Repeatable ≠ correct, again:* determinism reproduces a broken answer as faithfully as a good one – the same loop,
+  the same 8 000 tokens, ten times. And a different build can change not only the hash but the quality of the answer.
+- *Hypothesis:* a tiny Q4 model with greedy decoding (temperature 0) can lock into a repetition loop; at
+  temperature 1 this seed happened to avoid it. Whether the loop comes from the build (0.40.4) or from the hardware
+  (Metal vs CUDA) cannot be told from these data – a Mac test on Ollama 0.40.7, where the PC reference exists, would
+  separate the two.
+
 ## Second model: qwen3:0.6b-q8_0 (default since 22 Oct)
 
 `qwen3:0.6b-q8_0` (752M parameters, 0.8 GB download): ~500 tok/s on an RTX 5090, ~1 s per generation, runs on almost
@@ -132,3 +153,6 @@ per second); versions must be frozen (an update can change the text); cloud APIs
   thinking for 0.40.6 and 0.40.7; RESULTS.md shows where the model ran (`--device`: GPU / CPU / mix).
 - 2026-10-22: `qwen3:0.6b-q4_K_M` profile (Q4_K_M = the default tag `qwen3:0.6b`); references for it (thinking off
   and on) and for gemma4:26b-a4b-it-q8_0 with thinking (Ollama 0.40.7).
+- 2026-10-22: first machine outside the origin PC: `mac-m5pro-64gb` (Apple M5 Pro, Ollama 0.40.4),
+  qwen3:0.6b-q4_K_M thinking off and on – repeatable, no reference for its build; with thinking at temperature 0 a
+  repetition loop up to max_tokens, identical in 10/10 runs.
