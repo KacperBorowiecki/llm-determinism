@@ -6,6 +6,6 @@
  "prompt": "Napisz mi historie o psie i kaczce oraz kotku?",
  "answer_tokens": 90,
  "prompt_tokens": 29,
- "source": "qwen3-0.6b-q8, Ollama 0.40.7 (b1-f174553e1); origin PC, 2026-10-22T1740_quick.json (10/10 runs identical); no logprobs",
+ "source": "qwen3:0.6b-q8_0, Ollama 0.40.7 (b1-f174553e1); origin PC, 2026-10-22T1740_quick.json (10/10 runs identical); no logprobs",
  "text": "W przestrzeni nieogromnej i niepraktycznie szklanej, w której żadna ścież i czynność nie zmienia się, bycia wykorzystywana do rozmowy. W taki sposób, pojawia się oni, bystynie, pojawia się w taki sposób, że to możliwe.  \nOczywiście, byliśmy na tym."
 }

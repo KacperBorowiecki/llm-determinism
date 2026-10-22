@@ -1,23 +1,19 @@
 {
  "schema": 1,
  "label": "origin-pc-2x5090-win11",
- "profile": "gemma4-26b-q8",
+ "profile": "gemma4:26b-a4b-it-q8_0",
  "reference_llama_cpp": [
   "b1-b42b7e6d3",
   "b1-620d2225c"
  ],
  "reference_exact": true,
- "started": "2026-10-19T19:38:00+02:00",
- "finished": "2026-10-19T20:09:00+02:00",
- "length": "imported",
- "runs_per_temperature": {
-  "0": 5,
-  "1": 5
- },
- "gpu": 1,
- "note": "Second server on GPU 1 (Ollama 0.40.4), run while the GPU 0 server was generating (19:38 and 20:09) – same hashes as GPU 0. Imported from the origin project logs.",
+ "started": "2026-10-21T17:48:23+02:00",
+ "finished": "2026-10-21T17:51:04+02:00",
+ "length": "quick",
+ "runs_per_temperature": 10,
+ "gpu": 0,
+ "note": "End-to-end test of the kit: new server started following the determinism-test skill (-ngl 999, all layers on GPU 0), after stopping the servers of the 1000/5000-run tests. Two days after the first tests; no PC restart since 19 Oct 20:35.",
  "machine": {
-  "reconstructed": true,
   "os": "Windows 11 (10.0.26200)",
   "arch": "AMD64",
   "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
@@ -36,17 +32,17 @@
     "cuda": "13.3"
    }
   ],
-  "ollama": "0.40.4",
+  "ollama": "0.40.6",
   "python": "3.13.5",
   "server": {
-   "build_info": "b1-b42b7e6d3",
+   "build_info": "b1-620d2225c",
    "model": "sha256-ec528f6d0b7e2d2219d203bea82f4c5b98cbcdcbfaa9153b6d8c36756504c2d5",
    "n_ctx": 8192,
    "slots": 1,
    "sampling": {
     "top_k": 64,
-    "top_p": 0.95,
-    "min_p": 0.05,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
     "samplers": [
      "penalties",
      "dry",
@@ -63,9 +59,9 @@
  },
  "temperatures": {
   "0": {
-   "runs": 5,
+   "runs": 10,
    "hashes": {
-    "138e66a98238": 5
+    "138e66a98238": 10
    },
    "repeatable": true,
    "reference_hash": "138e66a98238",
@@ -76,13 +72,13 @@
    "prompt_tokens": [
     29
    ],
-   "tok_per_s_median": null,
+   "tok_per_s_median": 169.3,
    "divergence_vs_reference": null
   },
   "1": {
-   "runs": 5,
+   "runs": 10,
    "hashes": {
-    "0e661f14a480": 5
+    "0e661f14a480": 10
    },
    "repeatable": true,
    "reference_hash": "0e661f14a480",
@@ -93,7 +89,7 @@
    "prompt_tokens": [
     29
    ],
-   "tok_per_s_median": null,
+   "tok_per_s_median": 164.1,
    "divergence_vs_reference": null
   }
  },
@@ -106,82 +102,162 @@
   {
    "temperature": 0.0,
    "run": 1,
-   "time": null,
+   "time": "2026-10-21T17:48:31+02:00",
    "hash": "138e66a98238",
    "answer_tokens": 1305,
-   "seconds": 8.22
+   "seconds": 7.98
   },
   {
    "temperature": 0.0,
    "run": 2,
-   "time": null,
+   "time": "2026-10-21T17:48:39+02:00",
    "hash": "138e66a98238",
    "answer_tokens": 1305,
-   "seconds": 7.99
+   "seconds": 7.88
   },
   {
    "temperature": 0.0,
    "run": 3,
-   "time": null,
+   "time": "2026-10-21T17:48:47+02:00",
    "hash": "138e66a98238",
    "answer_tokens": 1305,
-   "seconds": 7.99
+   "seconds": 7.76
   },
   {
    "temperature": 0.0,
    "run": 4,
-   "time": null,
+   "time": "2026-10-21T17:48:54+02:00",
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.82
+  },
+  {
+   "temperature": 0.0,
+   "run": 5,
+   "time": "2026-10-21T17:49:02+02:00",
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.87
+  },
+  {
+   "temperature": 0.0,
+   "run": 6,
+   "time": "2026-10-21T17:49:10+02:00",
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.8
+  },
+  {
+   "temperature": 0.0,
+   "run": 7,
+   "time": "2026-10-21T17:49:18+02:00",
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.8
+  },
+  {
+   "temperature": 0.0,
+   "run": 8,
+   "time": "2026-10-21T17:49:26+02:00",
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.7
+  },
+  {
+   "temperature": 0.0,
+   "run": 9,
+   "time": "2026-10-21T17:49:33+02:00",
+   "hash": "138e66a98238",
+   "answer_tokens": 1305,
+   "seconds": 7.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 10,
+   "time": "2026-10-21T17:49:41+02:00",
    "hash": "138e66a98238",
    "answer_tokens": 1305,
    "seconds": 7.96
   },
   {
-   "temperature": 0.0,
-   "run": 5,
-   "time": null,
-   "hash": "138e66a98238",
-   "answer_tokens": 1305,
-   "seconds": 7.97
-  },
-  {
    "temperature": 1.0,
    "run": 1,
-   "time": null,
+   "time": "2026-10-21T17:49:49+02:00",
    "hash": "0e661f14a480",
    "answer_tokens": 1346,
-   "seconds": 8.55
+   "seconds": 8.07
   },
   {
    "temperature": 1.0,
    "run": 2,
-   "time": null,
+   "time": "2026-10-21T17:49:57+02:00",
    "hash": "0e661f14a480",
    "answer_tokens": 1346,
-   "seconds": 8.2
+   "seconds": 8.1
   },
   {
    "temperature": 1.0,
    "run": 3,
-   "time": null,
+   "time": "2026-10-21T17:50:05+02:00",
    "hash": "0e661f14a480",
    "answer_tokens": 1346,
-   "seconds": 8.29
+   "seconds": 7.95
   },
   {
    "temperature": 1.0,
    "run": 4,
-   "time": null,
+   "time": "2026-10-21T17:50:13+02:00",
    "hash": "0e661f14a480",
    "answer_tokens": 1346,
-   "seconds": 8.22
+   "seconds": 8.02
   },
   {
    "temperature": 1.0,
    "run": 5,
-   "time": null,
+   "time": "2026-10-21T17:50:22+02:00",
    "hash": "0e661f14a480",
    "answer_tokens": 1346,
-   "seconds": 8.28
+   "seconds": 8.35
+  },
+  {
+   "temperature": 1.0,
+   "run": 6,
+   "time": "2026-10-21T17:50:30+02:00",
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.32
+  },
+  {
+   "temperature": 1.0,
+   "run": 7,
+   "time": "2026-10-21T17:50:38+02:00",
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.45
+  },
+  {
+   "temperature": 1.0,
+   "run": 8,
+   "time": "2026-10-21T17:50:47+02:00",
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.43
+  },
+  {
+   "temperature": 1.0,
+   "run": 9,
+   "time": "2026-10-21T17:50:55+02:00",
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.33
+  },
+  {
+   "temperature": 1.0,
+   "run": 10,
+   "time": "2026-10-21T17:51:04+02:00",
+   "hash": "0e661f14a480",
+   "answer_tokens": 1346,
+   "seconds": 8.26
   }
  ]
 }

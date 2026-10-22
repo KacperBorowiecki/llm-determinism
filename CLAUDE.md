@@ -8,8 +8,8 @@ this machine (repeatability) and compared with the reference machine (same hash?
   labels already in `results/` are only suggestions – wait for the user's confirmation.
 - **Never `git push`, `gh pr create` or upload anything** unless the user asks for that specific action. The repo is
   local-only.
-- **Model profiles** (`reference.json`): `qwen3-0.6b-q8` – the default, small and fast; `qwen3-0.6b-q4_K_M` – the same
-  model in Q4_K_M (a different text); `gemma4-26b-q8` – the main experiment, needs ~30 GB of memory.
+- **Model profiles** (`reference.json`): `qwen3:0.6b-q8_0` – the default, small and fast; `qwen3:0.6b-q4_K_M` – the same
+  model in Q4_K_M (a different text); `gemma4:26b-a4b-it-q8_0` – the main experiment, needs ~30 GB of memory.
 - **Before a test, ask:** model (`--profile`), thinking on/off (`--thinking`, default off) and length. Record where
   the model ran with `--device gpu|cpu|mix` (matches `-ngl`: all layers / 0 / some).
 - **Before pulling a model** (sizes in `reference.json`: ~0.8 GB / ~28 GB): ask, check free disk space and check

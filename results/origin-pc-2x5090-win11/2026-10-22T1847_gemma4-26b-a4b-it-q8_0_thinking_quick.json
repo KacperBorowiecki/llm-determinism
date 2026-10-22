@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "label": "origin-pc-2x5090-win11",
- "profile": "gemma4-26b-q8",
+ "profile": "gemma4:26b-a4b-it-q8_0",
  "thinking": true,
  "reference_llama_cpp": [
   "b1-f174553e1"

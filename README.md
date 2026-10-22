@@ -54,7 +54,7 @@ result. Then say *"save the result"* (skill `determinism-submit`).
 
    ```
    python run_test.py --label <your-machine-label> --length quick     # default model, 10 + 10 runs
-   python run_test.py --label <your-machine-label> --profile gemma4-26b-q8 --length standard   # 100 + 100
+   python run_test.py --label <your-machine-label> --profile gemma4:26b-a4b-it-q8_0 --length standard   # 100 + 100
    python run_test.py --label <your-machine-label> --thinking --device cpu   # thinking on, model on the CPU
    ```
 
@@ -76,15 +76,15 @@ same build:
 
 | model (thinking) | Ollama (llama.cpp build) | temperature 0 | temperature 1 |
 |---|---|---|---|
-| qwen3-0.6b-q8 | 0.40.6 (`b1-620d2225c`) | `8cc886e38b1a` | `e94074591fd4` |
-| qwen3-0.6b-q8 | 0.40.7 (`b1-f174553e1`) | `23cd03276e07` | `599eb85dd1d7` |
-| qwen3-0.6b-q8 (on) | 0.40.6 (`b1-620d2225c`) | `482f7ccfcecf` + thinking `cb78d96c1efb` | `31cf38892cc4` + thinking `3098c730f004` |
-| qwen3-0.6b-q8 (on) | 0.40.7 (`b1-f174553e1`) | `93da943bed61` + thinking `52499a3e123b` | `fa20d1ae8cef` + thinking `4074d4788a6f` |
-| gemma4-26b-q8 | 0.40.4, 0.40.6 (`b1-b42b7e6d3`, `b1-620d2225c`) | `138e66a98238` | `0e661f14a480` |
-| gemma4-26b-q8 | 0.40.7 (`b1-f174553e1`) | `179e3c96dff3` | `d4afe73e6d3c` |
-| qwen3-0.6b-q4_K_M | 0.40.7 (`b1-f174553e1`) | `0ac50154a638` | `872d20cd2d2e` |
-| qwen3-0.6b-q4_K_M (on) | 0.40.7 (`b1-f174553e1`) | `1f701b198097` + thinking `227ff26f211c` | `14b5be25f98e` + thinking `ac573c3b004d` |
-| gemma4-26b-q8 (on) | 0.40.7 (`b1-f174553e1`) | `29ea83a13637` + thinking `2d68efe195a0` | `f975c9bddcfd` + thinking `1d183e394b78` |
+| qwen3:0.6b-q8_0 | 0.40.6 (`b1-620d2225c`) | `8cc886e38b1a` | `e94074591fd4` |
+| qwen3:0.6b-q8_0 | 0.40.7 (`b1-f174553e1`) | `23cd03276e07` | `599eb85dd1d7` |
+| qwen3:0.6b-q8_0 (on) | 0.40.6 (`b1-620d2225c`) | `482f7ccfcecf` + thinking `cb78d96c1efb` | `31cf38892cc4` + thinking `3098c730f004` |
+| qwen3:0.6b-q8_0 (on) | 0.40.7 (`b1-f174553e1`) | `93da943bed61` + thinking `52499a3e123b` | `fa20d1ae8cef` + thinking `4074d4788a6f` |
+| gemma4:26b-a4b-it-q8_0 | 0.40.4, 0.40.6 (`b1-b42b7e6d3`, `b1-620d2225c`) | `138e66a98238` | `0e661f14a480` |
+| gemma4:26b-a4b-it-q8_0 | 0.40.7 (`b1-f174553e1`) | `179e3c96dff3` | `d4afe73e6d3c` |
+| qwen3:0.6b-q4_K_M | 0.40.7 (`b1-f174553e1`) | `0ac50154a638` | `872d20cd2d2e` |
+| qwen3:0.6b-q4_K_M (on) | 0.40.7 (`b1-f174553e1`) | `1f701b198097` + thinking `227ff26f211c` | `14b5be25f98e` + thinking `ac573c3b004d` |
+| gemma4:26b-a4b-it-q8_0 (on) | 0.40.7 (`b1-f174553e1`) | `29ea83a13637` + thinking `2d68efe195a0` | `f975c9bddcfd` + thinking `1d183e394b78` |
 
 ## Results
 

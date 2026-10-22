@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 MAX_HASHES = 3
-LEGACY_PROFILE = "gemma4-26b-q8"   # result files written before model profiles existed
+LEGACY_PROFILE = "gemma4:26b-a4b-it-q8_0"   # result files written before model profiles existed
 
 
 def reference_for(reference: dict, profile: str, build: str | None, thinking: bool) -> dict | None:

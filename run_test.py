@@ -1,11 +1,12 @@
 """Determinism test for llama-server: the same prompt and seed, N runs at temperature 0 and N at temperature 1.
 
 Talks to an already running llama-server (started from Ollama's installation, see README). Prints a summary and
-writes one result file: results/<label>/<start time>_<profile>_<length>.json. Model profiles and their reference
+writes one result file: results/<label>/<start time>_<profile>_<length>.json
+(':' in the profile name becomes '-'). Model profiles and their reference
 hashes (one set per llama.cpp build) are in reference.json.
 
   python run_test.py --label my-pc                       # default model, quick: 10 + 10
-  python run_test.py --label my-pc --profile gemma4-26b-q8 --length standard     # 100 + 100
+  python run_test.py --label my-pc --profile gemma4:26b-a4b-it-q8_0 --length standard     # 100 + 100
   python run_test.py --label my-pc --thinking            # with the model's thinking (hashed separately)
   python run_test.py --label my-pc --runs 3 --note "-ngl 30 (partial offload)"
 """
@@ -284,7 +285,7 @@ def main() -> None:
     if args.thinking:
         record["thinking_texts"] = {r["thinking_hash"]: r["thinking_text"] for r in results}
     mode = "_thinking" if args.thinking else ""
-    out = ROOT / "results" / args.label / f"{started:%Y-%m-%dT%H%M}_{profile_name}{mode}_{length}.json"
+    out = ROOT / "results" / args.label / f"{started:%Y-%m-%dT%H%M}_{profile_name.replace(':', '-')}{mode}_{length}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     with out.open("w", encoding="utf-8", newline="\n") as f:
         json.dump(record, f, ensure_ascii=False, indent=1)
