@@ -30,7 +30,10 @@ Follow CLAUDE.md. Talk to the user in their language.
    exist for all three profiles with and without thinking (gemma4:26b-a4b-it-q8_0 with thinking: ~2 000 tokens and
    ~11–12 s per answer on an RTX 5090).
 5. **Model file:** `ollama list`. If the profile's `model` is missing: check free disk space and ask before
-   `ollama pull <model>` (`download_gb` of the profile).
+   `ollama pull <model>` (`download_gb` of the profile); if the pull hangs near the end, stop it and run it
+   again (it resumes). Then check the file: the **first** `FROM` line of `ollama show <model> --modelfile` must
+   end with `model_file` of the profile. Different: the tag now points to another file – say so and ask; the
+   test still shows repeatability, but the reference hashes no longer apply.
 6. **GPU free?** No other `llama-server` process, nothing in `ollama ps`, no other heavy GPU load. If busy: stop and
    ask.
 7. **Start llama-server from Ollama's installation:**
