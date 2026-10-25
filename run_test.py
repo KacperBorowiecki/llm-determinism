@@ -1,6 +1,6 @@
 """Determinism test for llama-server: the same prompt and seed, N runs at temperature 0 and N at temperature 1.
 
-Talks to an already running llama-server (started from Ollama's installation, see README). Prints a summary and
+Talks to an already running llama-server (started from Ollama's installation, see the skill determinism-test). Prints a summary and
 writes one result file: results/<label>/<start time>_<profile>_<length>.json
 (':' in the profile name becomes '-'). Model profiles and their reference
 hashes (one set per llama.cpp build) are in reference.json.
