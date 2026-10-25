@@ -17,7 +17,8 @@ this machine (repeatability) and compared with the reference machine (same hash?
   stop.
 - **Do not start anything while the GPU is busy** (another `llama-server`, other GPU load). A test started directly
   with `llama-server` does not show in `ollama ps`.
-- Python only in the repo's `.venv` (`python -m venv .venv`, then `pip install -r requirements.txt`);
+- Python ≥ 3.10, only in the repo's `.venv` (`.venv-<system>` when the repo is shared by two systems – skill
+  `determinism-test`), then `pip install -r requirements.txt`;
   Windows: `PYTHONUTF8=1`.
 - The protocol (`reference.json`) and the hash function (`text_hash` in `run_test.py`) must not change without the
   user's consent.

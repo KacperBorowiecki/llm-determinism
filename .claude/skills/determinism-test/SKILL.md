@@ -9,8 +9,14 @@ Follow CLAUDE.md. Talk to the user in their language.
 
 1. **Ollama:** `ollama --version`. Not installed: say so and stop – the test needs Ollama (the model and
    `llama-server` come from it). If it cannot connect to a running Ollama, ask the user to start it.
-2. **Python:** `.venv` in the repo root (`python -m venv .venv` if missing); `pip install -r requirements.txt`
-   into it; run scripts with the `.venv` interpreter; Windows: `PYTHONUTF8=1`.
+2. **Python ≥ 3.10 and its environment:**
+   - A Python ≥ 3.10 on this machine (`python3 --version`, `python --version`; Windows also `py --list`). None
+     (e.g. only macOS's system Python 3.9): say so and stop.
+   - The environment: `.venv` in the repo root, checked with its own interpreter (`.venv/bin/python --version`;
+     Windows: `.venv\Scripts\python.exe --version`). Missing: create it with that Python (`-m venv .venv`).
+     Does not run here or older than 3.10 (made on another system, e.g. a drive shared by Windows and macOS):
+     leave it and use `.venv-<system>` (e.g. `.venv-mac`) instead – check or create it the same way.
+   - `pip install -r requirements.txt` into it; run all scripts with its interpreter; Windows: `PYTHONUTF8=1`.
 3. **Hardware, then label:** first check the hardware with the same functions that write it into the result
    file: `python -c "import run_test as r; print(r.cpu_name(), r.ram_gb(), r.gpus())"` (CPU, RAM in GB, NVIDIA
    GPUs or Apple unified memory; an empty GPU list means no NVIDIA GPU was found – ask what GPU there is).

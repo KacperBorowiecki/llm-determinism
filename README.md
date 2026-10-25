@@ -7,8 +7,9 @@ compares the answers by hash – run after run on one machine, and between machi
 
 ## What we found
 
-**The model itself is deterministic: the same input in a frozen environment gives the same output, token for
-token.** The randomness people see comes from the environment around the model.
+**The model itself is deterministic – even at temperature 1: the same input (prompt and seed) in a frozen
+environment gives the same output, token for token.** The randomness people see comes from the environment
+around the model.
 
 - **Thousands of identical answers in a row.** Gemma 4 26B (Q8_0) on the reference PC: 2 108 runs at temperature 0
   and 10 108 runs at temperature 1 – one text each, on both GPUs. A restart, the PC going to sleep in the middle of
@@ -19,7 +20,8 @@ token.** The randomness people see comes from the environment around the model.
 - **Every test so far was repeatable:** 3 models (Gemma 4 26B, Qwen3 0.6B in Q8_0 and Q4_K_M), thinking on and off,
   2 machines (Windows with 2× RTX 5090, Apple M5 Pro).
 
-What "frozen" means – each of these changed the text when it changed:
+What "frozen" means: the same model file, llama.cpp build, settings and machine, one request at a time. Each of
+these changed the text when it changed:
 
 | what changed | result |
 |---|---|
@@ -27,23 +29,23 @@ What "frozen" means – each of these changed the text when it changed:
 | quantization (Q4_K_M instead of Q8_0) | a different text – effectively a different model |
 | thinking on / off | a different prompt, so a different text |
 | 10 requests computed together (batching) | 0 of 100 answers equal to the single-request text, at temperature 0 and 1 |
-| Ollama's prompt cache (seen in Ollama's own API) | the first call differs from later calls – the kit turns the cache off |
+
+The input means the exact tokens: any change in the prompt – even one extra space – makes it a different input
+and can change the whole answer (switching thinking on changes only a few template tokens, and the text is
+already different).
 
 Batching is how cloud APIs work: your request is computed together with other people's, so even temperature 0 does
 not give the same answer twice. Locally, one request at a time, it does.
 
-Two limits:
-- *Repeatable ≠ correct.* A broken answer repeats just as faithfully: on the Mac a tiny model looped until the token
-  limit, identically in 10 of 10 runs.
-- **Same text on different hardware is still open.** The Mac test ran on another llama.cpp build than the
-  references, so its hashes cannot be compared yet.
+*Repeatable ≠ correct:* a broken answer repeats just as faithfully – on the Mac a tiny model looped until the
+token limit, identically in 10 of 10 runs.
 
 All numbers: [FINDINGS.md](FINDINGS.md); every test: [RESULTS.md](RESULTS.md).
 
 ## How the test works
 
 - One prompt (a short request for a story, in Polish), seed 42, temperatures 0 and 1, the same number of runs at
-  each (quick 10, standard 100, long 1000). One request at a time, prompt cache off. Model profiles and server
+  each (quick 10, standard 100, long 1000). One request at a time. Model profiles and server
   arguments: `reference.json`.
 - Reference hashes come from the reference PC and are stored in `reference.json` **per model, llama.cpp build and
   thinking mode**; the texts are in `reference/texts/`. A result is compared with the reference of the same build.
