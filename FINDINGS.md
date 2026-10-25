@@ -29,7 +29,8 @@ Windows 11 Pro, AMD Ryzen 9 9950X, 61.6 GB RAM, 2× RTX 5090 (driver 610.88, CUD
 ### Ollama update 0.40.6 → 0.40.7 (21 Oct): new text for both models
 
 - Ollama updated itself to 0.40.7: new llama.cpp build `b1-f174553e1` and new `ggml-cuda.dll`, `libllama.dll`,
-  `libllama-server-impl.dll`. Driver, model files, sampling parameters and the 29 prompt tokens unchanged.
+  `libllama-server-impl.dll`. Driver, model files, `top_k` / `top_p` / `min_p` and the 29 prompt tokens
+  unchanged.
 - **gemma4:26b-a4b-it-q8_0:** still repeatable (10/10 at both temperatures, in two separate tests), but a **different text**:
   temperature 0 `179e3c96dff3` (1 276 tokens) instead of `138e66a98238`, temperature 1 `d4afe73e6d3c` (981 tokens)
   instead of `0e661f14a480`. Both split from the old text at character 133, in the title: "Wielka Przygoda na
