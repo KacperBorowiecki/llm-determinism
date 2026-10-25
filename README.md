@@ -1,31 +1,32 @@
 # llm-determinism
 
-**Is an LLM deterministic?** AI is often called non-deterministic: ask twice, get two different answers. We wanted
+**Is an LLM deterministic?** AI is often called non-deterministic: ask twice, get two different answers. I wanted
 to know whether that comes from the model itself or from the environment it runs in. This repo sends the same
 prompt with the same seed to a local model (`llama-server` from [Ollama](https://ollama.com)) many times and
 compares the answers by hash, run after run.
 
-## What we found
+## What I found
 
 **The model itself is deterministic – even at temperature 1: the same input (prompt and seed) in a frozen
-environment gives the same output, token for token.** The randomness people see comes from how the model is
-called – at a temperature above 0 without a fixed seed every call draws differently (3 runs without a seed gave 3
-different texts) – and from the environment around the model.
+environment gives the same output, token for token, with exactly the same probabilities.** The randomness people
+see comes from how the model is called – at a temperature above 0 without a fixed seed every call draws differently
+(3 runs without a seed gave 3 different texts) – and from the environment around the model.
 
-- **Thousands of identical answers in a row.** Gemma 4 26B (Q8_0) on the reference PC: 2 108 runs at temperature 0
-  and 10 108 runs at temperature 1 – one text each, on both GPUs. A restart, the PC going to sleep in the middle of
-  a generation and heavy CPU load from another process did not change the text.
+- **Thousands of identical answers in a row.** Gemma 4 26B (Q8_0) on the reference PC, on both GPUs: 2 108 runs at
+  temperature 0 gave one text, 10 108 runs at temperature 1 gave another one – the two temperatures give different
+  texts, but each repeats its own text in every run. A restart, the PC going to sleep in the middle of a generation
+  and heavy CPU load from another process did not change them.
 - **Temperature 1 repeats too.** Sampling really picks less likely tokens (106 of the 1 346 tokens in that answer),
   but it is pseudo-random: with a fixed seed every draw repeats. *Temperature decides what is sampled; the seed
   makes the sampling repeat.*
 - **Every test so far was repeatable:** 3 models (Gemma 4 26B, Qwen3 0.6B in Q8_0 and Q4_K_M), thinking on and off,
-  2 machines (Windows with 2× RTX 5090, Apple M5 Pro).
+  2 machines (Windows with 2× RTX 5090, Apple M5 Pro), on the GPU and on the CPU.
 - **Not only the text – the numbers too.** Since 25 Oct the kit also hashes the probability of every generated
-  token: on the reference PC all 56 runs since then (all three models, thinking on and off) gave the same
-  probabilities bit for bit, at temperature 0 and 1.
+  token. In every test since then (8 tests, 62 runs on the reference PC: all three models, thinking on and off, GPU
+  and CPU) all runs of the same setting gave the same probabilities bit for bit, at temperature 0 and 1.
 
 What "frozen" means: the same model file, llama.cpp build, settings and machine, one request at a time. These
-changed the text in our tests:
+changed the text in my tests:
 
 | what changed | result |
 |---|---|
