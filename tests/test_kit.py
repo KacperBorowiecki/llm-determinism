@@ -152,6 +152,23 @@ def test_results_table_thinking_column_and_both_hashes(tmp_path):
     assert "| m | on | pc |" in md and "`aaa`×3 · thinking `ttt`×3 – repeatable, = ref" in md
 
 
+def test_results_table_is_sorted_by_start_time(tmp_path):
+    def record(profile, started):
+        return {"label": "pc", "profile": profile, "started": started, "note": "", "gpu": 0,
+                "machine": {"os": "Linux", "gpus": [], "ollama": "0.40.7", "server": {"build_info": "b1"}},
+                "temperatures": {"0": {"runs": 1, "hashes": {"aaa": 1}, "repeatable": True}}, "warnings": []}
+    (tmp_path / "results" / "pc").mkdir(parents=True)
+    # file names and profiles in the opposite order; 10:00+01:00 (09:00 UTC) is earlier than 10:30+02:00 (08:30 UTC)
+    for name, profile, started in [("a", "a-model", "2026-10-22T10:00:00+01:00"),
+                                   ("b", "b-model", "2026-10-22T10:30:00+02:00"),
+                                   ("c", "c-model", "2026-10-21T23:00:00+02:00")]:
+        (tmp_path / "results" / "pc" / f"{name}.json").write_text(json.dumps(record(profile, started)),
+                                                                 encoding="utf-8")
+    (tmp_path / "reference.json").write_text(json.dumps({"profiles": {}}), encoding="utf-8")
+    rows = [line for line in results_table.build(tmp_path).splitlines() if line.startswith("| ") and "-model" in line]
+    assert [row.split(" | ")[0] for row in rows] == ["| c-model", "| b-model", "| a-model"]
+
+
 def test_compute_column_shows_gpu_cpu_or_mix():
     machine = {"cpu": "CPU Y", "gpus": [{"name": "GPU A"}, {"name": "GPU B"}]}
     assert results_table.compute({"machine": machine, "gpu": 1, "device": "gpu"}) == "GPU 1: GPU B"
