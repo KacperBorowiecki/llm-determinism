@@ -53,13 +53,15 @@ nothing).
 `llama-server` comes with Ollama. The model file is the path in the first `FROM` line of
 `ollama show <model> --modelfile`; the other arguments are the test's setup, the same on every machine.
 
-Windows:
+Windows: Ollama brings two CUDA library folders, nothing to install. The first line of `nvidia-smi` shows the
+highest CUDA version the driver supports (`CUDA Version`, on newer drivers `CUDA UMD Version`): 13 or higher →
+`cuda_v13`, 12.x → `cuda_v12`. The references were made with `cuda_v13`; `cuda_v12` may give a different text.
 
 ```powershell
 $tag = "qwen3:0.6b-q8_0"                       # the model profile
 $gpu = "0"                                     # which GPU
 $lib = "$env:LOCALAPPDATA\Programs\Ollama\lib\ollama"
-$cuda = "$lib\cuda_v13"                        # cuda_v12 with an older NVIDIA driver
+$cuda = "$lib\cuda_v13"                        # or cuda_v12 – see above
 $env:PATH = "$lib;$cuda;$env:PATH"             # without these four variables the server silently runs on the CPU
 $env:OLLAMA_LIBRARY_PATH = "$lib;$cuda"
 $env:GGML_BACKEND_PATH = "$cuda\ggml-cuda.dll"
@@ -80,8 +82,7 @@ MODEL=$(ollama show "$TAG" --modelfile | grep -m1 '^FROM' | sed 's/^FROM //')
 
 Wait for `listening on http://127.0.0.1:8090`, then check that the model is on the GPU:
 - Windows: `nvidia-smi` shows the chosen GPU's memory grown by about the model size. If it did not grow, the server
-  runs on the CPU: stop it (Ctrl+C), check `$cuda` – `nvidia-smi` shows the driver's `CUDA Version` top right; below
-  13 use `cuda_v12` – and start again.
+  runs on the CPU: stop it (Ctrl+C), check `$cuda` (which CUDA folder – see above) and start again.
 - macOS: Activity Monitor → Window → GPU History is busy while the test generates.
 
 The model does not fit into GPU memory: lower `-ngl` (e.g. `-ngl 30`, only part of the model on the GPU) and run

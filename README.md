@@ -84,6 +84,8 @@ Requirements:
   - `qwen3:0.6b-q4_K_M` (the same file as the default tag `qwen3:0.6b`) – ~0.5 GB, a different text than Q8;
   - `gemma4:26b-a4b-it-q8_0` – the main experiment: ~28 GB download, ~30 GB of GPU memory, Apple unified memory,
     or GPU + RAM together.
+- A GPU driver only: with NVIDIA (Windows / Linux) Ollama brings the CUDA libraries itself (`cuda_v12` and
+  `cuda_v13`); on Apple Silicon nothing extra.
 - Python ≥ 3.10.
 - [Claude Code](https://claude.com/claude-code). The kit was built and run with Claude Opus 5.5.
 
