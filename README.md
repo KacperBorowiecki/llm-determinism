@@ -31,8 +31,7 @@ these changed the text when it changed:
 | 10 requests computed together (batching) | 0 of 100 answers equal to the single-request text, at temperature 0 and 1 |
 
 The input means the exact tokens: any change in the prompt – even one extra space – makes it a different input
-and can change the whole answer (switching thinking on changes only a few template tokens, and the text is
-already different).
+and can change the whole answer.
 
 Batching is how cloud APIs work: your request is computed together with other people's, so even temperature 0 does
 not give the same answer twice. Locally, one request at a time, it does.
