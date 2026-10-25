@@ -120,6 +120,12 @@ per model on GPU 0:
 - **A quick test afterwards** (qwen3:0.6b-q8_0, 10 + 10): texts and logprobs equal to the reference.
 - So the same text does not just happen to come out of slightly different numbers – the numbers behind every
   token are the same.
+- **The numbers show what the text hides.** The Gemma references (temperature 0) of Ollama 0.40.4
+  (`138e66a98238`) and 0.40.7 (`179e3c96dff3`), both with logprobs in this repo, have the same text for the first
+  43 tokens – but different numbers from token 0: the margin of the chosen token over the next candidate changed
+  by 0.24 nat (median over those 43 tokens); e.g. token 37 "Wiel" p = 0.441 → 0.581. The update changed the
+  computation everywhere, the text survived until token 43. The text hash saw the change at token 43, the
+  logprobs hash would have seen it at token 0.
 
 ## The seed at temperature 0 does nothing (25 Oct)
 
@@ -138,8 +144,8 @@ on GPU 0 and the kit's own request – only the seed differs.
 - **Temperature 1: every seed a different text**; seed 42 gives the reference `d4afe73e6d3c`. The seed does reach
   the server – it decides the draw.
 - So the two temperatures test different things: repeatability at temperature 0 shows that the *computation* is
-  stable (the same numbers, the same most likely token every time); at temperature 1, that the *seeded
-  sampling* repeats.
+  stable (the same numbers, the same most likely token every time); repeatability at temperature 1 needs both –
+  stable computation *and* sampling that repeats with the seed.
 - **Without a seed** the server draws a new one for every request (its default seed 4294967295 = random):
   temperature 0 – the reference text every time, temperature 1 – a different text in every run (3 runs, 3 texts;
   qwen3:0.6b-q8_0, 25 Oct).
@@ -188,6 +194,7 @@ throughput) can break it; versions must be frozen (an update can change the text
   repetition loop up to max_tokens, identical in 10/10 runs.
 - 2026-10-25: the seed at temperature 0 does nothing – seeds 42, 7 and 1234 (fresh server for each) gave the same
   text; at temperature 1 every seed gave a different text.
+- 2026-10-25: Gemma 0.40.4 vs 0.40.7 – the same text for 43 tokens, different numbers from token 0.
 - 2026-10-25: logprobs hashed next to the text; references for Ollama 0.40.7 store them – texts and logprobs
   identical bit for bit in every run.
 - 2026-10-25: token 43 is not a near-tie (margin 0.17 nat): the update to 0.40.7 moved the numbers by tenths of
