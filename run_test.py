@@ -1,8 +1,9 @@
 """Determinism test for llama-server: the same prompt and seed, N runs at temperature 0 and N at temperature 1.
 
 Talks to an already running llama-server (started from Ollama's installation, see the skill determinism-test). Prints a summary and
-writes one result file: results/<label>/<start time>_<profile>_<length>.json
-(':' in the profile name becomes '-'). Model profiles and their reference
+writes one result file: results/<label>/<start time>_<profile>[_thinking]_<length>_<id>.json
+(':' in the profile name becomes '-'; <id> is a short random code, so tests started in the same minute never
+overwrite each other). Model profiles and their reference
 hashes (one set per llama.cpp build) are in reference.json.
 
   python run_test.py --label my-pc                       # default model, quick: 10 + 10
@@ -16,6 +17,7 @@ import hashlib
 import json
 import platform
 import re
+import secrets
 import statistics
 import subprocess
 import sys
@@ -149,6 +151,21 @@ def ask(url: str, protocol: dict, temperature: float, thinking: bool = False, ti
         out["thinking_text"] = thought
         out["thinking_hash"], out["thinking_sha256"] = text_hash(thought)
     return out
+
+
+def write_result(base: Path, record: dict) -> Path:
+    """Write `record` to `<base>_<id>.json` and return the path. <id> is a short random code (not a hash of the
+    content – result files are edited later, e.g. when a result becomes a reference): two tests started in the
+    same minute (two GPUs, GPU and CPU, ...) get different files, and mode "x" never overwrites one."""
+    base.parent.mkdir(parents=True, exist_ok=True)
+    while True:
+        out = base.with_name(f"{base.name}_{secrets.token_hex(3)}.json")
+        try:
+            with out.open("x", encoding="utf-8", newline="\n") as f:
+                json.dump(record, f, ensure_ascii=False, indent=1)
+            return out
+        except FileExistsError:
+            continue
 
 
 def run_cmd(cmd: list[str]) -> str:
@@ -285,10 +302,8 @@ def main() -> None:
     if args.thinking:
         record["thinking_texts"] = {r["thinking_hash"]: r["thinking_text"] for r in results}
     mode = "_thinking" if args.thinking else ""
-    out = ROOT / "results" / args.label / f"{started:%Y-%m-%dT%H%M}_{profile_name.replace(':', '-')}{mode}_{length}.json"
-    out.parent.mkdir(parents=True, exist_ok=True)
-    with out.open("w", encoding="utf-8", newline="\n") as f:
-        json.dump(record, f, ensure_ascii=False, indent=1)
+    out = write_result(ROOT / "results" / args.label /
+                       f"{started:%Y-%m-%dT%H%M}_{profile_name.replace(':', '-')}{mode}_{length}", record)
 
     print()
     for key, s in summary.items():

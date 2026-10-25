@@ -1,7 +1,8 @@
 """Optional curiosity: 10 requests at the same time to one llama-server started with -np 10 -c 20480.
 
 Checks whether computing requests together in one batch changes the text: compares every simultaneous answer with
-a single request on the same server. Writes results/<label>/parallel/<start>.json.
+a single request on the same server. Writes results/<label>/parallel/<start>_t<temperature>_<id>.json (with the
+machine and server description, as run_test.py).
 
   python parallel_test.py --label my-pc --rounds 3 --temperature 0
 """
@@ -14,7 +15,7 @@ from datetime import datetime
 
 import requests
 
-from run_test import ROOT, ask, load_reference
+from run_test import ROOT, ask, load_reference, machine_info, write_result
 
 
 def main() -> None:
@@ -31,6 +32,7 @@ def main() -> None:
     slots = requests.get(f"{args.url}/props", timeout=10).json().get("total_slots", 1)
     if slots < args.parallel:
         sys.exit(f"The server has {slots} slot(s); start it with -np {args.parallel} -c 20480 for this test.")
+    machine = machine_info(args.url)
     started = datetime.now().astimezone()
     solo = ask(args.url, protocol, args.temperature)
     print(f"single request: {solo['hash']}")
@@ -45,10 +47,10 @@ def main() -> None:
     equal = sum(r["hashes"].get(solo["hash"], 0) for r in rounds)
     record = {"schema": 1, "kind": "parallel", "label": args.label, "started": started.isoformat(timespec="seconds"),
               "temperature": args.temperature, "parallel": args.parallel, "single_request_hash": solo["hash"],
-              "rounds": rounds, "equal_to_single": equal, "total": args.rounds * args.parallel}
-    out = ROOT / "results" / args.label / "parallel" / f"{started:%Y-%m-%dT%H%M}.json"
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(record, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+              "rounds": rounds, "equal_to_single": equal, "total": args.rounds * args.parallel,
+              "machine": machine}
+    out = write_result(ROOT / "results" / args.label / "parallel" /
+                       f"{started:%Y-%m-%dT%H%M}_t{args.temperature:g}", record)
     print(f"\nequal to the single request: {equal}/{record['total']}\nResult: {out.relative_to(ROOT)}")
 
 

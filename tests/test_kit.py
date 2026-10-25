@@ -3,7 +3,7 @@ from pathlib import Path
 
 import results_table
 from run_test import (divergence, get_profile, load_reference, pick_reference, summarize, text_hash,
-                      warnings_for)
+                      warnings_for, write_result)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -167,6 +167,13 @@ def test_results_table_is_sorted_by_start_time(tmp_path):
     (tmp_path / "reference.json").write_text(json.dumps({"profiles": {}}), encoding="utf-8")
     rows = [line for line in results_table.build(tmp_path).splitlines() if line.startswith("| ") and "-model" in line]
     assert [row.split(" | ")[0] for row in rows] == ["| c-model", "| b-model", "| a-model"]
+
+
+def test_write_result_never_overwrites(tmp_path):
+    base = tmp_path / "results" / "pc" / "2026-10-25T1200_qwen3-0.6b-q8_0_quick"
+    first, second = write_result(base, {"gpu": 0}), write_result(base, {"gpu": 1})   # same minute, two GPUs
+    assert first != second and first.name.startswith(base.name + "_") and first.suffix == ".json"
+    assert [json.loads(p.read_text(encoding="utf-8"))["gpu"] for p in (first, second)] == [0, 1]
 
 
 def test_compute_column_shows_gpu_cpu_or_mix():
