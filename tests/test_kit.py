@@ -1,3 +1,4 @@
+import itertools
 import json
 import subprocess
 import sys
@@ -514,12 +515,11 @@ def test_parallel_test_saves_texts_and_logprobs(tmp_path, monkeypatch):
     import parallel_test
     import run_test
     bodies, _ = fake_server(tmp_path, monkeypatch, slots=10)
-    fake_post, calls = run_test.requests.post, []
+    fake_post, calls = run_test.requests.post, itertools.count(1)   # next() is atomic across the threads
 
     def post(url, json=None, timeout=None):   # the 5th request (in round 1) gets another text and other numbers
         resp = fake_post(url, json=json, timeout=timeout)
-        calls.append(1)
-        if len(calls) == 5:
+        if next(calls) == 5:
             choice = resp.data["choices"][0]
             choice["message"]["content"] = "inna historia"
             choice["logprobs"]["content"][0]["logprob"] = -0.3
@@ -551,7 +551,9 @@ def test_results_table_shows_numbers_and_seed(tmp_path):
     (tmp_path / "results" / "pc").mkdir(parents=True)
     for name, rec in [("1", record("1", 42, stats("aaa", {"lp0": 3}), stats("bbb", {"lp1": 3}))),
                       ("2", record("2", 42, stats("aaa", {"lpX": 3}), stats("bbb", {"lp1": 2, "lpY": 1}, False))),
-                      ("3", record("3", None, stats("aaa", {"lp0": 3}), stats("ccc", {"lpZ": 3})))]:
+                      ("3", record("3", None, stats("aaa", {"lp0": 3}),   # --seed none at t1: nothing repeats
+                                   dict(stats("ccc", {"lpZ": 2, "lpW": 1}, False), hashes={"ccc": 2, "ddd": 1},
+                                        repeatable=False)))]:
         (tmp_path / "results" / "pc" / f"r{name}.json").write_text(json.dumps(rec), encoding="utf-8")
     (tmp_path / "reference.json").write_text(json.dumps(reference), encoding="utf-8")
     rows = [line for line in results_table.build(tmp_path).splitlines() if line.startswith("| m |")]
