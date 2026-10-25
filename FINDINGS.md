@@ -33,8 +33,11 @@ Windows 11 Pro, AMD Ryzen 9 9950X, 61.6 GB RAM, 2× RTX 5090 (driver 610.88, CUD
 - **gemma4:26b-a4b-it-q8_0:** still repeatable (10/10 at both temperatures, in two separate tests), but a **different text**:
   temperature 0 `179e3c96dff3` (1 276 tokens) instead of `138e66a98238`, temperature 1 `d4afe73e6d3c` (981 tokens)
   instead of `0e661f14a480`. Both split from the old text at character 133, in the title: "Wielka Przygoda na
-  **Podwórku**" → "na **Słonecznej Polanie**" – token 43, a known near-tie ("Pod" 0.44 vs "S" 0.37) that also flipped
-  in the batching test below.
+  **Podwórku**" → "na **Słonecznej Polanie**" – token 43 ("Pod" 0.44 vs "S" 0.37, a margin of 0.17 nat), which also flipped
+  in the batching test below. It is **not a near-tie**: 25 tokens of the answer have a smaller margin, e.g. token
+  37 ("Wiel" vs "Tr", 0.11 nat), earlier in the text, did not flip. The text splits at the first token where the
+  change of the numbers exceeds the margin, not at the closest one – and the update moved them by more than
+  0.17 nat there, far more than rounding noise.
 - **qwen3:0.6b-q8_0:** also a different text, also repeatable: `23cd03276e07` / `599eb85dd1d7` instead of
   `8cc886e38b1a` / `e94074591fd4`.
 - **Not caused by CPU load:** the first 0.40.7 test ran while a CPU-only `llama-server` test (the same Gemma model,
@@ -87,8 +90,9 @@ for Q8_0). Profile `qwen3:0.6b-q4_K_M`.
 
 - **Repeatable, but a different text than Q8 in all four combinations** (temperature 0 / 1, thinking off / on):
   e.g. temperature 0 – Q4 `0ac50154a638` (446 tokens) vs Q8 `23cd03276e07` (370 tokens). The quantization rounds
-  the weights differently, so the probabilities differ slightly and the first near-tie goes the other way – a
-  different quantization is effectively a different model.
+  the weights differently, which shifts the probabilities; at the first token where the shift exceeds the margin
+  between the two most likely candidates the choice flips, and the rest of the text follows – a different
+  quantization is effectively a different model.
 - **Hardly faster:** ~557–567 tok/s (Q4) vs ~528–543 tok/s (Q8) on an RTX 5090 – about 5 %, although the file is
   37 % smaller. For such a small model the speed is limited by the fixed cost per token (launching GPU work,
   choosing the token on the CPU), not by reading the weights. *(Hypothesis for the reason; the numbers are
@@ -134,9 +138,11 @@ Origin PC, gemma4:26b-a4b-it-q8_0 (Ollama 0.40.6), one server with `-np 10 -c 20
   temperature 1; some already at the 6th token.
 - The single request on the same 10-slot server still gave the reference hash – the change comes from computing
   requests together, not from the configuration.
-- At temperature 0 the texts split exactly at near-ties (token 117 "główn"/"ul", token 91 "nie"/"był").
-  *Hypothesis:* computing a request together with others changes the numbers slightly (the model is a mixture of
-  experts, so a small change can also change which experts are used); at a near-tie that flips the token.
+- At temperature 0 the texts split at tokens where the two most likely candidates were close – but not only at
+  near-ties: token 117 "główn"/"ul" (0.001 nat, the closest of all) and token 91 "nie"/"był" (0.32 nat, 58 % vs
+  42 %; 52 tokens of the answer have a smaller margin). Computing a request together with others therefore moves
+  the numbers by tenths of a nat, not by rounding noise. *Hypothesis:* the model is a mixture of experts – a tiny
+  rounding difference can change which experts are used, and that moves the numbers a lot.
 - Rounds with the same batch layout gave the same set of texts, but which request got which text changed from round
   to round – it depends on the position in the batch, i.e. on arrival order. This is the mechanism behind
   non-deterministic cloud APIs at temperature 0: your request is computed together with other people's requests.
@@ -179,3 +185,5 @@ per second); versions must be frozen (an update can change the text); cloud APIs
   repetition loop up to max_tokens, identical in 10/10 runs.
 - 2026-10-25: the seed at temperature 0 does nothing – seeds 42, 7 and 1234 (fresh server for each) gave the same
   text; at temperature 1 every seed gave a different text.
+- 2026-10-25: tokens 43 and 91 are not near-ties (margins 0.17 and 0.32 nat): the update to 0.40.7 and batching
+  move the numbers by tenths of a nat; the text splits where the change exceeds the margin (after a review).
