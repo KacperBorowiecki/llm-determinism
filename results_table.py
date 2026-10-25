@@ -45,9 +45,9 @@ def cell(stats: dict | None, ref: dict | None, key: str) -> str:
     # the numbers (logprobs) only when they tell something the text does not; missing in older results
     numbers = ""
     lp_ref = (ref or {}).get("logprobs_hashes", {}).get(key)
-    if stats.get("logprobs_repeatable") is False:
+    if stats["repeatable"] and stats.get("logprobs_repeatable") is False:
         numbers = ", **numbers differ**"
-    elif lp_ref and stats.get("logprobs_hashes") and set(stats["logprobs_hashes"]) != {lp_ref}:
+    elif verdict == "= ref" and lp_ref and stats.get("logprobs_hashes") and set(stats["logprobs_hashes"]) != {lp_ref}:
         numbers = ", **numbers ≠ ref**"
     return f"{text} – {'repeatable' if stats['repeatable'] else '**not repeatable**'}, {verdict}{numbers}"
 

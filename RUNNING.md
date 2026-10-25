@@ -146,9 +146,13 @@ The result is in `results/<label>/`, the table in `RESULTS.md`.
 Start the server as in step 2, but with `-np 10 -c 20480` instead of `-c 8192 -np 1`, then in terminal 2 (with
 the variables from step 3):
 
+Windows:
+
 ```powershell
 python parallel_test.py --label $label --rounds 3 --temperature 0
 ```
+
+macOS:
 
 ```bash
 python parallel_test.py --label "$LABEL" --rounds 3 --temperature 0

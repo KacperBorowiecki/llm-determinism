@@ -35,30 +35,32 @@ def main() -> None:
     machine = machine_info(args.url)
     started = datetime.now().astimezone()
     solo = ask(args.url, protocol, args.temperature)
+    solo_lp = solo["logprobs_hash"]   # None: the server sent no logprobs – then they are not compared
     texts = {solo["hash"]: solo["text"]}   # every unique text once
-    print(f"single request: {solo['hash']}  logprobs {solo['logprobs_hash']}")
+    print(f"single request: {solo['hash']}  logprobs {solo_lp}")
     rounds = []
     with ThreadPoolExecutor(max_workers=args.parallel) as pool:
         for rnd in range(1, args.rounds + 1):
             answers = list(pool.map(lambda _: ask(args.url, protocol, args.temperature), range(args.parallel)))
             texts.update((a["hash"], a["text"]) for a in answers)
             counts = collections.Counter(a["hash"] for a in answers)
-            lp_counts = collections.Counter(a["logprobs_hash"] for a in answers)
+            lp_counts = collections.Counter(a["logprobs_hash"] for a in answers if a["logprobs_hash"])
             rounds.append({"round": rnd, "hashes": dict(counts.most_common()),
                            "logprobs_hashes": dict(lp_counts.most_common())})
+            lp_equal = f"{lp_counts.get(solo_lp, 0)}/{args.parallel}" if solo_lp else "not returned"
             print(f"round {rnd}: equal to the single request – text {counts.get(solo['hash'], 0)}/{args.parallel}, "
-                  f"logprobs {lp_counts.get(solo['logprobs_hash'], 0)}/{args.parallel}  {dict(counts.most_common())}",
-                  flush=True)
+                  f"logprobs {lp_equal}  {dict(counts.most_common())}", flush=True)
     equal = sum(r["hashes"].get(solo["hash"], 0) for r in rounds)
-    lp_equal = sum(r["logprobs_hashes"].get(solo["logprobs_hash"], 0) for r in rounds)
+    lp_equal = sum(r["logprobs_hashes"].get(solo_lp, 0) for r in rounds) if solo_lp else None
     record = {"schema": 1, "kind": "parallel", "label": args.label, "started": started.isoformat(timespec="seconds"),
               "temperature": args.temperature, "parallel": args.parallel, "single_request_hash": solo["hash"],
-              "single_request_logprobs_hash": solo["logprobs_hash"], "rounds": rounds, "equal_to_single": equal,
+              "single_request_logprobs_hash": solo_lp, "rounds": rounds, "equal_to_single": equal,
               "logprobs_equal_to_single": lp_equal, "total": args.rounds * args.parallel, "machine": machine,
               "texts": texts}
     out = write_result(ROOT / "results" / args.label / "parallel" /
                        f"{started:%Y-%m-%dT%H%M}_t{args.temperature:g}", record)
-    print(f"\nequal to the single request: text {equal}/{record['total']}, logprobs {lp_equal}/{record['total']}\n"
+    lp_text = f"{lp_equal}/{record['total']}" if solo_lp else "not returned by the server"
+    print(f"\nequal to the single request: text {equal}/{record['total']}, logprobs {lp_text}\n"
           f"Result: {out.relative_to(ROOT)}")
 
 

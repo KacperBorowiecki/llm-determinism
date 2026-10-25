@@ -285,6 +285,9 @@ def save_reference(root: Path, reference: dict, profile_name: str, machine: dict
             if entry["logprobs_hashes"] != logprobs_hashes:
                 raise ValueError(f"build {build} already has a reference with other logprobs – not overwritten")
             return "Already the reference for this build."
+        if len(entry["llama_cpp"]) > 1:   # the numbers of one build cannot stand for the others
+            others = ", ".join(b for b in entry["llama_cpp"] if b != build)
+            raise ValueError(f"the reference for build {build} also covers {others} – not changed")
         entry["logprobs_hashes"] = logprobs_hashes
         done = "Reference logprobs added for this build."
     else:

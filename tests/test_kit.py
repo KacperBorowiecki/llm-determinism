@@ -27,6 +27,9 @@ def test_reference_texts_rehash_to_reference_hashes():
             data = json.loads((ROOT / "reference" / "texts" / f"{short}.json").read_text(encoding="utf-8"))
             assert text_hash(data["text"]) == (short, data["sha256"]), f"{name} temperature {key}"
             assert "\r" not in data["text"]
+    for path in (ROOT / "reference" / "texts").glob("*.json"):   # every text file, also thinking and old ones
+        data = json.loads(path.read_text(encoding="utf-8"))
+        assert text_hash(data["text"]) == (path.stem, data["sha256"]) == (data["hash"], data["sha256"]), path.name
 
 
 def test_reference_logprobs_rehash_to_reference_hashes():
@@ -39,6 +42,8 @@ def test_reference_logprobs_rehash_to_reference_hashes():
     for path in (ROOT / "reference" / "logprobs").glob("*.json"):   # the name is the hash of the numbers inside
         data = json.loads(path.read_text(encoding="utf-8"))
         assert logprobs_hash(data["tokens"]) == path.stem == data["logprobs_hash"] and list(data)[-1] == "tokens"
+        for short in (data["text_hash"], data.get("thinking_hash")):   # the texts the numbers belong to exist
+            assert short is None or (ROOT / "reference" / "texts" / f"{short}.json").exists(), path.name
     for path in (ROOT / "reference" / "texts").glob("*.json"):      # the text files hold only the text
         assert "tokens" not in json.loads(path.read_text(encoding="utf-8")), path.name
 
@@ -249,7 +254,7 @@ def test_summarize_logprobs_like_the_text():
     assert not any("no logprobs" in w for w in warnings_for(machine, summarize(same, ref), REFERENCE, None))
 
 
-def test_reference_text_file_one_token_per_line():
+def test_reference_file_one_token_per_line():
     data = {"hash": "abc", "text": "O to", "tokens": [{"token": "O", "logprob": -0.1}, {"token": " to", "logprob": 0.0}]}
     text = dump_reference_text(data)
     assert json.loads(text) == data and list(json.loads(text)) == ["hash", "text", "tokens"]
@@ -326,6 +331,8 @@ def test_reference_blockers():
     other_text = dict(ok, **{"0": {"runs": 3, "repeatable": False, "logprobs_repeatable": True}})
     one_run = dict(ok, **{"0": {"runs": 1, "repeatable": True, "logprobs_repeatable": True}})
     assert any("at least 3" in b for b in reference_blockers(one_run, [], "gpu"))
+    two_runs = dict(ok, **{"1": {"runs": 2, "repeatable": True, "logprobs_repeatable": True}})
+    assert any("at least 3" in b for b in reference_blockers(two_runs, [], "gpu"))
     assert any("not repeatable" in b for b in reference_blockers(no_logprobs, [], "gpu"))
     assert any("not repeatable" in b for b in reference_blockers(other_text, [], "gpu"))
     assert any("--device mix" in b for b in reference_blockers(ok, [], "mix"))
@@ -459,9 +466,9 @@ def test_seed_option_changes_only_the_seed_in_the_request(tmp_path, monkeypatch)
     r, path, bodies, _, _ = run_main(tmp_path, monkeypatch, "--runs", "2", "--seed", "none")
     assert all("seed" not in b for b in bodies) and r["seed"] is None and "_noseed_" in path.name
     assert any("instead of the protocol's" in w for w in r["warnings"])
-    r, path, bodies, _, code = run_main(tmp_path, monkeypatch, "--runs", "2", "--seed", "7", "--make-reference")
+    r, path, bodies, _, code = run_main(tmp_path, monkeypatch, "--runs", "3", "--seed", "7", "--make-reference")
     assert all(b["seed"] == 7 for b in bodies) and r["seed"] == 7 and "_seed7_" in path.name
-    assert code not in (0, None) and "Not saved as reference" in r["note"]
+    assert code not in (0, None) and "protocol's seed" in r["note"] and "at least 3" not in r["note"]
     r, path, bodies, _, _ = run_main(tmp_path, monkeypatch, "--runs", "1")   # no --seed: the protocol's seed
     assert all(b["seed"] == 42 for b in bodies) and r["seed"] == 42 and "seed" not in path.name
     assert not any("instead of the protocol's" in w for w in r["warnings"])
@@ -505,13 +512,27 @@ def test_divergence_with_thinking_in_the_thinking_and_in_the_answer():
 
 def test_parallel_test_saves_texts_and_logprobs(tmp_path, monkeypatch):
     import parallel_test
+    import run_test
     bodies, _ = fake_server(tmp_path, monkeypatch, slots=10)
+    fake_post, calls = run_test.requests.post, []
+
+    def post(url, json=None, timeout=None):   # the 5th request (in round 1) gets another text and other numbers
+        resp = fake_post(url, json=json, timeout=timeout)
+        calls.append(1)
+        if len(calls) == 5:
+            choice = resp.data["choices"][0]
+            choice["message"]["content"] = "inna historia"
+            choice["logprobs"]["content"][0]["logprob"] = -0.3
+        return resp
+
+    monkeypatch.setattr(run_test.requests, "post", post)
     monkeypatch.setattr(sys, "argv", ["parallel_test.py", "--label", "pc", "--rounds", "2"])
     parallel_test.main()
     r = json.loads(next((tmp_path / "results" / "pc" / "parallel").glob("*.json")).read_text(encoding="utf-8"))
-    assert len(bodies) == 21 and r["total"] == 20 and r["equal_to_single"] == r["logprobs_equal_to_single"] == 20
-    assert r["texts"] == {r["single_request_hash"]: "historia 0"} and r["single_request_logprobs_hash"]
-    assert all(rd["logprobs_hashes"] == {r["single_request_logprobs_hash"]: 10} for rd in r["rounds"])
+    assert len(bodies) == 21 and r["total"] == 20 and r["equal_to_single"] == r["logprobs_equal_to_single"] == 19
+    assert sorted(r["texts"].values()) == ["historia 0", "inna historia"] and r["single_request_logprobs_hash"]
+    assert r["rounds"][1]["logprobs_hashes"] == {r["single_request_logprobs_hash"]: 10}
+    assert len(r["rounds"][0]["logprobs_hashes"]) == 2
 
 
 def test_results_table_shows_numbers_and_seed(tmp_path):
@@ -536,7 +557,7 @@ def test_results_table_shows_numbers_and_seed(tmp_path):
     rows = [line for line in results_table.build(tmp_path).splitlines() if line.startswith("| m |")]
     assert "numbers" not in rows[0] and "seed" not in rows[0]                  # all equal: nothing extra
     assert "= ref, **numbers ≠ ref**" in rows[1] and "**numbers differ**" in rows[1]
-    assert "| off, seed none |" in rows[2] and "**≠ ref**" in rows[2]
+    assert "| off, seed none |" in rows[2] and "**≠ ref**" in rows[2] and "numbers" not in rows[2]
 
 
 def test_save_reference_same_text_other_numbers_in_a_new_build(tmp_path):
@@ -547,13 +568,43 @@ def test_save_reference_same_text_other_numbers_in_a_new_build(tmp_path):
     other_numbers = {f"lpB{k}": [{"token": k, "logprob": -0.2, "top1": k, "alt": "t", "alt_logprob": -2.0}]
                      for k in summary}
     next_build = dict(MACHINE, server={"build_info": "b10-next"})
+    text_files = {p.name: p.read_bytes() for p in (tmp_path / "reference" / "texts").glob("*.json")}
     done = save_reference(tmp_path, reference, "m", next_build, False, other, results, other_numbers, "pc", STARTED)
     entries = reference["profiles"]["m"]["references"]
     assert done.startswith("Became the reference") and [e["llama_cpp"] for e in entries] == [["b9-new"], ["b10-next"]]
     assert entries[0]["hashes"] == entries[1]["hashes"]   # the same text in both builds
+    assert {p.name: p.read_bytes() for p in (tmp_path / "reference" / "texts").glob("*.json")} == text_files
     numbers = tmp_path / "reference" / "logprobs"
     assert json.loads((numbers / "lpB0.json").read_text(encoding="utf-8"))["tokens"] == other_numbers["lpB0"]
     assert json.loads((numbers / "lp0.json").read_text(encoding="utf-8"))["tokens"] == sequences["lp0"]   # kept
     same_numbers = dict(MACHINE, server={"build_info": "b11-same"})
     save_reference(tmp_path, reference, "m", same_numbers, False, summary, results, sequences, "pc", STARTED)
     assert json.loads((numbers / "lp0.json").read_text(encoding="utf-8"))["llama_cpp"] == ["b9-new", "b11-same"]
+
+
+def test_save_reference_refuses_a_reference_of_several_builds(tmp_path):
+    summary, results, sequences = repeatable_test()
+    hashes = {k: next(iter(s["hashes"])) for k, s in summary.items()}
+    reference = reference_root(tmp_path, [{"thinking": False, "llama_cpp": ["b8-old", "b9-new"], "hashes": hashes}])
+    with pytest.raises(ValueError, match="also covers b8-old"):
+        save_reference(tmp_path, reference, "m", MACHINE, False, summary, results, sequences, "pc", STARTED)
+    assert "logprobs_hashes" not in reference["profiles"]["m"]["references"][0]
+
+
+def test_parallel_test_without_logprobs_does_not_count_them_as_equal(tmp_path, monkeypatch):
+    import parallel_test
+    import run_test
+    fake_server(tmp_path, monkeypatch, slots=10)
+    fake_post = run_test.requests.post
+
+    def post(url, json=None, timeout=None):
+        resp = fake_post(url, json=json, timeout=timeout)
+        del resp.data["choices"][0]["logprobs"]
+        return resp
+
+    monkeypatch.setattr(run_test.requests, "post", post)
+    monkeypatch.setattr(sys, "argv", ["parallel_test.py", "--label", "pc", "--rounds", "1"])
+    parallel_test.main()
+    r = json.loads(next((tmp_path / "results" / "pc" / "parallel").glob("*.json")).read_text(encoding="utf-8"))
+    assert r["single_request_logprobs_hash"] is None and r["logprobs_equal_to_single"] is None
+    assert r["rounds"][0]["logprobs_hashes"] == {} and r["equal_to_single"] == 10

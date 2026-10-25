@@ -23,8 +23,8 @@ Windows 11 Pro, AMD Ryzen 9 9950X, 61.6 GB RAM, 2× RTX 5090 (driver 610.88, CUD
 - **Near-ties:** the temperature-0 answer has 8 tokens where the top two candidates are within 0.05 nat; the closest:
   "…Golden Retrieverem, którego" → "główn" p = 0.4210 vs "ul" p = 0.4205. In single requests it is always resolved
   the same way.
-- The restart and the first silent Ollama update (0.40.4 → 0.40.6, new llama.cpp build) did not change either hash;
-  the second update (0.40.7) did – see below.
+- The restart and the first silent Ollama update (0.40.4 → 0.40.6, new llama.cpp build) did not change the text
+  at either temperature (the numbers of 0.40.6 were not recorded); the second update (0.40.7) did – see below.
 
 ### Ollama update 0.40.6 → 0.40.7 (21 Oct): new text for both models
 
@@ -123,7 +123,7 @@ per model on GPU 0:
 - **The numbers show what the text hides.** The Gemma references (temperature 0) of Ollama 0.40.4
   (`138e66a98238`) and 0.40.7 (`179e3c96dff3`), both with logprobs in this repo, have the same text for the first
   43 tokens – but different numbers from token 0: the margin of the chosen token over the next candidate changed
-  by 0.24 nat (median over those 43 tokens); e.g. token 37 "Wiel" p = 0.441 → 0.581. The update changed the
+  by 0.23 nat (median over those 43 tokens); e.g. token 37 "Wiel" p = 0.441 → 0.581. The update changed the
   computation everywhere, the text survived until token 43. The text hash saw the change at token 43, the
   logprobs hash would have seen it at token 0.
 
@@ -143,9 +143,9 @@ on GPU 0 and the kit's own request – only the seed differs.
   act on.
 - **Temperature 1: every seed a different text**; seed 42 gives the reference `d4afe73e6d3c`. The seed does reach
   the server – it decides the draw.
-- So the two temperatures test different things: repeatability at temperature 0 shows that the *computation* is
-  stable (the same numbers, the same most likely token every time); repeatability at temperature 1 needs both –
-  stable computation *and* sampling that repeats with the seed.
+- So the two temperatures test different things: a repeatable text at temperature 0 shows that the most likely
+  token is the same every time (that the numbers themselves are the same shows the logprobs hash);
+  repeatability at temperature 1 needs both – stable computation *and* sampling that repeats with the seed.
 - **Without a seed** the server draws a new one for every request (its default seed 4294967295 = random):
   temperature 0 – the reference text every time, temperature 1 – a different text in every run (3 runs, 3 texts;
   qwen3:0.6b-q8_0, 25 Oct).

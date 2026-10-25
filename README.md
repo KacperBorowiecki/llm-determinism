@@ -29,7 +29,7 @@ changed the text in our tests:
 
 | what changed | result |
 |---|---|
-| llama.cpp build (Ollama update 0.40.6 → 0.40.7) | a different text, still repeatable (the update 0.40.4 → 0.40.6 changed nothing) |
+| llama.cpp build (Ollama update 0.40.6 → 0.40.7) | a different text, still repeatable (the update 0.40.4 → 0.40.6 kept the text) |
 | quantization (Q4_K_M instead of Q8_0) | a different text – effectively a different model |
 | thinking on / off | a different prompt, so a different text |
 
@@ -37,7 +37,7 @@ The input means the exact tokens: any change in the prompt – even one extra sp
 and can change the whole answer.
 
 Other changes may alter the probabilities, and through them the text, but are not shown here: another machine
-or GPU, distributed computation (the model split across several GPUs or machines – the sums are added in a
+or GPU model, distributed computation (the model split across several GPUs or machines – the sums are added in a
 different order) and computing several requests together (batching). The test therefore runs on one GPU, one
 request at a time. Batching is how cloud APIs work, so even temperature 0 does not guarantee the same answer
 twice there; `parallel_test.py` shows the effect on your own server.
