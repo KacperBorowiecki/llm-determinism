@@ -502,3 +502,28 @@ def test_parallel_test_saves_texts_and_logprobs(tmp_path, monkeypatch):
     assert len(bodies) == 21 and r["total"] == 20 and r["equal_to_single"] == r["logprobs_equal_to_single"] == 20
     assert r["texts"] == {r["single_request_hash"]: "historia 0"} and r["single_request_logprobs_hash"]
     assert all(rd["logprobs_hashes"] == {r["single_request_logprobs_hash"]: 10} for rd in r["rounds"])
+
+
+def test_results_table_shows_numbers_and_seed(tmp_path):
+    reference = {"protocol": {"seed": 42}, "profiles": {"m": {"references": [
+        {"llama_cpp": ["b1"], "hashes": {"0": "aaa", "1": "bbb"}, "logprobs_hashes": {"0": "lp0", "1": "lp1"}}]}}}
+
+    def record(name, seed, t0, t1):
+        return {"label": "pc", "profile": "m", "started": f"2026-10-25T1{name}:00:00+02:00", "note": name, "gpu": 0,
+                "seed": seed, "machine": {"os": "Linux", "gpus": [], "ollama": "0.40.7", "server": {"build_info": "b1"}},
+                "temperatures": {"0": t0, "1": t1}, "warnings": []}
+
+    def stats(h, lp, lp_repeatable=True):
+        return {"runs": 3, "hashes": {h: 3}, "repeatable": True, "logprobs_hashes": lp,
+                "logprobs_repeatable": lp_repeatable}
+
+    (tmp_path / "results" / "pc").mkdir(parents=True)
+    for name, rec in [("1", record("1", 42, stats("aaa", {"lp0": 3}), stats("bbb", {"lp1": 3}))),
+                      ("2", record("2", 42, stats("aaa", {"lpX": 3}), stats("bbb", {"lp1": 2, "lpY": 1}, False))),
+                      ("3", record("3", None, stats("aaa", {"lp0": 3}), stats("ccc", {"lpZ": 3})))]:
+        (tmp_path / "results" / "pc" / f"r{name}.json").write_text(json.dumps(rec), encoding="utf-8")
+    (tmp_path / "reference.json").write_text(json.dumps(reference), encoding="utf-8")
+    rows = [line for line in results_table.build(tmp_path).splitlines() if line.startswith("| m |")]
+    assert "numbers" not in rows[0] and "seed" not in rows[0]                  # all equal: nothing extra
+    assert "= ref, **numbers ≠ ref**" in rows[1] and "**numbers differ**" in rows[1]
+    assert "| off, seed none |" in rows[2] and "**≠ ref**" in rows[2]
