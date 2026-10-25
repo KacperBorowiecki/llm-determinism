@@ -34,7 +34,8 @@ Follow CLAUDE.md. Talk to the user in their language.
    Also ask: **thinking on or off** (default off). With thinking the model first writes its reasoning – a
    different, longer text; the answer and the thinking are hashed separately (`--thinking`). Origin references
    exist for all three profiles with and without thinking (gemma4:26b-a4b-it-q8_0 with thinking writes ~2 000 tokens
-   per answer).
+   per answer); for the current build they also hold the logprobs (the probability of every token), and the test
+   compares them too.
 5. **Model file:** `ollama list`. If the profile's `model` is missing: check free disk space and ask before
    `ollama pull <model>` (`download_gb` of the profile); if the pull hangs near the end, stop it and run it
    again (it resumes). Then check the file: the **first** `FROM` line of `ollama show <model> --modelfile` must
@@ -74,17 +75,27 @@ Follow CLAUDE.md. Talk to the user in their language.
    - Arguments: `--model <file> --host 127.0.0.1 --port 8090 --no-webui -ngl 999` + `server_args` from
      `reference.json`. If the model does not fit on the GPU, use a lower `-ngl` (partial offload: `--device mix`; no
      usable GPU: `-ngl 0`, `--device cpu`), tell the user, and put it into `--note`.
-   - Start it in the background; wait until `http://127.0.0.1:8090/health` returns 200; check the model is on the GPU
-     (NVIDIA: GPU memory in `nvidia-smi` grows by about the model size; otherwise generation speed).
+   - Start it in the background; wait until `http://127.0.0.1:8090/health` returns 200; check the model is on the
+     GPU (NVIDIA: GPU memory in `nvidia-smi` grows by about the model size; otherwise generation speed – on macOS
+     the user can also watch Activity Monitor → Window → GPU History).
      Unexpected CPU: stop and report.
 8. **Length:** ask – quick (10 + 10, default), standard (100 + 100), long (1000 + 1000). No time estimates in
    advance – the speed depends on the hardware; a quick test shows this machine's time per generation, use it
    if the user asks how long a longer test takes. For standard and long remind the user to disable sleep.
 9. **Run:** `python run_test.py --label <label> --profile <profile> --length <length> --device <gpu|cpu|mix> --gpu <index> [--thinking] --note "<context>"` – the note
    says what is special about this run: GPU/RAM split, other things running, and what happened since the last
-   test on this machine (restart, Ollama or driver update, date change, sleep during the run).
-10. **Stop the server.**
-11. **Report:** per temperature – repeatable? equal to the reference? warnings? The reference is the one for the
-    same llama.cpp build; if the build has no reference yet (a newer or older Ollama), the warning says so – the
+   test on this machine (restart, Ollama or driver update, date change, sleep during the run). `--save-raw`
+   (every run kept locally, not in git: the server's response and the answer as text; Qwen quick ≈ 1–2 MB, Gemma
+   long ≈ 650 MB, with thinking 2–3× more): offer it when the user wants the runs kept or to investigate a
+   difference – ask first, and for standard or long check free disk space. `--make-reference` only on the origin
+   PC and only when the user asks for it (CLAUDE.md).
+10. **Stop the server** – only the one you started, never all `llama-server` processes. Find it by its port:
+    Windows `Get-NetTCPConnection -LocalPort 8090 -State Listen` → `OwningProcess` (in Git Bash `$!` is not the
+    Windows PID); macOS / Linux `lsof -ti tcp:8090`. Check its command line (as in step 7) before stopping it.
+11. **Report:** per temperature – text and logprobs repeatable? Text and logprobs equal to the reference? Warnings?
+    `None` / `null` for logprobs means not checked, not a difference: for "logprobs equal reference" the
+    reference has no logprobs hash (older builds); for "logprobs repeatable" the server sent no logprobs (a warning
+    says so); result files older than 25 Oct have no logprobs fields at all. The reference is the one for the same
+    llama.cpp build; if the build has no reference yet (a newer or older Ollama), the warning says so – the
     repeatability result still holds, but a different hash is expected and is not a hardware difference.
     If something differs, explain what is known (warnings, divergence position) and offer to investigate. Suggest `determinism-save` to save the result.
