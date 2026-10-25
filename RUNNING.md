@@ -57,12 +57,13 @@ Windows:
 
 ```powershell
 $tag = "qwen3:0.6b-q8_0"                       # the model profile
+$gpu = "0"                                     # which GPU
 $lib = "$env:LOCALAPPDATA\Programs\Ollama\lib\ollama"
 $cuda = "$lib\cuda_v13"                        # cuda_v12 with an older NVIDIA driver
 $env:PATH = "$lib;$cuda;$env:PATH"             # without these four variables the server silently runs on the CPU
 $env:OLLAMA_LIBRARY_PATH = "$lib;$cuda"
 $env:GGML_BACKEND_PATH = "$cuda\ggml-cuda.dll"
-$env:CUDA_VISIBLE_DEVICES = "0"                # which GPU
+$env:CUDA_VISIBLE_DEVICES = $gpu
 $model = ((ollama show $tag --modelfile | Select-String '^FROM' | Select-Object -First 1).Line -replace '^FROM\s+', '')
 & "$lib\llama-server.exe" --model $model --host 127.0.0.1 --port 8090 --no-webui -ngl 999 `
     -c 8192 -np 1 --flash-attn auto -b 1024 -ub 1024 --split-mode none --jinja
@@ -89,22 +90,28 @@ of it on the CPU will most likely give a different text than the reference.
 
 ## 3. Terminal 2: run the test
 
+Variables live only in the terminal window where they are set, so the model (and on Windows the GPU) is set here
+again – the same values as in terminal 1.
+
 Windows:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .venv\Scripts\Activate.ps1
 $env:PYTHONUTF8 = "1"
+$tag = "qwen3:0.6b-q8_0"                       # the same model as in terminal 1
+$gpu = "0"                                     # the same GPU as in terminal 1
 $label = "my-pc"                               # this machine's label, e.g. origin-pc-2x5090-win11
-python run_test.py --label $label --profile qwen3:0.6b-q8_0 --length quick --gpu 0
+python run_test.py --label $label --profile $tag --length quick --gpu $gpu
 ```
 
 macOS:
 
 ```bash
 source .venv/bin/activate
+TAG=qwen3:0.6b-q8_0                            # the same model as in terminal 1
 LABEL=my-mac                                   # this machine's label, e.g. mac-m5pro-64gb
-python run_test.py --label "$LABEL" --profile qwen3:0.6b-q8_0 --length quick
+python run_test.py --label "$LABEL" --profile "$TAG" --length quick
 ```
 
 - `--label` – this machine, lowercase letters, digits, `.`, `_`, `-` (e.g. `mac-m5pro-64gb`);
@@ -137,8 +144,12 @@ The result is in `results/<label>/`, the table in `RESULTS.md`.
 ## Optional: 10 requests at once
 
 Start the server as in step 2, but with `-np 10 -c 20480` instead of `-c 8192 -np 1`, then in terminal 2 (with
-the label from step 3):
+the variables from step 3):
 
+```powershell
+python parallel_test.py --label $label --rounds 3 --temperature 0
 ```
-python parallel_test.py --label my-pc --rounds 3 --temperature 0
+
+```bash
+python parallel_test.py --label "$LABEL" --rounds 3 --temperature 0
 ```
