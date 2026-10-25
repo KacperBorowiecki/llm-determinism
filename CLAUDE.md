@@ -22,6 +22,8 @@ after run (repeatability), and whether it equals the reference hashes. See READM
   Windows: `PYTHONUTF8=1`.
 - The protocol (`reference.json`) and the hash function (`text_hash` in `run_test.py`) must not change without the
   user's consent.
+- `run_test.py --make-reference` writes references (`reference.json`, `reference/texts/`) – only on the origin PC and
+  only when the user asks for it.
 - Talk to the user in their language; everything in the repo is in English.
 
 ## Known pitfalls

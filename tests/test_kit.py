@@ -1,8 +1,12 @@
 import json
+from datetime import datetime
 from pathlib import Path
 
+import pytest
+
 import results_table
-from run_test import (divergence, get_profile, load_reference, pick_reference, summarize, text_hash,
+from run_test import (divergence, dump_reference_text, get_profile, load_reference, logprobs_hash,
+                      logprobs_tokens, pick_reference, reference_blockers, save_reference, summarize, text_hash,
                       warnings_for, write_result)
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,6 +25,15 @@ def test_reference_texts_rehash_to_reference_hashes():
             data = json.loads((ROOT / "reference" / "texts" / f"{short}.json").read_text(encoding="utf-8"))
             assert text_hash(data["text"]) == (short, data["sha256"]), f"{name} temperature {key}"
             assert "\r" not in data["text"]
+
+
+def test_reference_logprobs_rehash_to_reference_hashes():
+    for name, entry in all_references():
+        for key, lp in entry.get("logprobs_hashes", {}).items():
+            path = ROOT / "reference" / "texts" / f"{entry['hashes'][key]}.json"
+            data = json.loads(path.read_text(encoding="utf-8"))
+            assert logprobs_hash(data["tokens"]) == lp, f"{name} temperature {key}"
+            assert len(data["tokens"]) == entry["answer_tokens"][key] and list(data)[-1] == "tokens"
 
 
 def test_text_hash_uses_exact_bytes():
@@ -182,3 +195,143 @@ def test_compute_column_shows_gpu_cpu_or_mix():
     assert results_table.compute({"machine": machine, "device": "cpu"}) == "CPU: CPU Y"
     assert results_table.compute({"machine": machine, "gpu": 0, "device": "mix"}) == "mix – GPU 0: GPU A + CPU: CPU Y"
     assert results_table.compute({"machine": machine, "gpu": 0}) == "GPU 0: GPU A"   # before --device existed
+
+
+def lp_entry(token, logprob, top):
+    """One entry of choices[0].logprobs.content as llama-server sends it."""
+    return {"id": 7, "token": token, "bytes": [], "logprob": logprob,
+            "top_logprobs": [{"id": i, "token": t, "bytes": [], "logprob": p} for i, (t, p) in enumerate(top)]}
+
+
+def test_logprobs_tokens_like_the_reference_files():
+    top = [("O", -0.79), ("**", -1.85)]
+    first, second, outside, empty = logprobs_tokens([lp_entry("O", -0.79, top), lp_entry("**", -1.85, top),
+                                                     lp_entry("W", -2.27, top), lp_entry("x", -0.1, [])])
+    assert first == {"token": "O", "logprob": -0.79, "top1": "O", "alt": "**", "alt_logprob": -1.85}
+    assert second["top1"] == "O" and second["alt"] == "O"     # temperature 1: the second candidate was drawn
+    assert outside["top1"] == "O" and outside["alt"] == "O"   # drawn from outside both candidates
+    assert empty["top1"] is None and empty["alt"] is None and empty["alt_logprob"] is None
+    old = json.loads((ROOT / "reference" / "texts" / "138e66a98238.json").read_text(encoding="utf-8"))["tokens"][0]
+    assert list(first) == list(old)                           # the same keys in the same order as the old references
+
+
+def test_logprobs_hash_is_the_text_hash_of_the_numbers():
+    entries = [lp_entry("O", -0.7933734655380249, [("O", -0.7933734655380249), ("**", -1.85)])]
+    tokens = logprobs_tokens(entries)
+    h = logprobs_hash(tokens)
+    assert h == text_hash(json.dumps(tokens, ensure_ascii=False, separators=(",", ":")))[0]
+    assert logprobs_hash(logprobs_tokens(entries)) == h
+    assert logprobs_hash([dict(tokens[0], logprob=-0.79337346553802)]) != h   # one digit less
+    assert logprobs_hash([]) is None
+
+
+def test_summarize_logprobs_like_the_text():
+    ref = dict(REFERENCE, logprobs_hashes={"0": "lp0"})
+    same = [dict(fake(0.0, "same story"), logprobs_hash="lp0")] * 3
+    s = summarize(same, ref)["0"]
+    assert s["logprobs_repeatable"] and s["logprobs_equals_reference"] and s["logprobs_hashes"] == {"lp0": 3}
+    s = summarize(same[:2] + [dict(same[0], logprobs_hash="lp1")], ref)["0"]
+    assert s["repeatable"] and s["logprobs_repeatable"] is False and s["logprobs_equals_reference"] is False
+    s = summarize(same[:2] + [fake(0.0, "same story")], ref)["0"]     # one run without logprobs
+    assert s["logprobs_repeatable"] is None and s["logprobs_equals_reference"] is None
+    assert summarize(same, REFERENCE)["0"]["logprobs_equals_reference"] is None   # reference without logprobs
+    machine = {"server": {"model": "sha256-abc", "sampling": {"top_k": 64, "top_p": 0.95, "min_p": 0.05}}}
+    assert any("no logprobs" in w for w in warnings_for(machine, summarize([fake(0.0, "same story")], REFERENCE),
+                                                        REFERENCE, None))
+    assert not any("no logprobs" in w for w in warnings_for(machine, summarize(same, ref), REFERENCE, None))
+
+
+def test_reference_text_file_one_token_per_line():
+    data = {"hash": "abc", "text": "O to", "tokens": [{"token": "O", "logprob": -0.1}, {"token": " to", "logprob": 0.0}]}
+    text = dump_reference_text(data)
+    assert json.loads(text) == data and list(json.loads(text)) == ["hash", "text", "tokens"]
+    assert '  {"token":"O","logprob":-0.1},' in text.splitlines()
+    assert json.loads(dump_reference_text({"hash": "abc"})) == {"hash": "abc"}
+
+
+MACHINE = {"server": {"build_info": "b9-new"}, "ollama": "0.99.0"}
+STARTED = datetime(2026, 10, 25, 12, 0)
+
+
+def reference_root(tmp_path, entries):
+    """A copy of the reference files in tmp_path: one profile "m" with the given reference entries."""
+    reference = {"protocol": load_reference()["protocol"], "profiles": {"m": {"references": entries}}}
+    (tmp_path / "reference" / "texts").mkdir(parents=True)
+    (tmp_path / "reference.json").write_text(json.dumps(reference), encoding="utf-8")
+    return reference
+
+
+def repeatable_test():
+    """summary, results and logprobs sequences of a repeatable test (3 runs per temperature)."""
+    texts = {"0": "story zero", "1": "story one"}
+    results = [dict(fake(float(k), t), logprobs_hash=f"lp{k}") for k, t in texts.items()]
+    summary = {k: {"hashes": {text_hash(t)[0]: 3}, "logprobs_hashes": {f"lp{k}": 3}, "prompt_tokens": [29],
+                   "answer_tokens": [100]} for k, t in texts.items()}
+    sequences = {f"lp{k}": [{"token": k, "logprob": -0.1, "top1": k, "alt": "t", "alt_logprob": -2.0}] for k in texts}
+    return summary, results, sequences
+
+
+def test_save_reference_for_a_new_build(tmp_path):
+    reference = reference_root(tmp_path, [])
+    summary, results, sequences = repeatable_test()
+    done = save_reference(tmp_path, reference, "m", MACHINE, False, summary, results, sequences, "pc", STARTED)
+    assert done.startswith("Became the reference")
+    entry = json.loads((tmp_path / "reference.json").read_text(encoding="utf-8"))["profiles"]["m"]["references"][0]
+    assert entry["llama_cpp"] == ["b9-new"] and entry["ollama"] == ["0.99.0"] and entry["prompt_tokens"] == 29
+    assert entry["logprobs_hashes"] == {"0": "lp0", "1": "lp1"}
+    data = json.loads((tmp_path / "reference" / "texts" / f"{entry['hashes']['0']}.json").read_text(encoding="utf-8"))
+    assert data["text"] == "story zero" and data["tokens"] == sequences["lp0"] and data["tokens_cover"] == "answer"
+    assert text_hash(data["text"]) == (entry["hashes"]["0"], data["sha256"])
+
+
+def test_save_reference_adds_logprobs_and_never_overwrites(tmp_path):
+    summary, results, sequences = repeatable_test()
+    hashes = {k: next(iter(s["hashes"])) for k, s in summary.items()}
+    reference = reference_root(tmp_path, [{"thinking": False, "llama_cpp": ["b9-new"], "hashes": hashes}])
+    for k, h in hashes.items():   # the existing reference texts, without logprobs
+        (tmp_path / "reference" / "texts" / f"{h}.json").write_text(
+            json.dumps({"hash": h, "text": results[int(k)]["text"]}), encoding="utf-8")
+    done = save_reference(tmp_path, reference, "m", MACHINE, False, summary, results, sequences, "pc", STARTED)
+    assert done.startswith("Reference logprobs added")
+    data = json.loads((tmp_path / "reference" / "texts" / f"{hashes['1']}.json").read_text(encoding="utf-8"))
+    assert data["text"] == "story one" and data["tokens"] == sequences["lp1"]
+    done = save_reference(tmp_path, reference, "m", MACHINE, False, summary, results, sequences, "pc", STARTED)
+    assert done.startswith("Already the reference")
+    before = (tmp_path / "reference.json").read_text(encoding="utf-8")
+    other_logprobs = {k: dict(s, logprobs_hashes={"lpX": 3}) for k, s in summary.items()}
+    with pytest.raises(ValueError, match="other logprobs"):
+        save_reference(tmp_path, reference, "m", MACHINE, False, other_logprobs, results, sequences, "pc", STARTED)
+    other_texts = {k: dict(s, hashes={"000000000000": 3}) for k, s in summary.items()}
+    with pytest.raises(ValueError, match="other texts"):
+        save_reference(tmp_path, reference, "m", MACHINE, False, other_texts, results, sequences, "pc", STARTED)
+    assert (tmp_path / "reference.json").read_text(encoding="utf-8") == before
+
+
+def test_reference_blockers():
+    ok = {"0": {"repeatable": True, "logprobs_repeatable": True}, "1": {"repeatable": True, "logprobs_repeatable": True}}
+    assert reference_blockers(ok, [], "gpu") == []
+    assert reference_blockers(ok, ["sampling top_k = 40, reference 64"], "gpu") == ["sampling top_k = 40, reference 64"]
+    no_logprobs = dict(ok, **{"1": {"repeatable": True, "logprobs_repeatable": None}})
+    other_text = dict(ok, **{"0": {"repeatable": False, "logprobs_repeatable": True}})
+    assert any("not repeatable" in b for b in reference_blockers(no_logprobs, [], "gpu"))
+    assert any("not repeatable" in b for b in reference_blockers(other_text, [], "gpu"))
+    assert any("--device mix" in b for b in reference_blockers(ok, [], "mix"))
+
+
+def test_save_reference_with_thinking(tmp_path):
+    reference = reference_root(tmp_path, [])
+    summary, results, sequences = repeatable_test()
+    for r in results:
+        r["thinking_text"] = "thought: " + r["text"]
+        r["thinking_hash"] = text_hash(r["thinking_text"])[0]
+    for k, st in summary.items():
+        st["thinking_hashes"] = {results[int(k)]["thinking_hash"]: 3}
+    save_reference(tmp_path, reference, "m", MACHINE, True, summary, results, sequences, "pc", STARTED)
+    entry = reference["profiles"]["m"]["references"][0]
+    texts = tmp_path / "reference" / "texts"
+    answer = json.loads((texts / f"{entry['hashes']['0']}.json").read_text(encoding="utf-8"))
+    thought = json.loads((texts / f"{entry['thinking_hashes']['0']}.json").read_text(encoding="utf-8"))
+    assert entry["thinking"] and list(entry)[-1] == "logprobs_hashes"
+    assert answer["tokens_cover"] == "thinking + answer" and answer["tokens"] == sequences["lp0"]
+    assert answer["tokens_source"].startswith("m, thinking on")
+    assert thought["kind"] == "thinking" and thought["text"] == "thought: story zero" and "tokens" not in thought

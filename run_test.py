@@ -6,10 +6,17 @@ writes one result file: results/<label>/<start time>_<profile>[_thinking]_<lengt
 overwrite each other). Model profiles and their reference
 hashes (one set per llama.cpp build) are in reference.json.
 
+Next to the text, every run hashes the numbers behind it (logprobs_hash): for every generated token the chosen token
+and its logprob, the most likely candidate and the most likely other candidate with its logprob – equal hashes
+mean the probabilities were identical bit for bit. With
+--make-reference (origin PC only, on the user's request) a repeatable test without warnings becomes the reference
+for its build, logprobs included.
+
   python run_test.py --label my-pc                       # default model, quick: 10 + 10
   python run_test.py --label my-pc --profile gemma4:26b-a4b-it-q8_0 --length standard     # 100 + 100
   python run_test.py --label my-pc --thinking            # with the model's thinking (hashed separately)
   python run_test.py --label my-pc --runs 3 --note "-ngl 30 (partial offload)"
+  python run_test.py --label origin-pc --runs 3 --make-reference   # origin PC: this test becomes the reference
 """
 import argparse
 import collections
@@ -37,6 +44,36 @@ def text_hash(text: str) -> tuple[str, str]:
     Returns (short hash = first 12 hex characters, full hex digest)."""
     full = hashlib.sha256(text.encode("utf-8")).hexdigest()
     return full[:12], full
+
+
+def logprobs_tokens(content: list[dict]) -> list[dict]:
+    """The probabilities behind a generation, from the server's `choices[0].logprobs.content` (one entry per
+    generated token; with thinking it covers the thinking and the answer), in the format of the reference files:
+    the chosen token and its logprob, the most likely candidate (`top1`) and the most likely candidate other than
+    the chosen token (`alt`). At temperature 1 the chosen token may be neither of the two candidates."""
+    tokens = []
+    for e in content:
+        top = e.get("top_logprobs") or []
+        alt = next((t for t in top if t.get("token") != e.get("token")), None)
+        tokens.append({"token": e.get("token"), "logprob": e.get("logprob"),
+                       "top1": top[0].get("token") if top else None,
+                       "alt": alt.get("token") if alt else None, "alt_logprob": alt.get("logprob") if alt else None})
+    return tokens
+
+
+def logprobs_hash(tokens: list[dict]) -> str | None:
+    """The hash of the probabilities, computed like the text hash: text_hash of the token list as compact JSON.
+    Equal hashes = every logprob identical bit for bit. None if the server sent no logprobs."""
+    return text_hash(json.dumps(tokens, ensure_ascii=False, separators=(",", ":")))[0] if tokens else None
+
+
+def dump_reference_text(data: dict) -> str:
+    """A reference text file: indent=1 as before, but `tokens` last and one token per line (~1 000 tokens)."""
+    text = json.dumps({k: v for k, v in data.items() if k != "tokens"}, ensure_ascii=False, indent=1)
+    if "tokens" not in data:
+        return text + "\n"
+    lines = ",\n".join("  " + json.dumps(t, ensure_ascii=False, separators=(",", ":")) for t in data["tokens"])
+    return text[:-2] + ",\n \"tokens\": [\n" + lines + "\n ]\n}\n"
 
 
 def load_reference() -> dict:
@@ -97,6 +134,14 @@ def summarize(results: list[dict], reference: dict) -> dict:
             stats["thinking_reference_hash"] = thinking_ref
             stats["repeatable"] = stats["repeatable"] and len(thinking_counts) == 1
             stats["equals_reference"] = stats["equals_reference"] and set(thinking_counts) == {thinking_ref}
+        # logprobs: like the text; None = some run has no logprobs (missing data, not "the numbers differ")
+        lp_counts = collections.Counter(r.get("logprobs_hash") for r in rs)
+        lp_ref = reference.get("logprobs_hashes", {}).get(key)
+        missing = None in lp_counts
+        stats["logprobs_hashes"] = {h: c for h, c in lp_counts.most_common() if h is not None}
+        stats["logprobs_repeatable"] = None if missing else len(lp_counts) == 1
+        stats["logprobs_reference_hash"] = lp_ref
+        stats["logprobs_equals_reference"] = None if missing or lp_ref is None else set(lp_counts) == {lp_ref}
         ref_text = reference_text(ref_hash)
         if main_hash != ref_hash and ref_text is not None:
             main_text = next(r["text"] for r in rs if r["hash"] == main_hash)
@@ -122,6 +167,9 @@ def warnings_for(machine: dict, summary: dict, reference: dict, build_after: str
         if s.get("finish_reasons", {}).get("length"):
             warn.append(f"temperature {key}: {s['finish_reasons']['length']} generation(s) hit max_tokens "
                         f"(text cut off)")
+    for key, s in summary.items():
+        if "logprobs_repeatable" in s and s["logprobs_repeatable"] is None:
+            warn.append(f"temperature {key}: the server returned no logprobs for some runs (numbers not checked)")
     if build_after and build_after != server.get("build_info"):
         warn.append(f"llama-server build changed during the test: {server.get('build_info')} -> {build_after}")
     return warn
@@ -142,10 +190,11 @@ def ask(url: str, protocol: dict, temperature: float, thinking: bool = False, ti
     message = d["choices"][0]["message"]
     text = message.get("content") or ""
     short, full = text_hash(text)
+    tokens = logprobs_tokens((d["choices"][0].get("logprobs") or {}).get("content") or [])
     out = {"hash": short, "sha256": full, "text": text, "answer_tokens": d["usage"]["completion_tokens"],
            "prompt_tokens": d["usage"]["prompt_tokens"], "finish_reason": d["choices"][0].get("finish_reason"),
            "tok_per_s": d.get("timings", {}).get("predicted_per_second"), "seconds": round(time.time() - t0, 2),
-           "thinking_hash": None}
+           "thinking_hash": None, "logprobs_hash": logprobs_hash(tokens), "logprobs": tokens}
     if thinking:
         thought = message.get("reasoning_content") or ""
         out["thinking_text"] = thought
@@ -166,6 +215,75 @@ def write_result(base: Path, record: dict) -> Path:
             return out
         except FileExistsError:
             continue
+
+
+def reference_blockers(summary: dict, problems: list[str], device: str) -> list[str]:
+    """Why a test may not become a reference (--make-reference): warnings other than "no reference for this
+    build", text or logprobs not repeatable (or missing), the model not entirely on the GPU. Empty = it may."""
+    blockers = list(problems) + [f"temperature {k}: text or logprobs not repeatable" for k, st in summary.items()
+                                 if not (st["repeatable"] and st["logprobs_repeatable"])]
+    if device != "gpu":
+        blockers.append(f"--device {device}: references come from runs with all layers on the GPU")
+    return blockers
+
+
+def save_reference(root: Path, reference: dict, profile_name: str, machine: dict, thinking: bool, summary: dict,
+                   results: list[dict], sequences: dict, label: str, started: datetime) -> str:
+    """--make-reference: store a repeatable test (text and logprobs, no warnings – checked by the caller) as the
+    reference for its model profile, llama.cpp build and thinking mode, logprobs included; writes reference.json
+    and reference/texts/. Returns what was done. ValueError if this build already has a reference with other
+    hashes – nothing is overwritten."""
+    build, profile = machine["server"]["build_info"], reference["profiles"][profile_name]
+    hashes = {k: next(iter(st["hashes"])) for k, st in summary.items()}
+    thinking_hashes = {k: next(iter(st["thinking_hashes"])) for k, st in summary.items()} if thinking else None
+    logprobs_hashes = {k: next(iter(st["logprobs_hashes"])) for k, st in summary.items()}
+    entry, exact = pick_reference(profile, build, thinking)
+    if exact:
+        if entry["hashes"] != hashes or (thinking and entry.get("thinking_hashes") != thinking_hashes):
+            raise ValueError(f"build {build} already has a reference with other texts – not overwritten")
+        if entry.get("logprobs_hashes"):
+            if entry["logprobs_hashes"] != logprobs_hashes:
+                raise ValueError(f"build {build} already has a reference with other logprobs – not overwritten")
+            return "Already the reference for this build."
+        entry["logprobs_hashes"] = logprobs_hashes
+        done = "Reference logprobs added for this build."
+    else:
+        prompt_tokens = {t for st in summary.values() for t in st["prompt_tokens"]}
+        if len(prompt_tokens) != 1:
+            raise ValueError(f"prompt tokens differ between the temperatures: {sorted(prompt_tokens)}")
+        entry = {"thinking": thinking, "llama_cpp": [build], "ollama": [machine.get("ollama")],
+                 "prompt_tokens": prompt_tokens.pop(), "hashes": hashes}
+        if thinking:
+            entry["thinking_hashes"] = thinking_hashes
+        entry["answer_tokens"] = {k: st["answer_tokens"][0] for k, st in summary.items()}
+        entry["logprobs_hashes"] = logprobs_hashes   # last, as when added to an existing reference
+        profile["references"].append(entry)
+        done = "Became the reference for this build."
+    protocol = reference["protocol"]
+    source = (f"{profile_name}, thinking {'on' if thinking else 'off'}, Ollama {machine.get('ollama')} ({build}); "
+              f"{label}, {started:%Y-%m-%dT%H%M}")
+    for key in summary:
+        files = [("answer", hashes[key], next(r["text"] for r in results if r["hash"] == hashes[key]))]
+        if thinking:
+            files.append(("thinking", thinking_hashes[key],
+                          next(r["thinking_text"] for r in results if r["thinking_hash"] == thinking_hashes[key])))
+        for kind, short, text in files:
+            path = root / "reference" / "texts" / f"{short}.json"
+            data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {
+                "hash": short, "sha256": text_hash(text)[1], "kind": kind, "temperature": int(float(key)),
+                "seed": protocol["seed"], "prompt": protocol["prompt"], "thinking": thinking, "source": source,
+                "text": text}
+            if kind == "answer" and "tokens" not in data:   # tokens already there: the same text in another build
+                data["tokens_source"] = source
+                data["tokens_cover"] = "thinking + answer" if thinking else "answer"
+                data["tokens"] = sequences[logprobs_hashes[key]]
+            elif path.exists():
+                continue
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(dump_reference_text(data), encoding="utf-8", newline="\n")
+    (root / "reference.json").write_text(json.dumps(reference, ensure_ascii=False, indent=1) + "\n",
+                                         encoding="utf-8", newline="\n")
+    return done
 
 
 def run_cmd(cmd: list[str]) -> str:
@@ -250,6 +368,9 @@ def main() -> None:
     ap.add_argument("--device", choices=["gpu", "cpu", "mix"], default="gpu",
                     help="where the model runs: gpu (all layers, -ngl 999), cpu (-ngl 0), mix (partial offload)")
     ap.add_argument("--note", default="", help="free text, e.g. the GPU/RAM split or anything unusual")
+    ap.add_argument("--make-reference", action="store_true",
+                    help="origin PC only, on the user's request: a repeatable test without warnings becomes the "
+                         "reference for its build (texts, logprobs)")
     args = ap.parse_args()
     if not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", args.label):
         ap.error("label: lowercase letters, digits, '.', '_' and '-' only")
@@ -269,36 +390,62 @@ def main() -> None:
     print(f"{args.label}: {profile_name}, thinking {'on' if args.thinking else 'off'}, llama-server {build}, "
           f"{n} runs per temperature; reference: {'this build' if exact else 'none for this build (known: ' + known + ')'}")
 
-    results = []
+    results, sequences = [], {}   # sequences (--make-reference only): one logprobs token list per unique hash
     for temp in protocol["temperatures"]:
         ref_hash = ref["hashes"].get(f"{temp:g}")
         thinking_ref = ref.get("thinking_hashes", {}).get(f"{temp:g}")
         for i in range(1, n + 1):
             r = ask(args.url, protocol, float(temp), args.thinking)
+            logprobs = r.pop("logprobs")   # the hash stays in r; the numbers only for --make-reference
+            if args.make_reference:
+                sequences.setdefault(r["logprobs_hash"], logprobs)
             r.update(temperature=float(temp), run=i, time=datetime.now().astimezone().isoformat(timespec="seconds"))
             results.append(r)
             same = r["hash"] == ref_hash and (not args.thinking or r["thinking_hash"] == thinking_ref)
             thought = f" + thinking {r['thinking_hash']}" if args.thinking else ""
             print(f"  temp {temp:g}  run {i:>4}/{n}: {r['hash']}{thought} {'=' if same else '≠'} reference  "
+                  f"logprobs {r['logprobs_hash']}  "
                   f"{r['answer_tokens']} tok  {r['seconds']} s", flush=True)
     build_after = requests.get(f"{args.url}/props", timeout=10).json().get("build_info")
 
-    summary = summarize(results, ref)
-    # the reference entry may carry its own prompt token count (e.g. thinking on renders a shorter prompt)
-    expected = {**profile, **({"prompt_tokens": ref["prompt_tokens"]} if "prompt_tokens" in ref else {})}
-    warnings = warnings_for(machine, summary, expected, build_after)
-    if not exact:
-        warnings.append(f"no reference hashes for llama.cpp build {build} ({profile_name}, thinking "
-                        f"{'on' if args.thinking else 'off'}); known: {known}")
+    def evaluate(ref: dict, exact: bool) -> tuple[dict, list[str], list[str]]:
+        """Summary, all warnings, and the warnings other than \"no reference for this build\"."""
+        summary = summarize(results, ref)
+        # the reference entry may carry its own prompt token count (e.g. thinking on renders a shorter prompt)
+        expected = {**profile, **({"prompt_tokens": ref["prompt_tokens"]} if "prompt_tokens" in ref else {})}
+        problems = warnings_for(machine, summary, expected, build_after)
+        warnings = list(problems)
+        if not exact:
+            warnings.append(f"no reference hashes for llama.cpp build {build} ({profile_name}, thinking "
+                            f"{'on' if args.thinking else 'off'}); known: {', '.join(ref['llama_cpp']) or 'none'}")
+        return summary, warnings, problems
+
+    summary, warnings, problems = evaluate(ref, exact)
+    note, not_saved, done = args.note, [], ""
+    if args.make_reference:
+        not_saved = reference_blockers(summary, problems, args.device)
+        if not not_saved:
+            try:
+                reference = load_reference()   # fresh from disk: another test may have saved a reference meanwhile
+                profile = reference["profiles"][profile_name]
+                done = save_reference(ROOT, reference, profile_name, machine, args.thinking, summary, results,
+                                      sequences, args.label, started)
+                ref, exact = pick_reference(profile, build, args.thinking)   # compare with it from now on
+                summary, warnings, problems = evaluate(ref, exact)
+                note = f"{note} {done}".strip()
+            except (ValueError, OSError) as e:   # the result is written anyway
+                not_saved = [str(e)]
+        if not_saved:
+            note = f"{note} Not saved as reference: {'; '.join(not_saved)}.".strip()
     record = {"schema": 1, "label": args.label, "profile": profile_name, "thinking": args.thinking,
               "reference_llama_cpp": ref["llama_cpp"],
               "reference_exact": exact, "started": started.isoformat(timespec="seconds"),
               "finished": datetime.now().astimezone().isoformat(timespec="seconds"), "length": length,
-              "runs_per_temperature": n, "device": args.device, "gpu": args.gpu, "note": args.note, "machine": machine, "temperatures": summary,
+              "runs_per_temperature": n, "device": args.device, "gpu": args.gpu, "note": note, "machine": machine, "temperatures": summary,
               "warnings": warnings,
               "texts": {r["hash"]: r["text"] for r in results},
-              "runs": [{k: r[k] for k in ("temperature", "run", "time", "hash", "thinking_hash", "answer_tokens",
-                                          "finish_reason", "seconds")} for r in results]}
+              "runs": [{k: r[k] for k in ("temperature", "run", "time", "hash", "thinking_hash", "logprobs_hash",
+                                          "answer_tokens", "finish_reason", "seconds")} for r in results]}
     if args.thinking:
         record["thinking_texts"] = {r["thinking_hash"]: r["thinking_text"] for r in results}
     mode = "_thinking" if args.thinking else ""
@@ -308,11 +455,16 @@ def main() -> None:
     print()
     for key, s in summary.items():
         print(f"temperature {key}: {len(s['hashes'])} unique of {s['runs']} – repeatable: {s['repeatable']}, "
-              f"equals reference: {s['equals_reference']}  {s['hashes']}"
+              f"logprobs repeatable: {s['logprobs_repeatable']}, equals reference: {s['equals_reference']}, "
+              f"logprobs equal reference: {s['logprobs_equals_reference']}  {s['hashes']}"
               + (f"  thinking {s['thinking_hashes']}" if "thinking_hashes" in s else ""))
     for w in record["warnings"]:
         print(f"WARNING: {w}")
     print(f"Result: {out.relative_to(ROOT)}")
+    if args.make_reference:
+        if not_saved:
+            sys.exit("NOT SAVED AS REFERENCE: " + "; ".join(not_saved))
+        print(f"Reference: {done}")
 
 
 if __name__ == "__main__":
