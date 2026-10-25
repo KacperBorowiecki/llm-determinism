@@ -140,7 +140,10 @@ on GPU 0 and the kit's own request – only the seed differs.
 - So the two temperatures test different things: repeatability at temperature 0 shows that the *computation* is
   stable (the same numbers, the same most likely token every time); at temperature 1, that the *seeded
   sampling* repeats.
-- Ad-hoc test, not in `results/`; a script for it is planned.
+- **Without a seed** the server draws a new one for every request (its default seed 4294967295 = random):
+  temperature 0 – the reference text every time, temperature 1 – a different text in every run (3 runs, 3 texts;
+  qwen3:0.6b-q8_0, 25 Oct).
+- Ad-hoc tests, not in `results/`; `run_test.py --seed 7` or `--seed none` repeats them.
 
 ## Batching: several requests computed together
 

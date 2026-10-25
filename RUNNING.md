@@ -114,6 +114,9 @@ python run_test.py --label "$LABEL" --profile qwen3:0.6b-q8_0 --length quick
 - `--device gpu | cpu | mix` – where the model runs; `--gpu <index>` – which GPU (Windows: the same index as
   `CUDA_VISIBLE_DEVICES`); both are recorded in the result;
 - `--note "…"` – anything unusual (another program running, a restart or an update since the last test);
+- `--seed 7` / `--seed none` – a demo of what the seed does: another seed, or none (the server then draws a new one
+  for every request). At temperature 0 the text stays the reference, at temperature 1 it changes; such results
+  are marked (`_seed7` / `_noseed` in the file name, a warning) and never become references;
 - `--save-raw` – keep every run locally in `results/<label>/raw/` (not in git): the server's full response byte for
   byte and the final answer as text, two files per run. Qwen quick ≈ 1–2 MB, Gemma quick ≈ 7 MB, Gemma long ≈ 650 MB;
   with thinking 2–3× more. An interrupted test keeps the runs written so far (without a result file).

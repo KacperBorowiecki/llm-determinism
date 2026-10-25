@@ -18,6 +18,7 @@ response byte for byte and the final answer as text.
   python run_test.py --label my-pc --profile gemma4:26b-a4b-it-q8_0 --length standard     # 100 + 100
   python run_test.py --label my-pc --thinking            # with the model's thinking (hashed separately)
   python run_test.py --label my-pc --runs 3 --note "-ngl 30 (partial offload)"
+  python run_test.py --label my-pc --runs 3 --seed none   # demo: no seed – temperature 0 still repeats, 1 does not
   python run_test.py --label origin-pc --runs 3 --make-reference   # origin PC: this test becomes the reference
 """
 import argparse
@@ -185,6 +186,8 @@ def ask(url: str, protocol: dict, temperature: float, thinking: bool = False, ti
             "max_tokens": protocol["max_tokens_thinking"] if thinking else protocol["max_tokens"],
             "logprobs": True, "top_logprobs": 2, "cache_prompt": False,
             "chat_template_kwargs": {"enable_thinking": thinking}}
+    if protocol["seed"] is None:   # --seed none: the server draws a new seed for every request
+        del body["seed"]
     started, t0 = datetime.now().astimezone(), time.time()
     r = requests.post(f"{url}/v1/chat/completions", json=body, timeout=(10, timeout_s))
     r.raise_for_status()
@@ -392,6 +395,8 @@ def main() -> None:
     ap.add_argument("--device", choices=["gpu", "cpu", "mix"], default="gpu",
                     help="where the model runs: gpu (all layers, -ngl 999), cpu (-ngl 0), mix (partial offload)")
     ap.add_argument("--note", default="", help="free text, e.g. the GPU/RAM split or anything unusual")
+    ap.add_argument("--seed", help="a demo of what the seed does, instead of the protocol's seed: a whole number, or "
+                                   "'none' (the server draws a new one for every request); never a reference")
     ap.add_argument("--save-raw", action="store_true",
                     help="keep every run locally in results/<label>/raw/ (not in git): the server's response "
                          "byte for byte and the final answer as text")
@@ -401,11 +406,17 @@ def main() -> None:
     args = ap.parse_args()
     if not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", args.label):
         ap.error("label: lowercase letters, digits, '.', '_' and '-' only")
+    if args.seed is not None and args.seed != "none" and not re.fullmatch(r"\d+", args.seed):
+        ap.error("seed: a whole number or 'none'")
 
     reference = load_reference()
     if args.profile and args.profile not in reference["profiles"]:
         ap.error(f"profile: one of {', '.join(reference['profiles'])}")
     protocol = reference["protocol"]
+    protocol_seed = protocol["seed"]
+    if args.seed is not None:   # --seed: a demo; the references use the protocol's seed
+        protocol = {**protocol, "seed": None if args.seed == "none" else int(args.seed)}
+    seed_text = "none" if protocol["seed"] is None else str(protocol["seed"])
     profile_name, profile = get_profile(reference, args.profile)
     n = args.runs or LENGTHS[args.length]
     length = f"custom{n}" if args.runs else args.length
@@ -414,11 +425,13 @@ def main() -> None:
     ref, exact = pick_reference(profile, build, args.thinking)
     started = datetime.now().astimezone()
     known = ", ".join(ref["llama_cpp"]) or "none"
-    print(f"{args.label}: {profile_name}, thinking {'on' if args.thinking else 'off'}, llama-server {build}, "
+    print(f"{args.label}: {profile_name}, thinking {'on' if args.thinking else 'off'}, seed {seed_text}, "
+          f"llama-server {build}, "
           f"{n} runs per temperature; reference: {'this build' if exact else 'none for this build (known: ' + known + ')'}")
 
     mode = "_thinking" if args.thinking else ""
-    base_name = f"{started:%Y-%m-%dT%H%M}_{profile_name.replace(':', '-')}{mode}_{length}"
+    seed_tag = "" if args.seed is None else ("_noseed" if protocol["seed"] is None else f"_seed{protocol['seed']}")
+    base_name = f"{started:%Y-%m-%dT%H%M}_{profile_name.replace(':', '-')}{mode}{seed_tag}_{length}"
     run_id, raw_dir, raw_error, width = secrets.token_hex(3), None, None, len(str(n))
     if args.save_raw:   # the folder gets the result file's name; created exclusively, like the result file
         (ROOT / "results" / args.label / "raw").mkdir(parents=True, exist_ok=True)
@@ -465,12 +478,17 @@ def main() -> None:
         if not exact:
             warnings.append(f"no reference hashes for llama.cpp build {build} ({profile_name}, thinking "
                             f"{'on' if args.thinking else 'off'}); known: {', '.join(ref['llama_cpp']) or 'none'}")
+        if args.seed is not None:
+            warnings.append(f"seed {seed_text} instead of the protocol's {protocol_seed}: at temperature 0 the "
+                            f"reference still applies, at temperature 1 a different text is expected")
         return summary, warnings, problems
 
     summary, warnings, problems = evaluate(ref, exact)
     note, not_saved, done = args.note, [], ""
     if args.make_reference:
         not_saved = reference_blockers(summary, problems, args.device)
+        if args.seed is not None:
+            not_saved.append(f"--seed {seed_text}: references use the protocol's seed")
         if not not_saved:
             try:
                 reference = load_reference()   # fresh from disk: another test may have saved a reference meanwhile
@@ -485,6 +503,7 @@ def main() -> None:
         if not_saved:
             note = f"{note} Not saved as reference: {'; '.join(not_saved)}.".strip()
     record = {"schema": 1, "label": args.label, "profile": profile_name, "thinking": args.thinking,
+              "seed": protocol["seed"],
               "reference_llama_cpp": ref["llama_cpp"],
               "reference_exact": exact, "started": started.isoformat(timespec="seconds"),
               "finished": datetime.now().astimezone().isoformat(timespec="seconds"), "length": length,

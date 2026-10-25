@@ -387,16 +387,20 @@ class FakeResponse:
         pass
 
 
-def test_main_with_save_raw_against_a_fake_server(tmp_path, monkeypatch):
+def run_main(tmp_path, monkeypatch, *args):
+    """run_test.main() against a fake llama-server, with tmp_path as the repo root. Returns the newest result, its
+    path, the request bodies sent, the responses and the exit code."""
     import run_test
-    (tmp_path / "reference.json").write_text((ROOT / "reference.json").read_text(encoding="utf-8"), encoding="utf-8")
+    if not (tmp_path / "reference.json").exists():
+        (tmp_path / "reference.json").write_text((ROOT / "reference.json").read_text(encoding="utf-8"), encoding="utf-8")
     monkeypatch.setattr(run_test, "ROOT", tmp_path)
     profile = load_reference()["profiles"]["qwen3:0.6b-q8_0"]
     props = {"build_info": "b9-test", "model_path": "models/" + profile["model_file"], "total_slots": 1,
              "default_generation_settings": {"n_ctx": 8192, "params": dict(profile["sampling"])}}
-    sent = []
+    bodies, sent = [], []
 
     def post(url, json=None, timeout=None):
+        bodies.append(json)
         body = {"id": f"chatcmpl-{len(sent)}", "created": 1792924458 + len(sent),
                 "usage": {"completion_tokens": 1, "prompt_tokens": 29}, "timings": {"predicted_per_second": 100.0},
                 "choices": [{"finish_reason": "stop", "message": {"content": f"historia {json['temperature']:g}"},
@@ -407,10 +411,18 @@ def test_main_with_save_raw_against_a_fake_server(tmp_path, monkeypatch):
     monkeypatch.setattr(run_test.requests, "get", lambda url, timeout=None: FakeResponse(props))
     monkeypatch.setattr(run_test.requests, "post", post)
     monkeypatch.setattr(run_test, "run_cmd", lambda cmd: "ollama version is 0.99.0" if cmd[0] == "ollama" else "")
-    monkeypatch.setattr(sys, "argv", ["run_test.py", "--label", "pc", "--runs", "2", "--save-raw"])
-    run_test.main()
-    result = next((tmp_path / "results" / "pc").glob("*.json"))
-    r = json.loads(result.read_text(encoding="utf-8"))
+    monkeypatch.setattr(sys, "argv", ["run_test.py", "--label", "pc", *args])
+    code = 0
+    try:
+        run_test.main()
+    except SystemExit as e:
+        code = e.code
+    result = max((tmp_path / "results" / "pc").glob("*.json"), key=lambda p: p.stat().st_mtime_ns)
+    return json.loads(result.read_text(encoding="utf-8")), result, bodies, sent, code
+
+
+def test_main_with_save_raw_against_a_fake_server(tmp_path, monkeypatch):
+    r, result, _, sent, _ = run_main(tmp_path, monkeypatch, "--runs", "2", "--save-raw")
     raw_dir = result.parent / r["raw_dir"]
     assert raw_dir.name == result.stem and list(r).index("raw_dir") == list(r).index("note") + 1
     assert sorted(p.name for p in raw_dir.iterdir()) == [f"t{t}_run{i}.{e}" for t in (0, 1) for i in (1, 2)
@@ -419,3 +431,15 @@ def test_main_with_save_raw_against_a_fake_server(tmp_path, monkeypatch):
     assert [x["response_id"] for x in r["runs"]] == [f"chatcmpl-{i}" for i in range(4)]
     assert all(x["started"] <= x["finished"] and "raw" not in x and x["logprobs_hash"] for x in r["runs"])
     assert all(s["repeatable"] and s["logprobs_repeatable"] for s in r["temperatures"].values())
+
+
+def test_seed_option_changes_only_the_seed_in_the_request(tmp_path, monkeypatch):
+    r, path, bodies, _, _ = run_main(tmp_path, monkeypatch, "--runs", "2", "--seed", "none")
+    assert all("seed" not in b for b in bodies) and r["seed"] is None and "_noseed_" in path.name
+    assert any("instead of the protocol's" in w for w in r["warnings"])
+    r, path, bodies, _, code = run_main(tmp_path, monkeypatch, "--runs", "2", "--seed", "7", "--make-reference")
+    assert all(b["seed"] == 7 for b in bodies) and r["seed"] == 7 and "_seed7_" in path.name
+    assert code not in (0, None) and "Not saved as reference" in r["note"]
+    r, path, bodies, _, _ = run_main(tmp_path, monkeypatch, "--runs", "1")   # no --seed: the protocol's seed
+    assert all(b["seed"] == 42 for b in bodies) and r["seed"] == 42 and "seed" not in path.name
+    assert not any("instead of the protocol's" in w for w in r["warnings"])
