@@ -116,7 +116,7 @@ per model on GPU 0:
 - **All 12 reference sequences** (3 models × thinking off / on × temperature 0 / 1), 3 runs each: the texts equal
   the references, and the logprobs are identical in every run – bit for bit, at temperature 0 and 1. They are now
   part of the references (`logprobs_hashes` in `reference.json`, the probabilities token by token in
-  `reference/texts/`).
+  `reference/logprobs/`).
 - **A quick test afterwards** (qwen3:0.6b-q8_0, 10 + 10): texts and logprobs equal to the reference.
 - So the same text does not just happen to come out of slightly different numbers – the numbers behind every
   token are the same.

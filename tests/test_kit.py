@@ -32,10 +32,15 @@ def test_reference_texts_rehash_to_reference_hashes():
 def test_reference_logprobs_rehash_to_reference_hashes():
     for name, entry in all_references():
         for key, lp in entry.get("logprobs_hashes", {}).items():
-            path = ROOT / "reference" / "texts" / f"{entry['hashes'][key]}.json"
-            data = json.loads(path.read_text(encoding="utf-8"))
-            assert logprobs_hash(data["tokens"]) == lp, f"{name} temperature {key}"
-            assert len(data["tokens"]) == entry["answer_tokens"][key] and list(data)[-1] == "tokens"
+            data = json.loads((ROOT / "reference" / "logprobs" / f"{lp}.json").read_text(encoding="utf-8"))
+            assert data["text_hash"] == entry["hashes"][key], f"{name} temperature {key}"
+            assert set(entry["llama_cpp"]) <= set(data["llama_cpp"])
+            assert len(data["tokens"]) == entry["answer_tokens"][key]
+    for path in (ROOT / "reference" / "logprobs").glob("*.json"):   # the name is the hash of the numbers inside
+        data = json.loads(path.read_text(encoding="utf-8"))
+        assert logprobs_hash(data["tokens"]) == path.stem == data["logprobs_hash"] and list(data)[-1] == "tokens"
+    for path in (ROOT / "reference" / "texts").glob("*.json"):      # the text files hold only the text
+        assert "tokens" not in json.loads(path.read_text(encoding="utf-8")), path.name
 
 
 def test_text_hash_uses_exact_bytes():
@@ -213,7 +218,8 @@ def test_logprobs_tokens_like_the_reference_files():
     assert second["top1"] == "O" and second["alt"] == "O"     # temperature 1: the second candidate was drawn
     assert outside["top1"] == "O" and outside["alt"] == "O"   # drawn from outside both candidates
     assert empty["top1"] is None and empty["alt"] is None and empty["alt_logprob"] is None
-    old = json.loads((ROOT / "reference" / "texts" / "138e66a98238.json").read_text(encoding="utf-8"))["tokens"][0]
+    files = [json.loads(p.read_text(encoding="utf-8")) for p in (ROOT / "reference" / "logprobs").glob("*.json")]
+    old = next(f for f in files if f["text_hash"] == "138e66a98238")["tokens"][0]   # Ollama 0.40.4
     assert list(first) == list(old)                           # the same keys in the same order as the old references
 
 
@@ -282,8 +288,11 @@ def test_save_reference_for_a_new_build(tmp_path):
     assert entry["llama_cpp"] == ["b9-new"] and entry["ollama"] == ["0.99.0"] and entry["prompt_tokens"] == 29
     assert entry["logprobs_hashes"] == {"0": "lp0", "1": "lp1"}
     data = json.loads((tmp_path / "reference" / "texts" / f"{entry['hashes']['0']}.json").read_text(encoding="utf-8"))
-    assert data["text"] == "story zero" and data["tokens"] == sequences["lp0"] and data["tokens_cover"] == "answer"
+    assert data["text"] == "story zero" and "tokens" not in data
     assert text_hash(data["text"]) == (entry["hashes"]["0"], data["sha256"])
+    numbers = json.loads((tmp_path / "reference" / "logprobs" / "lp0.json").read_text(encoding="utf-8"))
+    assert numbers["tokens"] == sequences["lp0"] and numbers["tokens_cover"] == "answer"
+    assert numbers["text_hash"] == entry["hashes"]["0"] and numbers["llama_cpp"] == ["b9-new"]
 
 
 def test_save_reference_adds_logprobs_and_never_overwrites(tmp_path):
@@ -295,8 +304,8 @@ def test_save_reference_adds_logprobs_and_never_overwrites(tmp_path):
             json.dumps({"hash": h, "text": results[int(k)]["text"]}), encoding="utf-8")
     done = save_reference(tmp_path, reference, "m", MACHINE, False, summary, results, sequences, "pc", STARTED)
     assert done.startswith("Reference logprobs added")
-    data = json.loads((tmp_path / "reference" / "texts" / f"{hashes['1']}.json").read_text(encoding="utf-8"))
-    assert data["text"] == "story one" and data["tokens"] == sequences["lp1"]
+    data = json.loads((tmp_path / "reference" / "logprobs" / "lp1.json").read_text(encoding="utf-8"))
+    assert data["text_hash"] == hashes["1"] and data["tokens"] == sequences["lp1"]
     done = save_reference(tmp_path, reference, "m", MACHINE, False, summary, results, sequences, "pc", STARTED)
     assert done.startswith("Already the reference")
     before = (tmp_path / "reference.json").read_text(encoding="utf-8")
@@ -334,10 +343,11 @@ def test_save_reference_with_thinking(tmp_path):
     entry = reference["profiles"]["m"]["references"][0]
     texts = tmp_path / "reference" / "texts"
     answer = json.loads((texts / f"{entry['hashes']['0']}.json").read_text(encoding="utf-8"))
+    numbers = json.loads((tmp_path / "reference" / "logprobs" / "lp0.json").read_text(encoding="utf-8"))
     thought = json.loads((texts / f"{entry['thinking_hashes']['0']}.json").read_text(encoding="utf-8"))
     assert entry["thinking"] and list(entry)[-1] == "logprobs_hashes"
-    assert answer["tokens_cover"] == "thinking + answer" and answer["tokens"] == sequences["lp0"]
-    assert answer["tokens_source"].startswith("m, thinking on")
+    assert numbers["tokens_cover"] == "thinking + answer" and numbers["tokens"] == sequences["lp0"]
+    assert numbers["source"].startswith("m, thinking on") and "tokens" not in answer
     assert thought["kind"] == "thinking" and thought["text"] == "thought: story zero" and "tokens" not in thought
 
 
@@ -527,3 +537,23 @@ def test_results_table_shows_numbers_and_seed(tmp_path):
     assert "numbers" not in rows[0] and "seed" not in rows[0]                  # all equal: nothing extra
     assert "= ref, **numbers ≠ ref**" in rows[1] and "**numbers differ**" in rows[1]
     assert "| off, seed none |" in rows[2] and "**≠ ref**" in rows[2]
+
+
+def test_save_reference_same_text_other_numbers_in_a_new_build(tmp_path):
+    reference = reference_root(tmp_path, [])
+    summary, results, sequences = repeatable_test()
+    save_reference(tmp_path, reference, "m", MACHINE, False, summary, results, sequences, "pc", STARTED)   # b9-new
+    other = {k: dict(s, logprobs_hashes={f"lpB{k}": 3}) for k, s in summary.items()}
+    other_numbers = {f"lpB{k}": [{"token": k, "logprob": -0.2, "top1": k, "alt": "t", "alt_logprob": -2.0}]
+                     for k in summary}
+    next_build = dict(MACHINE, server={"build_info": "b10-next"})
+    done = save_reference(tmp_path, reference, "m", next_build, False, other, results, other_numbers, "pc", STARTED)
+    entries = reference["profiles"]["m"]["references"]
+    assert done.startswith("Became the reference") and [e["llama_cpp"] for e in entries] == [["b9-new"], ["b10-next"]]
+    assert entries[0]["hashes"] == entries[1]["hashes"]   # the same text in both builds
+    numbers = tmp_path / "reference" / "logprobs"
+    assert json.loads((numbers / "lpB0.json").read_text(encoding="utf-8"))["tokens"] == other_numbers["lpB0"]
+    assert json.loads((numbers / "lp0.json").read_text(encoding="utf-8"))["tokens"] == sequences["lp0"]   # kept
+    same_numbers = dict(MACHINE, server={"build_info": "b11-same"})
+    save_reference(tmp_path, reference, "m", same_numbers, False, summary, results, sequences, "pc", STARTED)
+    assert json.loads((numbers / "lp0.json").read_text(encoding="utf-8"))["llama_cpp"] == ["b9-new", "b11-same"]

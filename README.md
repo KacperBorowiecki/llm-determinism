@@ -53,7 +53,8 @@ All numbers: [FINDINGS.md](FINDINGS.md); every test: [RESULTS.md](RESULTS.md).
   each (quick 10, standard 100, long 1000). One request at a time. Model profiles and server
   arguments: `reference.json`.
 - Reference hashes come from the reference PC and are stored in `reference.json` **per model, llama.cpp build and
-  thinking mode**; the texts are in `reference/texts/`. A result is compared with the reference of the same build.
+  thinking mode**; the texts are in `reference/texts/`, the probabilities token by token in `reference/logprobs/`
+  (one file per logprobs hash). A result is compared with the reference of the same build.
 
 ### How the hash is computed
 
@@ -64,14 +65,14 @@ All numbers: [FINDINGS.md](FINDINGS.md); every test: [RESULTS.md](RESULTS.md).
    too).
 
 `text_hash` in `run_test.py` is the only place that computes hashes. SHA-256 is the same on every operating system,
-so a hash can only differ if the text differs. `pytest` re-hashes all reference texts in `reference/texts/` on your
+so a hash can only differ if the text differs. `pytest` re-hashes all reference texts and logprobs in `reference/` on your
 machine – if that fails, something changed the files (e.g. line endings), not the model.
 
 Next to the text, every run hashes the probabilities behind it (`logprobs_hash`): for every generated token
 (with thinking: also the thinking) the chosen token and its logprob, the most likely candidate and the most likely
 other candidate with its logprob, as the server returns them, hashed with the same `text_hash` as compact JSON. Equal hashes mean the numbers were identical bit for bit,
-not only the text. References store this hash too, and the reference text files list the probabilities token by
-token (probability = e^logprob).
+not only the text. References store this hash too, and `reference/logprobs/` lists the probabilities token by token
+(probability = e^logprob).
 
 ## Running it with Claude Code
 

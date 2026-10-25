@@ -71,7 +71,8 @@ def logprobs_hash(tokens: list[dict]) -> str | None:
 
 
 def dump_reference_text(data: dict) -> str:
-    """A reference text file: indent=1 as before, but `tokens` last and one token per line (~1 000 tokens)."""
+    """A reference file (reference/texts/, reference/logprobs/): indent=1, `tokens` last and one token per line
+    (~1 000 tokens)."""
     text = json.dumps({k: v for k, v in data.items() if k != "tokens"}, ensure_ascii=False, indent=1)
     if "tokens" not in data:
         return text + "\n"
@@ -269,7 +270,8 @@ def save_reference(root: Path, reference: dict, profile_name: str, machine: dict
                    results: list[dict], sequences: dict, label: str, started: datetime) -> str:
     """--make-reference: store a repeatable test (text and logprobs, no warnings – checked by the caller) as the
     reference for its model profile, llama.cpp build and thinking mode, logprobs included; writes reference.json
-    and reference/texts/. Returns what was done. ValueError if this build already has a reference with other
+    and reference/texts/ (the texts) and reference/logprobs/ (the numbers, one file per logprobs hash). Returns
+    what was done. ValueError if this build already has a reference with other
     hashes – nothing is overwritten."""
     build, profile = machine["server"]["build_info"], reference["profiles"][profile_name]
     hashes = {k: next(iter(st["hashes"])) for k, st in summary.items()}
@@ -305,18 +307,24 @@ def save_reference(root: Path, reference: dict, profile_name: str, machine: dict
         if thinking:
             files.append(("thinking", thinking_hashes[key],
                           next(r["thinking_text"] for r in results if r["thinking_hash"] == thinking_hashes[key])))
-        for kind, short, text in files:
+        for kind, short, text in files:   # a text file holds only the text: the same text is the same file
             path = root / "reference" / "texts" / f"{short}.json"
-            data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {
-                "hash": short, "sha256": text_hash(text)[1], "kind": kind, "temperature": int(float(key)),
-                "seed": protocol["seed"], "prompt": protocol["prompt"], "thinking": thinking, "source": source,
-                "text": text}
-            if kind == "answer" and "tokens" not in data:   # tokens already there: the same text in another build
-                data["tokens_source"] = source
-                data["tokens_cover"] = "thinking + answer" if thinking else "answer"
-                data["tokens"] = sequences[logprobs_hashes[key]]
-            elif path.exists():
-                continue
+            if not path.exists():
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(dump_reference_text({
+                    "hash": short, "sha256": text_hash(text)[1], "kind": kind, "temperature": int(float(key)),
+                    "seed": protocol["seed"], "prompt": protocol["prompt"], "thinking": thinking, "source": source,
+                    "text": text}), encoding="utf-8", newline="\n")
+        # the numbers: one file per logprobs hash – the same text in another build may come with other numbers
+        lp = logprobs_hashes[key]
+        path = root / "reference" / "logprobs" / f"{lp}.json"
+        data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {
+            "logprobs_hash": lp, "text_hash": hashes[key],
+            **({"thinking_hash": thinking_hashes[key]} if thinking else {}),
+            "temperature": int(float(key)), "seed": protocol["seed"], "thinking": thinking, "llama_cpp": [],
+            "source": source, "tokens_cover": "thinking + answer" if thinking else "answer", "tokens": sequences[lp]}
+        if build not in data["llama_cpp"]:   # the same numbers from another build: one file, every build listed
+            data["llama_cpp"].append(build)
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(dump_reference_text(data), encoding="utf-8", newline="\n")
     (root / "reference.json").write_text(json.dumps(reference, ensure_ascii=False, indent=1) + "\n",
