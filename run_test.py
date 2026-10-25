@@ -253,9 +253,13 @@ def save_raw_run(raw_dir: Path, r: dict, raw: bytes, width: int) -> None:
 
 def reference_blockers(summary: dict, problems: list[str], device: str) -> list[str]:
     """Why a test may not become a reference (--make-reference): warnings other than "no reference for this
-    build", text or logprobs not repeatable (or missing), the model not entirely on the GPU. Empty = it may."""
-    blockers = list(problems) + [f"temperature {k}: text or logprobs not repeatable" for k, st in summary.items()
-                                 if not (st["repeatable"] and st["logprobs_repeatable"])]
+    build", fewer than 3 runs (one run is "repeatable" by definition), text or logprobs not repeatable (or
+    missing), the model not entirely on the GPU. Empty = it may."""
+    blockers = list(problems)
+    blockers += [f"temperature {k}: {st['runs']} run(s) – a reference needs at least 3" for k, st in summary.items()
+                 if st["runs"] < 3]
+    blockers += [f"temperature {k}: text or logprobs not repeatable" for k, st in summary.items()
+                 if not (st["repeatable"] and st["logprobs_repeatable"])]
     if device != "gpu":
         blockers.append(f"--device {device}: references come from runs with all layers on the GPU")
     return blockers
@@ -408,8 +412,8 @@ def main() -> None:
                     help="keep every run locally in results/<label>/raw/ (not in git): the server's response "
                          "byte for byte and the final answer as text")
     ap.add_argument("--make-reference", action="store_true",
-                    help="origin PC only, on the user's request: a repeatable test without warnings becomes the "
-                         "reference for its build (texts, logprobs)")
+                    help="origin PC only, on the user's request: a repeatable test (at least 3 runs per "
+                         "temperature) without warnings becomes the reference for its build (texts, logprobs)")
     args = ap.parse_args()
     if not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", args.label):
         ap.error("label: lowercase letters, digits, '.', '_' and '-' only")

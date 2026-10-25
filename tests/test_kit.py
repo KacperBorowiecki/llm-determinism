@@ -310,11 +310,13 @@ def test_save_reference_adds_logprobs_and_never_overwrites(tmp_path):
 
 
 def test_reference_blockers():
-    ok = {"0": {"repeatable": True, "logprobs_repeatable": True}, "1": {"repeatable": True, "logprobs_repeatable": True}}
+    ok = {k: {"runs": 3, "repeatable": True, "logprobs_repeatable": True} for k in ("0", "1")}
     assert reference_blockers(ok, [], "gpu") == []
     assert reference_blockers(ok, ["sampling top_k = 40, reference 64"], "gpu") == ["sampling top_k = 40, reference 64"]
-    no_logprobs = dict(ok, **{"1": {"repeatable": True, "logprobs_repeatable": None}})
-    other_text = dict(ok, **{"0": {"repeatable": False, "logprobs_repeatable": True}})
+    no_logprobs = dict(ok, **{"1": {"runs": 3, "repeatable": True, "logprobs_repeatable": None}})
+    other_text = dict(ok, **{"0": {"runs": 3, "repeatable": False, "logprobs_repeatable": True}})
+    one_run = dict(ok, **{"0": {"runs": 1, "repeatable": True, "logprobs_repeatable": True}})
+    assert any("at least 3" in b for b in reference_blockers(one_run, [], "gpu"))
     assert any("not repeatable" in b for b in reference_blockers(no_logprobs, [], "gpu"))
     assert any("not repeatable" in b for b in reference_blockers(other_text, [], "gpu"))
     assert any("--device mix" in b for b in reference_blockers(ok, [], "mix"))
