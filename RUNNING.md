@@ -113,7 +113,10 @@ python run_test.py --label "$LABEL" --profile qwen3:0.6b-q8_0 --length quick
 - `--thinking` – the model's thinking on (default off);
 - `--device gpu | cpu | mix` – where the model runs; `--gpu <index>` – which GPU (Windows: the same index as
   `CUDA_VISIBLE_DEVICES`); both are recorded in the result;
-- `--note "…"` – anything unusual (another program running, a restart or an update since the last test).
+- `--note "…"` – anything unusual (another program running, a restart or an update since the last test);
+- `--save-raw` – keep every run locally in `results/<label>/raw/` (not in git): the server's full response byte for
+  byte and the final answer as text, two files per run. Qwen quick ≈ 1–2 MB, Gemma quick ≈ 7 MB, Gemma long ≈ 650 MB;
+  with thinking 2–3× more. An interrupted test keeps the runs written so far (without a result file).
 
 For a long test keep the computer awake – Windows: Settings → Power → never sleep; macOS: start the test with
 `caffeinate -i python run_test.py …`.

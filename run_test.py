@@ -10,7 +10,9 @@ Next to the text, every run hashes the numbers behind it (logprobs_hash): for ev
 and its logprob, the most likely candidate and the most likely other candidate with its logprob – equal hashes
 mean the probabilities were identical bit for bit. With
 --make-reference (origin PC only, on the user's request) a repeatable test without warnings becomes the reference
-for its build, logprobs included.
+for its build, logprobs included. Every run records when it started and finished and the id the server gave
+the response; with --save-raw every run is also kept locally (results/<label>/raw/, not in git): the server's
+response byte for byte and the final answer as text.
 
   python run_test.py --label my-pc                       # default model, quick: 10 + 10
   python run_test.py --label my-pc --profile gemma4:26b-a4b-it-q8_0 --length standard     # 100 + 100
@@ -183,9 +185,10 @@ def ask(url: str, protocol: dict, temperature: float, thinking: bool = False, ti
             "max_tokens": protocol["max_tokens_thinking"] if thinking else protocol["max_tokens"],
             "logprobs": True, "top_logprobs": 2, "cache_prompt": False,
             "chat_template_kwargs": {"enable_thinking": thinking}}
-    t0 = time.time()
+    started, t0 = datetime.now().astimezone(), time.time()
     r = requests.post(f"{url}/v1/chat/completions", json=body, timeout=(10, timeout_s))
     r.raise_for_status()
+    finished = datetime.now().astimezone()
     d = r.json()
     message = d["choices"][0]["message"]
     text = message.get("content") or ""
@@ -194,7 +197,11 @@ def ask(url: str, protocol: dict, temperature: float, thinking: bool = False, ti
     out = {"hash": short, "sha256": full, "text": text, "answer_tokens": d["usage"]["completion_tokens"],
            "prompt_tokens": d["usage"]["prompt_tokens"], "finish_reason": d["choices"][0].get("finish_reason"),
            "tok_per_s": d.get("timings", {}).get("predicted_per_second"), "seconds": round(time.time() - t0, 2),
-           "thinking_hash": None, "logprobs_hash": logprobs_hash(tokens), "logprobs": tokens}
+           "thinking_hash": None, "logprobs_hash": logprobs_hash(tokens), "logprobs": tokens,
+           "started": started.isoformat(timespec="milliseconds"),
+           "finished": finished.isoformat(timespec="milliseconds"),
+           "response_id": d.get("id"), "created": d.get("created"),
+           "raw": r.content}   # the response bytes exactly as they came; only for --save-raw
     if thinking:
         thought = message.get("reasoning_content") or ""
         out["thinking_text"] = thought
@@ -202,19 +209,36 @@ def ask(url: str, protocol: dict, temperature: float, thinking: bool = False, ti
     return out
 
 
-def write_result(base: Path, record: dict) -> Path:
+def write_result(base: Path, record: dict, suffix: str | None = None) -> Path:
     """Write `record` to `<base>_<id>.json` and return the path. <id> is a short random code (not a hash of the
     content – result files are edited later, e.g. when a result becomes a reference): two tests started in the
-    same minute (two GPUs, GPU and CPU, ...) get different files, and mode "x" never overwrites one."""
+    same minute (two GPUs, GPU and CPU, ...) get different files, and mode "x" never overwrites one. `suffix`:
+    the id chosen at the start (--save-raw names its folder with it), taken if the name is free."""
     base.parent.mkdir(parents=True, exist_ok=True)
     while True:
-        out = base.with_name(f"{base.name}_{secrets.token_hex(3)}.json")
+        out = base.with_name(f"{base.name}_{suffix or secrets.token_hex(3)}.json")
+        suffix = None   # taken: the next try gets a new random id
         try:
             with out.open("x", encoding="utf-8", newline="\n") as f:
                 json.dump(record, f, ensure_ascii=False, indent=1)
             return out
         except FileExistsError:
             continue
+
+
+def save_raw_run(raw_dir: Path, r: dict, raw: bytes, width: int) -> None:
+    """--save-raw: one run as two files in raw_dir – t<temperature>_run<N>.json, the server's response byte for
+    byte as it came (tokens and logprobs included), and the same name .txt, the final answer (with thinking: the
+    thinking first) to read and compare. N has `width` digits, so the files sort in run order."""
+    name = f"t{r['temperature']:g}_run{r['run']:0{width}d}"
+    (raw_dir / f"{name}.json").write_bytes(raw)
+    head = [f"temperature {r['temperature']:g}, run {r['run']}",
+            f"started  {r['started']}   finished {r['finished']}",
+            f"response {r['response_id']}   created {r['created']}",
+            f"{r['answer_tokens']} tokens, {r['finish_reason']}   text {r['hash']}   logprobs {r['logprobs_hash']}"
+            + (f"   thinking {r['thinking_hash']}" if "thinking_text" in r else "")]
+    body = (["=== thinking ===", r["thinking_text"], ""] if "thinking_text" in r else []) + ["=== answer ===", r["text"]]
+    (raw_dir / f"{name}.txt").write_text("\n".join(head + [""] + body) + "\n", encoding="utf-8", newline="\n")
 
 
 def reference_blockers(summary: dict, problems: list[str], device: str) -> list[str]:
@@ -368,6 +392,9 @@ def main() -> None:
     ap.add_argument("--device", choices=["gpu", "cpu", "mix"], default="gpu",
                     help="where the model runs: gpu (all layers, -ngl 999), cpu (-ngl 0), mix (partial offload)")
     ap.add_argument("--note", default="", help="free text, e.g. the GPU/RAM split or anything unusual")
+    ap.add_argument("--save-raw", action="store_true",
+                    help="keep every run locally in results/<label>/raw/ (not in git): the server's response "
+                         "byte for byte and the final answer as text")
     ap.add_argument("--make-reference", action="store_true",
                     help="origin PC only, on the user's request: a repeatable test without warnings becomes the "
                          "reference for its build (texts, logprobs)")
@@ -390,17 +417,37 @@ def main() -> None:
     print(f"{args.label}: {profile_name}, thinking {'on' if args.thinking else 'off'}, llama-server {build}, "
           f"{n} runs per temperature; reference: {'this build' if exact else 'none for this build (known: ' + known + ')'}")
 
+    mode = "_thinking" if args.thinking else ""
+    base_name = f"{started:%Y-%m-%dT%H%M}_{profile_name.replace(':', '-')}{mode}_{length}"
+    run_id, raw_dir, raw_error, width = secrets.token_hex(3), None, None, len(str(n))
+    if args.save_raw:   # the folder gets the result file's name; created exclusively, like the result file
+        (ROOT / "results" / args.label / "raw").mkdir(parents=True, exist_ok=True)
+        while True:
+            raw_dir = ROOT / "results" / args.label / "raw" / f"{base_name}_{run_id}"
+            try:
+                raw_dir.mkdir()
+                break
+            except FileExistsError:
+                run_id = secrets.token_hex(3)
+        print(f"raw runs: {raw_dir.relative_to(ROOT).as_posix()}")
+
     results, sequences = [], {}   # sequences (--make-reference only): one logprobs token list per unique hash
     for temp in protocol["temperatures"]:
         ref_hash = ref["hashes"].get(f"{temp:g}")
         thinking_ref = ref.get("thinking_hashes", {}).get(f"{temp:g}")
         for i in range(1, n + 1):
             r = ask(args.url, protocol, float(temp), args.thinking)
+            raw = r.pop("raw")             # never kept in memory; written at once with --save-raw
             logprobs = r.pop("logprobs")   # the hash stays in r; the numbers only for --make-reference
             if args.make_reference:
                 sequences.setdefault(r["logprobs_hash"], logprobs)
             r.update(temperature=float(temp), run=i, time=datetime.now().astimezone().isoformat(timespec="seconds"))
             results.append(r)
+            if raw_dir and not raw_error:
+                try:
+                    save_raw_run(raw_dir, r, raw, width)
+                except OSError as e:   # e.g. a full disk: the test goes on without the raw files
+                    raw_error = f"--save-raw stopped at temperature {temp:g}, run {i}: {e}"
             same = r["hash"] == ref_hash and (not args.thinking or r["thinking_hash"] == thinking_ref)
             thought = f" + thinking {r['thinking_hash']}" if args.thinking else ""
             print(f"  temp {temp:g}  run {i:>4}/{n}: {r['hash']}{thought} {'=' if same else '≠'} reference  "
@@ -441,16 +488,20 @@ def main() -> None:
               "reference_llama_cpp": ref["llama_cpp"],
               "reference_exact": exact, "started": started.isoformat(timespec="seconds"),
               "finished": datetime.now().astimezone().isoformat(timespec="seconds"), "length": length,
-              "runs_per_temperature": n, "device": args.device, "gpu": args.gpu, "note": note, "machine": machine, "temperatures": summary,
+              "runs_per_temperature": n, "device": args.device, "gpu": args.gpu, "note": note,
+              # where the raw runs are on this machine, relative to the result file (not in git)
+              **({"raw_dir": raw_dir.relative_to(ROOT / "results" / args.label).as_posix()} if raw_dir else {}),
+              "machine": machine, "temperatures": summary,
               "warnings": warnings,
               "texts": {r["hash"]: r["text"] for r in results},
-              "runs": [{k: r[k] for k in ("temperature", "run", "time", "hash", "thinking_hash", "logprobs_hash",
-                                          "answer_tokens", "finish_reason", "seconds")} for r in results]}
+              "runs": [{k: r[k] for k in ("temperature", "run", "time", "started", "finished", "response_id", "hash",
+                                          "thinking_hash", "logprobs_hash", "answer_tokens", "finish_reason",
+                                          "seconds")} for r in results]}
     if args.thinking:
         record["thinking_texts"] = {r["thinking_hash"]: r["thinking_text"] for r in results}
-    mode = "_thinking" if args.thinking else ""
-    out = write_result(ROOT / "results" / args.label /
-                       f"{started:%Y-%m-%dT%H%M}_{profile_name.replace(':', '-')}{mode}_{length}", record)
+    if raw_error:
+        record["warnings"].append(raw_error)
+    out = write_result(ROOT / "results" / args.label / base_name, record, run_id)
 
     print()
     for key, s in summary.items():
@@ -461,6 +512,8 @@ def main() -> None:
     for w in record["warnings"]:
         print(f"WARNING: {w}")
     print(f"Result: {out.relative_to(ROOT)}")
+    if raw_dir:
+        print(f"Raw runs: {raw_dir.relative_to(ROOT).as_posix()}")
     if args.make_reference:
         if not_saved:
             sys.exit("NOT SAVED AS REFERENCE: " + "; ".join(not_saved))

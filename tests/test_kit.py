@@ -1,4 +1,6 @@
 import json
+import subprocess
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -6,8 +8,8 @@ import pytest
 
 import results_table
 from run_test import (divergence, dump_reference_text, get_profile, load_reference, logprobs_hash,
-                      logprobs_tokens, pick_reference, reference_blockers, save_reference, summarize, text_hash,
-                      warnings_for, write_result)
+                      logprobs_tokens, pick_reference, reference_blockers, save_raw_run, save_reference, summarize,
+                      text_hash, warnings_for, write_result)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -335,3 +337,85 @@ def test_save_reference_with_thinking(tmp_path):
     assert answer["tokens_cover"] == "thinking + answer" and answer["tokens"] == sequences["lp0"]
     assert answer["tokens_source"].startswith("m, thinking on")
     assert thought["kind"] == "thinking" and thought["text"] == "thought: story zero" and "tokens" not in thought
+
+
+def raw_run(**extra):
+    """One run as main() holds it, with the fields save_raw_run writes."""
+    r = dict(fake(0.0, "Zażółć gęślą jaźń.\nDruga linia."), run=3, finish_reason="stop", logprobs_hash="lp0",
+             thinking_hash=None, started="2026-10-25T11:18:33.412+01:00", finished="2026-10-25T11:18:34.205+01:00",
+             response_id="chatcmpl-abc", created=1792923852)
+    r.update(extra)
+    return r
+
+
+def test_save_raw_run_keeps_the_response_byte_for_byte(tmp_path):
+    raw = '{"id":"chatcmpl-abc","choices":[{"message":{"content":"Zażółć gęślą jaźń."}}]}'.encode("utf-8")
+    save_raw_run(tmp_path, raw_run(), raw, 2)
+    assert (tmp_path / "t0_run03.json").read_bytes() == raw
+    text = (tmp_path / "t0_run03.txt").read_text(encoding="utf-8")
+    assert "started  2026-10-25T11:18:33.412+01:00" in text and "finished 2026-10-25T11:18:34.205+01:00" in text
+    assert "response chatcmpl-abc" in text and "created 1792923852" in text
+    assert text.endswith("=== answer ===\nZażółć gęślą jaźń.\nDruga linia.\n") and "=== thinking ===" not in text
+    save_raw_run(tmp_path, raw_run(temperature=1.0, run=12, thinking_text="Myślę.", thinking_hash="th"), raw, 4)
+    thought = (tmp_path / "t1_run0012.txt").read_text(encoding="utf-8")
+    assert thought.index("=== thinking ===\nMyślę.") < thought.index("=== answer ===") and "thinking th" in thought
+
+
+def test_write_result_takes_the_given_id(tmp_path):
+    base = tmp_path / "results" / "pc" / "2026-10-25T1200_qwen3-0.6b-q8_0_quick"
+    first = write_result(base, {"n": 1}, "abc123")
+    second = write_result(base, {"n": 2}, "abc123")   # taken: a new random id
+    assert first.name.endswith("_abc123.json") and second != first and second.exists()
+    assert json.loads(first.read_text(encoding="utf-8")) == {"n": 1}   # the first file is untouched
+
+
+def test_raw_folders_are_not_in_git():
+    def ignored(path):
+        return subprocess.run(["git", "check-ignore", "-q", path], cwd=ROOT).returncode == 0
+    assert ignored("results/x/raw/y/t0_run01.json") and not ignored("results/x/2026-10-25T1200_x_quick_abc123.json")
+
+
+class FakeResponse:
+    """What requests returns: the body as bytes and as JSON."""
+    def __init__(self, data):
+        self.data, self.content = data, json.dumps(data, ensure_ascii=False).encode("utf-8")
+
+    def json(self):
+        return self.data
+
+    def raise_for_status(self):
+        pass
+
+
+def test_main_with_save_raw_against_a_fake_server(tmp_path, monkeypatch):
+    import run_test
+    (tmp_path / "reference.json").write_text((ROOT / "reference.json").read_text(encoding="utf-8"), encoding="utf-8")
+    monkeypatch.setattr(run_test, "ROOT", tmp_path)
+    profile = load_reference()["profiles"]["qwen3:0.6b-q8_0"]
+    props = {"build_info": "b9-test", "model_path": "models/" + profile["model_file"], "total_slots": 1,
+             "default_generation_settings": {"n_ctx": 8192, "params": dict(profile["sampling"])}}
+    sent = []
+
+    def post(url, json=None, timeout=None):
+        body = {"id": f"chatcmpl-{len(sent)}", "created": 1792924458 + len(sent),
+                "usage": {"completion_tokens": 1, "prompt_tokens": 29}, "timings": {"predicted_per_second": 100.0},
+                "choices": [{"finish_reason": "stop", "message": {"content": f"historia {json['temperature']:g}"},
+                             "logprobs": {"content": [lp_entry("historia", -0.1, [("historia", -0.1), ("bajka", -2.0)])]}}]}
+        sent.append(body)
+        return FakeResponse(body)
+
+    monkeypatch.setattr(run_test.requests, "get", lambda url, timeout=None: FakeResponse(props))
+    monkeypatch.setattr(run_test.requests, "post", post)
+    monkeypatch.setattr(run_test, "run_cmd", lambda cmd: "ollama version is 0.99.0" if cmd[0] == "ollama" else "")
+    monkeypatch.setattr(sys, "argv", ["run_test.py", "--label", "pc", "--runs", "2", "--save-raw"])
+    run_test.main()
+    result = next((tmp_path / "results" / "pc").glob("*.json"))
+    r = json.loads(result.read_text(encoding="utf-8"))
+    raw_dir = result.parent / r["raw_dir"]
+    assert raw_dir.name == result.stem and list(r).index("raw_dir") == list(r).index("note") + 1
+    assert sorted(p.name for p in raw_dir.iterdir()) == [f"t{t}_run{i}.{e}" for t in (0, 1) for i in (1, 2)
+                                                        for e in ("json", "txt")]
+    assert (raw_dir / "t0_run1.json").read_bytes() == json.dumps(sent[0], ensure_ascii=False).encode("utf-8")
+    assert [x["response_id"] for x in r["runs"]] == [f"chatcmpl-{i}" for i in range(4)]
+    assert all(x["started"] <= x["finished"] and "raw" not in x and x["logprobs_hash"] for x in r["runs"])
+    assert all(s["repeatable"] and s["logprobs_repeatable"] for s in r["temperatures"].values())
