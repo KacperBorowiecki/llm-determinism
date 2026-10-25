@@ -19,6 +19,8 @@ around the model.
   makes the sampling repeat.*
 - **Every test so far was repeatable:** 3 models (Gemma 4 26B, Qwen3 0.6B in Q8_0 and Q4_K_M), thinking on and off,
   2 machines (Windows with 2× RTX 5090, Apple M5 Pro).
+- **Not only the text – the numbers too.** The kit also hashes the probability of every generated token: on the
+  reference PC every run gave the same probabilities bit for bit, at temperature 0 and 1.
 
 What "frozen" means: the same model file, llama.cpp build, settings and machine, one request at a time. Each of
 these changed the text when it changed:
@@ -60,6 +62,12 @@ All numbers: [FINDINGS.md](FINDINGS.md); every test: [RESULTS.md](RESULTS.md).
 `text_hash` in `run_test.py` is the only place that computes hashes. SHA-256 is the same on every operating system,
 so a hash can only differ if the text differs. `pytest` re-hashes all reference texts in `reference/texts/` on your
 machine – if that fails, something changed the files (e.g. line endings), not the model.
+
+Next to the text, every run hashes the probabilities behind it (`logprobs_hash`): for every generated token
+(with thinking: also the thinking) the chosen token and its logprob, the most likely candidate and the most likely
+other candidate with its logprob, as the server returns them, hashed with the same `text_hash` as compact JSON. Equal hashes mean the numbers were identical bit for bit,
+not only the text. References store this hash too, and the reference text files list the probabilities token by
+token (probability = e^logprob).
 
 ## Running it with Claude Code
 

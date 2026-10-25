@@ -1,0 +1,342 @@
+{
+ "schema": 1,
+ "label": "origin-pc-2x5090-win11",
+ "profile": "qwen3:0.6b-q8_0",
+ "thinking": false,
+ "reference_llama_cpp": [
+  "b1-f174553e1"
+ ],
+ "reference_exact": true,
+ "started": "2026-10-25T10:11:57+01:00",
+ "finished": "2026-10-25T10:12:06+01:00",
+ "length": "quick",
+ "runs_per_temperature": 10,
+ "device": "gpu",
+ "gpu": 0,
+ "note": "First quick test with logprobs hashes: checks texts and logprobs against the new references.",
+ "machine": {
+  "os": "Windows 11 (10.0.26200)",
+  "arch": "AMD64",
+  "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
+  "ram_gb": 61.6,
+  "gpus": [
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   },
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   }
+  ],
+  "ollama": "0.40.7",
+  "python": "3.13.5",
+  "server": {
+   "build_info": "b1-f174553e1",
+   "model": "sha256-31db9797248620627b127c47c75caa76ec2ce9b7de9dc0f2faca02ba59615818",
+   "n_ctx": 8192,
+   "slots": 1,
+   "sampling": {
+    "top_k": 40,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
+    "samplers": [
+     "penalties",
+     "dry",
+     "top_n_sigma",
+     "top_k",
+     "typ_p",
+     "top_p",
+     "min_p",
+     "xtc",
+     "temperature"
+    ]
+   }
+  }
+ },
+ "temperatures": {
+  "0": {
+   "runs": 10,
+   "hashes": {
+    "23cd03276e07": 10
+   },
+   "repeatable": true,
+   "reference_hash": "23cd03276e07",
+   "equals_reference": true,
+   "answer_tokens": [
+    370
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 538.6,
+   "finish_reasons": {
+    "stop": 10
+   },
+   "divergence_vs_reference": null,
+   "logprobs_hashes": {
+    "3a2dfeb9c378": 10
+   },
+   "logprobs_repeatable": true,
+   "logprobs_reference_hash": "3a2dfeb9c378",
+   "logprobs_equals_reference": true
+  },
+  "1": {
+   "runs": 10,
+   "hashes": {
+    "599eb85dd1d7": 10
+   },
+   "repeatable": true,
+   "reference_hash": "599eb85dd1d7",
+   "equals_reference": true,
+   "answer_tokens": [
+    90
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 554.3,
+   "finish_reasons": {
+    "stop": 10
+   },
+   "divergence_vs_reference": null,
+   "logprobs_hashes": {
+    "863045db135f": 10
+   },
+   "logprobs_repeatable": true,
+   "logprobs_reference_hash": "863045db135f",
+   "logprobs_equals_reference": true
+  }
+ },
+ "warnings": [],
+ "texts": {
+  "23cd03276e07": "Oczywiście! Oto historię o psie, kaczce i kotku:\n\n---\n\nW nocy, gdy świat był zbyt zbyt, wojny zaczęła się. W tle kuchni, w przestrzeni, gdzie świat był zbyt zbyt, pojawiała się psia. Jako nieznała, że to nie tylko świat, ale też świat zbyt. Jako nieznała, że to nie tylko świat, ale też świat zbyt.\n\nPsia, zaczęła się wojny. Wojna zaczęła się zaczynając się z kaczki. Kaczka, która była w tle kuchni, pojawiała się wojną. Kaczka, która była w tle kuchni, pojawiała się wojną. Kaczka, która była w tle kuchni, pojawiała się wojną.\n\nKotka, która była w tle kuchni, pojawiała się wojną. Kotka, która była w tle kuchni, pojawiała się wojną. Kotka, która była w tle kuchni, pojawiała się wojną.\n\nWojna zaczęła się, a świat był zbyt. Wojna zaczęła się, a świat był zbyt. Wojna zaczęła się, a świat był zbyt.\n\n---\n\nZa chwilę, gdy świat był zbyt, psia, kaczka i kotka zaczęły wojną. Wojna zaczęła się, a świat był zbyt.",
+  "599eb85dd1d7": "W przestrzeni nieogromnej i niepraktycznie szklanej, w której żadna ścież i czynność nie zmienia się, bycia wykorzystywana do rozmowy. W taki sposób, pojawia się oni, bystynie, pojawia się w taki sposób, że to możliwe.  \nOczywiście, byliśmy na tym."
+ },
+ "runs": [
+  {
+   "temperature": 0.0,
+   "run": 1,
+   "time": "2026-10-25T10:11:58+01:00",
+   "hash": "23cd03276e07",
+   "thinking_hash": null,
+   "logprobs_hash": "3a2dfeb9c378",
+   "answer_tokens": 370,
+   "finish_reason": "stop",
+   "seconds": 0.76
+  },
+  {
+   "temperature": 0.0,
+   "run": 2,
+   "time": "2026-10-25T10:11:59+01:00",
+   "hash": "23cd03276e07",
+   "thinking_hash": null,
+   "logprobs_hash": "3a2dfeb9c378",
+   "answer_tokens": 370,
+   "finish_reason": "stop",
+   "seconds": 0.68
+  },
+  {
+   "temperature": 0.0,
+   "run": 3,
+   "time": "2026-10-25T10:11:59+01:00",
+   "hash": "23cd03276e07",
+   "thinking_hash": null,
+   "logprobs_hash": "3a2dfeb9c378",
+   "answer_tokens": 370,
+   "finish_reason": "stop",
+   "seconds": 0.69
+  },
+  {
+   "temperature": 0.0,
+   "run": 4,
+   "time": "2026-10-25T10:12:00+01:00",
+   "hash": "23cd03276e07",
+   "thinking_hash": null,
+   "logprobs_hash": "3a2dfeb9c378",
+   "answer_tokens": 370,
+   "finish_reason": "stop",
+   "seconds": 0.69
+  },
+  {
+   "temperature": 0.0,
+   "run": 5,
+   "time": "2026-10-25T10:12:01+01:00",
+   "hash": "23cd03276e07",
+   "thinking_hash": null,
+   "logprobs_hash": "3a2dfeb9c378",
+   "answer_tokens": 370,
+   "finish_reason": "stop",
+   "seconds": 0.7
+  },
+  {
+   "temperature": 0.0,
+   "run": 6,
+   "time": "2026-10-25T10:12:01+01:00",
+   "hash": "23cd03276e07",
+   "thinking_hash": null,
+   "logprobs_hash": "3a2dfeb9c378",
+   "answer_tokens": 370,
+   "finish_reason": "stop",
+   "seconds": 0.73
+  },
+  {
+   "temperature": 0.0,
+   "run": 7,
+   "time": "2026-10-25T10:12:02+01:00",
+   "hash": "23cd03276e07",
+   "thinking_hash": null,
+   "logprobs_hash": "3a2dfeb9c378",
+   "answer_tokens": 370,
+   "finish_reason": "stop",
+   "seconds": 0.73
+  },
+  {
+   "temperature": 0.0,
+   "run": 8,
+   "time": "2026-10-25T10:12:03+01:00",
+   "hash": "23cd03276e07",
+   "thinking_hash": null,
+   "logprobs_hash": "3a2dfeb9c378",
+   "answer_tokens": 370,
+   "finish_reason": "stop",
+   "seconds": 0.72
+  },
+  {
+   "temperature": 0.0,
+   "run": 9,
+   "time": "2026-10-25T10:12:04+01:00",
+   "hash": "23cd03276e07",
+   "thinking_hash": null,
+   "logprobs_hash": "3a2dfeb9c378",
+   "answer_tokens": 370,
+   "finish_reason": "stop",
+   "seconds": 0.72
+  },
+  {
+   "temperature": 0.0,
+   "run": 10,
+   "time": "2026-10-25T10:12:04+01:00",
+   "hash": "23cd03276e07",
+   "thinking_hash": null,
+   "logprobs_hash": "3a2dfeb9c378",
+   "answer_tokens": 370,
+   "finish_reason": "stop",
+   "seconds": 0.73
+  },
+  {
+   "temperature": 1.0,
+   "run": 1,
+   "time": "2026-10-25T10:12:04+01:00",
+   "hash": "599eb85dd1d7",
+   "thinking_hash": null,
+   "logprobs_hash": "863045db135f",
+   "answer_tokens": 90,
+   "finish_reason": "stop",
+   "seconds": 0.2
+  },
+  {
+   "temperature": 1.0,
+   "run": 2,
+   "time": "2026-10-25T10:12:05+01:00",
+   "hash": "599eb85dd1d7",
+   "thinking_hash": null,
+   "logprobs_hash": "863045db135f",
+   "answer_tokens": 90,
+   "finish_reason": "stop",
+   "seconds": 0.19
+  },
+  {
+   "temperature": 1.0,
+   "run": 3,
+   "time": "2026-10-25T10:12:05+01:00",
+   "hash": "599eb85dd1d7",
+   "thinking_hash": null,
+   "logprobs_hash": "863045db135f",
+   "answer_tokens": 90,
+   "finish_reason": "stop",
+   "seconds": 0.17
+  },
+  {
+   "temperature": 1.0,
+   "run": 4,
+   "time": "2026-10-25T10:12:05+01:00",
+   "hash": "599eb85dd1d7",
+   "thinking_hash": null,
+   "logprobs_hash": "863045db135f",
+   "answer_tokens": 90,
+   "finish_reason": "stop",
+   "seconds": 0.19
+  },
+  {
+   "temperature": 1.0,
+   "run": 5,
+   "time": "2026-10-25T10:12:05+01:00",
+   "hash": "599eb85dd1d7",
+   "thinking_hash": null,
+   "logprobs_hash": "863045db135f",
+   "answer_tokens": 90,
+   "finish_reason": "stop",
+   "seconds": 0.19
+  },
+  {
+   "temperature": 1.0,
+   "run": 6,
+   "time": "2026-10-25T10:12:05+01:00",
+   "hash": "599eb85dd1d7",
+   "thinking_hash": null,
+   "logprobs_hash": "863045db135f",
+   "answer_tokens": 90,
+   "finish_reason": "stop",
+   "seconds": 0.2
+  },
+  {
+   "temperature": 1.0,
+   "run": 7,
+   "time": "2026-10-25T10:12:06+01:00",
+   "hash": "599eb85dd1d7",
+   "thinking_hash": null,
+   "logprobs_hash": "863045db135f",
+   "answer_tokens": 90,
+   "finish_reason": "stop",
+   "seconds": 0.2
+  },
+  {
+   "temperature": 1.0,
+   "run": 8,
+   "time": "2026-10-25T10:12:06+01:00",
+   "hash": "599eb85dd1d7",
+   "thinking_hash": null,
+   "logprobs_hash": "863045db135f",
+   "answer_tokens": 90,
+   "finish_reason": "stop",
+   "seconds": 0.19
+  },
+  {
+   "temperature": 1.0,
+   "run": 9,
+   "time": "2026-10-25T10:12:06+01:00",
+   "hash": "599eb85dd1d7",
+   "thinking_hash": null,
+   "logprobs_hash": "863045db135f",
+   "answer_tokens": 90,
+   "finish_reason": "stop",
+   "seconds": 0.19
+  },
+  {
+   "temperature": 1.0,
+   "run": 10,
+   "time": "2026-10-25T10:12:06+01:00",
+   "hash": "599eb85dd1d7",
+   "thinking_hash": null,
+   "logprobs_hash": "863045db135f",
+   "answer_tokens": 90,
+   "finish_reason": "stop",
+   "seconds": 0.19
+  }
+ ]
+}

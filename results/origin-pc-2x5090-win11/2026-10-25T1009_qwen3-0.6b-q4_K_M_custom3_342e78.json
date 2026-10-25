@@ -1,0 +1,188 @@
+{
+ "schema": 1,
+ "label": "origin-pc-2x5090-win11",
+ "profile": "qwen3:0.6b-q4_K_M",
+ "thinking": false,
+ "reference_llama_cpp": [
+  "b1-f174553e1"
+ ],
+ "reference_exact": true,
+ "started": "2026-10-25T10:09:33+01:00",
+ "finished": "2026-10-25T10:09:37+01:00",
+ "length": "custom3",
+ "runs_per_temperature": 3,
+ "device": "gpu",
+ "gpu": 0,
+ "note": "Reference logprobs for Ollama 0.40.7 (b1-f174553e1): run_test --make-reference, 3 runs per temperature, fresh llama-server on GPU 0. Reference logprobs added for this build.",
+ "machine": {
+  "os": "Windows 11 (10.0.26200)",
+  "arch": "AMD64",
+  "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
+  "ram_gb": 61.6,
+  "gpus": [
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   },
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   }
+  ],
+  "ollama": "0.40.7",
+  "python": "3.13.5",
+  "server": {
+   "build_info": "b1-f174553e1",
+   "model": "sha256-7f4030143c1c477224c5434f8272c662a8b042079a0a584f0a27a1684fe2e1fa",
+   "n_ctx": 8192,
+   "slots": 1,
+   "sampling": {
+    "top_k": 40,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
+    "samplers": [
+     "penalties",
+     "dry",
+     "top_n_sigma",
+     "top_k",
+     "typ_p",
+     "top_p",
+     "min_p",
+     "xtc",
+     "temperature"
+    ]
+   }
+  }
+ },
+ "temperatures": {
+  "0": {
+   "runs": 3,
+   "hashes": {
+    "0ac50154a638": 3
+   },
+   "repeatable": true,
+   "reference_hash": "0ac50154a638",
+   "equals_reference": true,
+   "answer_tokens": [
+    446
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 560.2,
+   "finish_reasons": {
+    "stop": 3
+   },
+   "divergence_vs_reference": null,
+   "logprobs_hashes": {
+    "375bdfa9233b": 3
+   },
+   "logprobs_repeatable": true,
+   "logprobs_reference_hash": "375bdfa9233b",
+   "logprobs_equals_reference": true
+  },
+  "1": {
+   "runs": 3,
+   "hashes": {
+    "872d20cd2d2e": 3
+   },
+   "repeatable": true,
+   "reference_hash": "872d20cd2d2e",
+   "equals_reference": true,
+   "answer_tokens": [
+    297
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 550.9,
+   "finish_reasons": {
+    "stop": 3
+   },
+   "divergence_vs_reference": null,
+   "logprobs_hashes": {
+    "0e676a38f61a": 3
+   },
+   "logprobs_repeatable": true,
+   "logprobs_reference_hash": "0e676a38f61a",
+   "logprobs_equals_reference": true
+  }
+ },
+ "warnings": [],
+ "texts": {
+  "0ac50154a638": "Oczywiście! Oto historię o psie, kaczce i kotku:\n\n---\n\n**Psie, kaczce i kot** – trzy nieznałe, które zaczęły się w samej jednej z jednostek, a potem zaczęły się w trzech innych. W tym czasie, gdy trzy nieznałe zaczęły się w jednej z jednostek, zaczęły się też trzy nieznałe, które zaczęły się w trzech innych. W trzech innych, trzy nieznałe zaczęły się w trzech innych, a potem zaczęły się trzy nieznałe, które zaczęły się w trzech innych. W trzech innych, trzy nieznałe zaczęły się w trzech innych, a potem zaczęły się trzy nieznałe, które zaczęły się w trzech innych. W trzech innych, trzy nieznałe zaczęły się w trzech innych, a potem zaczęły się trzy nieznałe, które zaczęły się w trzech innych.\n\n---\n\nZa chwilę, gdy trzy nieznałe zaczęły się w trzech innych, zaczęły się trzy nieznałe, które zaczęły się w trzech innych. W trzech innych, trzy nieznałe zaczęły się w trzech innych, a potem zaczęły się trzy nieznałe, które zaczęły się w trzech innych. W trzech innych, trzy nieznałe zaczęły się w trzech innych, a potem zaczęły się trzy nieznałe, które zaczęły się w trzech innych.\n\n--- \n\nJeśli chcesz, mogę też zapisać historię w formie tekstu lub w formie graficznej.",
+  "872d20cd2d2e": "Napiszę historię o psie i kaczce oraz kotku:\n\n---\n\n**Historia o psie i kaczce – Wątki w głowie**\n\nW niepokojnym czasie w wózach i budynkach na sklepie Była chwilka. W tej chwili pojawiały się doby i bydwy, które nie mogły by wojákować.\n\nByła psia, która była zawsze w szalonej, szczurejącym, masową i niepokojną chwili. Jąda, która była w taki sposób, że nie mogła by wojákować. Szczurka, która była zawsze w szalonej, szczurejącym, masową i niepokojną chwili.\n\nByła kotka, która była zawsze w szalonej, szczurejącym, masową i niepokojną chwili.\n\nW tej chwili pojawiały się doby i bydwy, które nie mogły by wojákować.\n\nW wózach i budynkach na sklepie Była chwilka. W tej chwili pojawiały się doby i bydwy, które nie mogły by wojákować.\n\n---\n\nW tym czasie wszystko w połączeniu."
+ },
+ "runs": [
+  {
+   "temperature": 0.0,
+   "run": 1,
+   "time": "2026-10-25T10:09:34+01:00",
+   "hash": "0ac50154a638",
+   "thinking_hash": null,
+   "logprobs_hash": "375bdfa9233b",
+   "answer_tokens": 446,
+   "finish_reason": "stop",
+   "seconds": 0.94
+  },
+  {
+   "temperature": 0.0,
+   "run": 2,
+   "time": "2026-10-25T10:09:35+01:00",
+   "hash": "0ac50154a638",
+   "thinking_hash": null,
+   "logprobs_hash": "375bdfa9233b",
+   "answer_tokens": 446,
+   "finish_reason": "stop",
+   "seconds": 0.84
+  },
+  {
+   "temperature": 0.0,
+   "run": 3,
+   "time": "2026-10-25T10:09:36+01:00",
+   "hash": "0ac50154a638",
+   "thinking_hash": null,
+   "logprobs_hash": "375bdfa9233b",
+   "answer_tokens": 446,
+   "finish_reason": "stop",
+   "seconds": 0.82
+  },
+  {
+   "temperature": 1.0,
+   "run": 1,
+   "time": "2026-10-25T10:09:36+01:00",
+   "hash": "872d20cd2d2e",
+   "thinking_hash": null,
+   "logprobs_hash": "0e676a38f61a",
+   "answer_tokens": 297,
+   "finish_reason": "stop",
+   "seconds": 0.55
+  },
+  {
+   "temperature": 1.0,
+   "run": 2,
+   "time": "2026-10-25T10:09:37+01:00",
+   "hash": "872d20cd2d2e",
+   "thinking_hash": null,
+   "logprobs_hash": "0e676a38f61a",
+   "answer_tokens": 297,
+   "finish_reason": "stop",
+   "seconds": 0.58
+  },
+  {
+   "temperature": 1.0,
+   "run": 3,
+   "time": "2026-10-25T10:09:37+01:00",
+   "hash": "872d20cd2d2e",
+   "thinking_hash": null,
+   "logprobs_hash": "0e676a38f61a",
+   "answer_tokens": 297,
+   "finish_reason": "stop",
+   "seconds": 0.58
+  }
+ ]
+}

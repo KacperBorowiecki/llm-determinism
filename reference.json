@@ -56,6 +56,10 @@
      "answer_tokens": {
       "0": 370,
       "1": 90
+     },
+     "logprobs_hashes": {
+      "0": "3a2dfeb9c378",
+      "1": "863045db135f"
      }
     },
     {
@@ -100,6 +104,10 @@
      "answer_tokens": {
       "0": 885,
       "1": 1097
+     },
+     "logprobs_hashes": {
+      "0": "a1636cf89c90",
+      "1": "de36a1d4a992"
      }
     }
    ]
@@ -132,6 +140,10 @@
      "answer_tokens": {
       "0": 446,
       "1": 297
+     },
+     "logprobs_hashes": {
+      "0": "375bdfa9233b",
+      "1": "0e676a38f61a"
      }
     },
     {
@@ -154,6 +166,10 @@
      "answer_tokens": {
       "0": 768,
       "1": 795
+     },
+     "logprobs_hashes": {
+      "0": "9bdfcd0af38f",
+      "1": "ab90071b56bd"
      }
     }
    ]
@@ -204,6 +220,10 @@
      "answer_tokens": {
       "0": 1276,
       "1": 981
+     },
+     "logprobs_hashes": {
+      "0": "35394f6fb24e",
+      "1": "b668969698f9"
      }
     },
     {
@@ -226,6 +246,10 @@
      "answer_tokens": {
       "0": 1843,
       "1": 2143
+     },
+     "logprobs_hashes": {
+      "0": "73f7d5aa0bdd",
+      "1": "baf6a567f02e"
      }
     }
    ]

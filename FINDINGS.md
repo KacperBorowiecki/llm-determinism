@@ -107,6 +107,20 @@ for Q8_0). Profile `qwen3:0.6b-q4_K_M`.
   with `<|think|>`; with Qwen3 it gets shorter (25 instead of 29). The expected prompt length depends on the
   model and the mode, so each reference stores its own.
 
+## Not only the text: the probabilities are identical too (25 Oct)
+
+Since 25 Oct every run also hashes the logprob of every generated token and of the most likely other candidate
+(`logprobs_hash`), and the references store it. Origin PC, Ollama 0.40.7 (`b1-f174553e1`), a fresh `llama-server`
+per model on GPU 0:
+
+- **All 12 reference sequences** (3 models × thinking off / on × temperature 0 / 1), 3 runs each: the texts equal
+  the references, and the logprobs are identical in every run – bit for bit, at temperature 0 and 1. They are now
+  part of the references (`logprobs_hashes` in `reference.json`, the probabilities token by token in
+  `reference/texts/`).
+- **A quick test afterwards** (qwen3:0.6b-q8_0, 10 + 10): texts and logprobs equal to the reference.
+- So the same text does not just happen to come out of slightly different numbers – the numbers behind every
+  token are the same.
+
 ## The seed at temperature 0 does nothing (25 Oct)
 
 Origin PC, gemma4:26b-a4b-it-q8_0, Ollama 0.40.7 (`b1-f174553e1`); for each seed a freshly started `llama-server`
@@ -171,6 +185,8 @@ throughput) can break it; versions must be frozen (an update can change the text
   repetition loop up to max_tokens, identical in 10/10 runs.
 - 2026-10-25: the seed at temperature 0 does nothing – seeds 42, 7 and 1234 (fresh server for each) gave the same
   text; at temperature 1 every seed gave a different text.
+- 2026-10-25: logprobs hashed next to the text; references for Ollama 0.40.7 store them – texts and logprobs
+  identical bit for bit in every run.
 - 2026-10-25: token 43 is not a near-tie (margin 0.17 nat): the update to 0.40.7 moved the numbers by tenths of
   a nat; the text splits where the change exceeds the margin. Batching numbers from the origin project removed;
   no expectations about other machines (after a review).

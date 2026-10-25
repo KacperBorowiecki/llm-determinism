@@ -1,0 +1,200 @@
+{
+ "schema": 1,
+ "label": "origin-pc-2x5090-win11",
+ "profile": "qwen3:0.6b-q4_K_M",
+ "thinking": true,
+ "reference_llama_cpp": [
+  "b1-f174553e1"
+ ],
+ "reference_exact": true,
+ "started": "2026-10-25T10:09:38+01:00",
+ "finished": "2026-10-25T10:09:47+01:00",
+ "length": "custom3",
+ "runs_per_temperature": 3,
+ "device": "gpu",
+ "gpu": 0,
+ "note": "Reference logprobs for Ollama 0.40.7 (b1-f174553e1): run_test --make-reference, 3 runs per temperature, fresh llama-server on GPU 0. Reference logprobs added for this build.",
+ "machine": {
+  "os": "Windows 11 (10.0.26200)",
+  "arch": "AMD64",
+  "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
+  "ram_gb": 61.6,
+  "gpus": [
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   },
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   }
+  ],
+  "ollama": "0.40.7",
+  "python": "3.13.5",
+  "server": {
+   "build_info": "b1-f174553e1",
+   "model": "sha256-7f4030143c1c477224c5434f8272c662a8b042079a0a584f0a27a1684fe2e1fa",
+   "n_ctx": 8192,
+   "slots": 1,
+   "sampling": {
+    "top_k": 40,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
+    "samplers": [
+     "penalties",
+     "dry",
+     "top_n_sigma",
+     "top_k",
+     "typ_p",
+     "top_p",
+     "min_p",
+     "xtc",
+     "temperature"
+    ]
+   }
+  }
+ },
+ "temperatures": {
+  "0": {
+   "runs": 3,
+   "hashes": {
+    "1f701b198097": 3
+   },
+   "repeatable": true,
+   "reference_hash": "1f701b198097",
+   "equals_reference": true,
+   "answer_tokens": [
+    768
+   ],
+   "prompt_tokens": [
+    25
+   ],
+   "tok_per_s_median": 522.7,
+   "finish_reasons": {
+    "stop": 3
+   },
+   "divergence_vs_reference": null,
+   "thinking_hashes": {
+    "227ff26f211c": 3
+   },
+   "thinking_reference_hash": "227ff26f211c",
+   "logprobs_hashes": {
+    "9bdfcd0af38f": 3
+   },
+   "logprobs_repeatable": true,
+   "logprobs_reference_hash": "9bdfcd0af38f",
+   "logprobs_equals_reference": true
+  },
+  "1": {
+   "runs": 3,
+   "hashes": {
+    "14b5be25f98e": 3
+   },
+   "repeatable": true,
+   "reference_hash": "14b5be25f98e",
+   "equals_reference": true,
+   "answer_tokens": [
+    795
+   ],
+   "prompt_tokens": [
+    25
+   ],
+   "tok_per_s_median": 553.4,
+   "finish_reasons": {
+    "stop": 3
+   },
+   "divergence_vs_reference": null,
+   "thinking_hashes": {
+    "ac573c3b004d": 3
+   },
+   "thinking_reference_hash": "ac573c3b004d",
+   "logprobs_hashes": {
+    "ab90071b56bd": 3
+   },
+   "logprobs_repeatable": true,
+   "logprobs_reference_hash": "ab90071b56bd",
+   "logprobs_equals_reference": true
+  }
+ },
+ "warnings": [],
+ "texts": {
+  "1f701b198097": "**Historia o psie, kaczce i kotku**  \n\nW bosom bosomia, gdzie światło zaszczyło i zimno zaszczyło, była klasyczna wóda. W tych czasach, gdy światło zaszczyło, było psia, kotka i kaczka.  \n\nPsia, z czerwonym i czerwonym, był wąsłym i zrozumiałyim. Kaczka, z czerwonym i czerwonym, była zrozumiałyą i zrozumiałyą. Kotka, z czerwonym i czerwonym, była zrozumiałyą i zrozumiałyą.  \n\nW bosomie, gdy światło zaszczyło, było psia, kotka i kaczka. Kotka, z czerwonym i czerwonym, była zrozumiałyą i zrozumiałyą. Kaczka, z czerwonym i czerwonym, była zrozumiałyą i zrozumiałyą.  \n\nPsia, z rozumieniem, był wąsłym i zrozumiałyim. Kotka, z rozumieniem, była zrozumiałyą i zrozumiałyą. Kaczka, z rozumieniem, była zrozumiałyą i zrozumiałyą.  \n\nW bosomie, gdy światło zaszczyło, było psia, kotka i kaczka. Kotka, z rozumieniem, była zrozumiałyą i zrozumiałyą. Kaczka, z rozumieniem, była zrozumiałyą i zrozumiałyą.  \n\n**Zakończenie:**  \nW bosomie, gdy światło zaszczyło, było psia, kotka i kaczka. Kotka, z rozumieniem, była zrozumiałyą i zrozumiałyą. Kaczka, z rozumieniem, była zrozumiałyą i zrozumiałyą.",
+  "14b5be25f98e": "Oto historia o psie i kaczce, a także kotku:\n\n**\"Pamięcia o ciebie\"**\n\nW tych latach, gdzie zwierzęta zaczynала przechowywać jego ciebie, była zamiast dobra, że nie tylko ciebie, ale też się obserwował. Psia, z czujnictwem zimnego i trudnopodobnym zrozumieniem, zniknął w tle i wyciągnęł się do domu, by ogniskowe, by skoptywać, nie tylko jego ciebie, ale też jego wydarzenia. Kaczka, z głęboką, nieoczywłością i poezją, zniknęła w tle też, by wyrzucić wam, gdy by to nie było tylko ciebie, ale też to, co było dla siennego, nieogonim. Kot, z niemarczeniami i rozumieniem, zniknął też, i w tym momencie zaczęła się wydarzyć – by wyrzucić ciebie, ale także by nie zaszkodzić wam.\n\n„Ciebie”, zniknął kot, gdy by to nie było tylko ciebie, ale też by wyrzucić, że by to nie było tylko ciebie, ale też by to było, co było dla siennego.  \n\nDlaczego? Po tej nieskończnej, byc zamiast dobra, by ciebie by to było, co było dla siennego."
+ },
+ "runs": [
+  {
+   "temperature": 0.0,
+   "run": 1,
+   "time": "2026-10-25T10:09:39+01:00",
+   "hash": "1f701b198097",
+   "thinking_hash": "227ff26f211c",
+   "logprobs_hash": "9bdfcd0af38f",
+   "answer_tokens": 768,
+   "finish_reason": "stop",
+   "seconds": 1.51
+  },
+  {
+   "temperature": 0.0,
+   "run": 2,
+   "time": "2026-10-25T10:09:41+01:00",
+   "hash": "1f701b198097",
+   "thinking_hash": "227ff26f211c",
+   "logprobs_hash": "9bdfcd0af38f",
+   "answer_tokens": 768,
+   "finish_reason": "stop",
+   "seconds": 1.52
+  },
+  {
+   "temperature": 0.0,
+   "run": 3,
+   "time": "2026-10-25T10:09:42+01:00",
+   "hash": "1f701b198097",
+   "thinking_hash": "227ff26f211c",
+   "logprobs_hash": "9bdfcd0af38f",
+   "answer_tokens": 768,
+   "finish_reason": "stop",
+   "seconds": 1.45
+  },
+  {
+   "temperature": 1.0,
+   "run": 1,
+   "time": "2026-10-25T10:09:44+01:00",
+   "hash": "14b5be25f98e",
+   "thinking_hash": "ac573c3b004d",
+   "logprobs_hash": "ab90071b56bd",
+   "answer_tokens": 795,
+   "finish_reason": "stop",
+   "seconds": 1.46
+  },
+  {
+   "temperature": 1.0,
+   "run": 2,
+   "time": "2026-10-25T10:09:45+01:00",
+   "hash": "14b5be25f98e",
+   "thinking_hash": "ac573c3b004d",
+   "logprobs_hash": "ab90071b56bd",
+   "answer_tokens": 795,
+   "finish_reason": "stop",
+   "seconds": 1.49
+  },
+  {
+   "temperature": 1.0,
+   "run": 3,
+   "time": "2026-10-25T10:09:47+01:00",
+   "hash": "14b5be25f98e",
+   "thinking_hash": "ac573c3b004d",
+   "logprobs_hash": "ab90071b56bd",
+   "answer_tokens": 795,
+   "finish_reason": "stop",
+   "seconds": 1.54
+  }
+ ],
+ "thinking_texts": {
+  "227ff26f211c": "Okay, the user wants a story about a fox, a rabbit, and a rabbit. Wait, there's a rabbit and a rabbit? That's confusing. Maybe they meant a fox, a rabbit, and a rabbit? Or perhaps a fox, a rabbit, and a rabbit? Let me check again. The user wrote \"psie i kaczce oraz kotku\". Oh, right, \"psie\" is a fox, \"kaczce\" is a rabbit, and \"kotku\" is a rabbit. So the story should include a fox, a rabbit, and a rabbit. But maybe the user made a typo, and they meant a fox, a rabbit, and a rabbit. Let me proceed with that.\n\nFirst, I need to set the scene. Maybe a forest or a village. The fox is the main character, the rabbits are the companions. The rabbit and rabbit could be the same, but maybe they are different in some way. Let me think of a plot. The fox could be a wise creature, the rabbits are curious. Maybe the fox helps the rabbits find food, or they have a conflict. Let me outline: introduce the fox, the rabbits, their interactions, a problem they face, and a resolution. Make sure to include all three characters. Check for any typos or inconsistencies. Alright, time to put it all together.\n",
+  "ac573c3b004d": "Okay, the user wants a story about a mouse, a mouse, and a mouse. Wait, no, that's three animals. Wait, maybe they made a typo. Let me check again. Oh, the original query says \"psie i kaczce oraz kotku\", which translates to \"the mouse, the mouse, and the mouse\". That's a bit confusing. Are they referring to three different animals? Or is there a typo where they meant two animals? Maybe they intended two animals and made a mistake. \n\nHmm, but regardless, I need to create a story. Let me start by setting the scene. Maybe a forest or a small village. The three animals could be characters in a story, each with their own traits. Let me think of a plot where each mouse has a unique role. Maybe they live in a coop, and the story follows their interactions. \n\nFirst, introduce the characters. Let's have a mouse, a cat, and a rabbit. Wait, the user mentioned mice and cats. Oh, so maybe they meant two animals: mouse and cat. Let me adjust to that. So the story is about a mouse and a cat, maybe with a rabbit involved. Wait, no, the user wrote \"psie i kaczce oraz kotku\", which is three animals. Maybe they meant two and made a typo. Alternatively, it's possible they wanted three, so I should clarify but since the user asked for \"psie i kaczce oraz kotku\", maybe they are referring to three, so I should write about three. But perhaps it's better to write about two and then mention the third if needed. Let me proceed with a mouse, a cat, and a rabbit, making sure they all fit in a story. \n\nFirst, introduce the characters. Maybe the mouse is curious, the cat is cautious, and the rabbit is playful. Then, develop their interactions. Maybe a problem arises, and they work together to solve it. The story can highlight their unique traits and their friendship. Need to make sure the plot flows smoothly. Also, check for clarity and grammar in the response.\n"
+ }
+}
