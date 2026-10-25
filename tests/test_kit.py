@@ -389,15 +389,17 @@ class FakeResponse:
         pass
 
 
-def run_main(tmp_path, monkeypatch, *args):
-    """run_test.main() against a fake llama-server, with tmp_path as the repo root. Returns the newest result, its
-    path, the request bodies sent, the responses and the exit code."""
+def fake_server(tmp_path, monkeypatch, slots=1):
+    """A fake llama-server for run_test / parallel_test, with tmp_path as the repo root. Returns the lists that fill
+    with the request bodies sent and the responses."""
+    import parallel_test
     import run_test
     if not (tmp_path / "reference.json").exists():
         (tmp_path / "reference.json").write_text((ROOT / "reference.json").read_text(encoding="utf-8"), encoding="utf-8")
     monkeypatch.setattr(run_test, "ROOT", tmp_path)
+    monkeypatch.setattr(parallel_test, "ROOT", tmp_path)
     profile = load_reference()["profiles"]["qwen3:0.6b-q8_0"]
-    props = {"build_info": "b9-test", "model_path": "models/" + profile["model_file"], "total_slots": 1,
+    props = {"build_info": "b9-test", "model_path": "models/" + profile["model_file"], "total_slots": slots,
              "default_generation_settings": {"n_ctx": 8192, "params": dict(profile["sampling"])}}
     bodies, sent = [], []
 
@@ -413,6 +415,14 @@ def run_main(tmp_path, monkeypatch, *args):
     monkeypatch.setattr(run_test.requests, "get", lambda url, timeout=None: FakeResponse(props))
     monkeypatch.setattr(run_test.requests, "post", post)
     monkeypatch.setattr(run_test, "run_cmd", lambda cmd: "ollama version is 0.99.0" if cmd[0] == "ollama" else "")
+    return bodies, sent
+
+
+def run_main(tmp_path, monkeypatch, *args):
+    """run_test.main() against the fake server. Returns the newest result, its path, the request bodies sent, the
+    responses and the exit code."""
+    import run_test
+    bodies, sent = fake_server(tmp_path, monkeypatch)
     monkeypatch.setattr(sys, "argv", ["run_test.py", "--label", "pc", *args])
     code = 0
     try:
@@ -481,3 +491,14 @@ def test_divergence_with_thinking_in_the_thinking_and_in_the_answer():
     assert s["thinking_divergence_vs_reference"]["char"] == 20 and s["divergence_vs_reference"]["char"] == 5
     s = summarize([run(answer, thought)], entry)["0"]            # identical: no divergence anywhere
     assert s["thinking_divergence_vs_reference"] is None and s["divergence_vs_reference"] is None
+
+
+def test_parallel_test_saves_texts_and_logprobs(tmp_path, monkeypatch):
+    import parallel_test
+    bodies, _ = fake_server(tmp_path, monkeypatch, slots=10)
+    monkeypatch.setattr(sys, "argv", ["parallel_test.py", "--label", "pc", "--rounds", "2"])
+    parallel_test.main()
+    r = json.loads(next((tmp_path / "results" / "pc" / "parallel").glob("*.json")).read_text(encoding="utf-8"))
+    assert len(bodies) == 21 and r["total"] == 20 and r["equal_to_single"] == r["logprobs_equal_to_single"] == 20
+    assert r["texts"] == {r["single_request_hash"]: "historia 0"} and r["single_request_logprobs_hash"]
+    assert all(rd["logprobs_hashes"] == {r["single_request_logprobs_hash"]: 10} for rd in r["rounds"])
