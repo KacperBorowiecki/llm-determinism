@@ -103,6 +103,27 @@ for Q8_0). Profile `qwen3:0.6b-q4_K_M`.
   with `<|think|>`; with Qwen3 it gets shorter (25 instead of 29). The expected prompt length depends on the
   model and the mode, so each reference stores its own.
 
+## The seed at temperature 0 does nothing (25 Oct)
+
+Origin PC, gemma4:26b-a4b-it-q8_0, Ollama 0.40.7 (`b1-f174553e1`); for each seed a freshly started `llama-server`
+on GPU 0 and the kit's own request – only the seed differs.
+
+| seed | temperature 0 (3 runs) | temperature 1 (1 control run) |
+|---|---|---|
+| 42 | `179e3c96dff3` ×3 | `d4afe73e6d3c` |
+| 7 | `179e3c96dff3` ×3 | `e8ca311a05d4` |
+| 1234 | `179e3c96dff3` ×3 | `1c94b00f867b` |
+
+- **Temperature 0: three seeds, all 9 runs – one text**, the reference `179e3c96dff3` (1 276 tokens). At
+  temperature 0 llama.cpp takes the most likely token every time; nothing is drawn, so the seed has nothing to
+  act on.
+- **Temperature 1: every seed a different text**; seed 42 gives the reference `d4afe73e6d3c`. The seed does reach
+  the server – it decides the draw.
+- So the two temperatures test different things: repeatability at temperature 0 shows that the *computation* is
+  stable (the same numbers, the same most likely token every time); at temperature 1, that the *seeded
+  sampling* repeats.
+- Ad-hoc test, not in `results/`; a script for it is planned.
+
 ## Curiosity: 10 requests at once (batching)
 
 Origin PC, gemma4:26b-a4b-it-q8_0 (Ollama 0.40.6), one server with `-np 10 -c 20480`, prompt cache off, seed 42.
@@ -156,3 +177,5 @@ per second); versions must be frozen (an update can change the text); cloud APIs
 - 2026-10-22: first machine outside the origin PC: `mac-m5pro-64gb` (Apple M5 Pro, Ollama 0.40.4),
   qwen3:0.6b-q4_K_M thinking off and on – repeatable, no reference for its build; with thinking at temperature 0 a
   repetition loop up to max_tokens, identical in 10/10 runs.
+- 2026-10-25: the seed at temperature 0 does nothing – seeds 42, 7 and 1234 (fresh server for each) gave the same
+  text; at temperature 1 every seed gave a different text.
