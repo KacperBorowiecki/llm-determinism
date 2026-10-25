@@ -137,6 +137,13 @@ def summarize(results: list[dict], reference: dict) -> dict:
             stats["thinking_reference_hash"] = thinking_ref
             stats["repeatable"] = stats["repeatable"] and len(thinking_counts) == 1
             stats["equals_reference"] = stats["equals_reference"] and set(thinking_counts) == {thinking_ref}
+            # where the thinking split from the reference; the answer's split is computed separately below
+            thinking_main = thinking_counts.most_common(1)[0][0]
+            thinking_ref_text = reference_text(thinking_ref)
+            stats["thinking_divergence_vs_reference"] = None
+            if thinking_main != thinking_ref and thinking_ref_text is not None:
+                thought = next(r["thinking_text"] for r in rs if r["thinking_hash"] == thinking_main)
+                stats["thinking_divergence_vs_reference"] = divergence(thinking_ref_text, thought)
         # logprobs: like the text; None = some run has no logprobs (missing data, not "the numbers differ")
         lp_counts = collections.Counter(r.get("logprobs_hash") for r in rs)
         lp_ref = reference.get("logprobs_hashes", {}).get(key)

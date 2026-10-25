@@ -98,4 +98,5 @@ Follow CLAUDE.md. Talk to the user in their language.
     says so); result files older than 25 Oct have no logprobs fields at all. The reference is the one for the same
     llama.cpp build; if the build has no reference yet (a newer or older Ollama), the warning says so – the
     repeatability result still holds, but a different hash is expected and is not a hardware difference.
-    If something differs, explain what is known (warnings, divergence position) and offer to investigate. Suggest `determinism-save` to save the result.
+    If something differs, explain what is known (warnings, divergence position – with thinking, in the thinking and in the answer
+    separately) and offer to investigate. Suggest `determinism-save` to save the result.

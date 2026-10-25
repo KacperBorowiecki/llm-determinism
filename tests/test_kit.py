@@ -443,3 +443,39 @@ def test_seed_option_changes_only_the_seed_in_the_request(tmp_path, monkeypatch)
     r, path, bodies, _, _ = run_main(tmp_path, monkeypatch, "--runs", "1")   # no --seed: the protocol's seed
     assert all(b["seed"] == 42 for b in bodies) and r["seed"] == 42 and "seed" not in path.name
     assert not any("instead of the protocol's" in w for w in r["warnings"])
+
+
+def test_protocol_is_pinned():
+    """The protocol must not change without the user's consent (CLAUDE.md): a change fails here, not in a diff."""
+    reference = load_reference()
+    assert reference["protocol"] == {"prompt": "Napisz mi historie o psie i kaczce oraz kotku?", "seed": 42,
+                                     "max_tokens": 4096, "max_tokens_thinking": 8000, "temperatures": [0, 1]}
+    assert reference["server_args"] == "-c 8192 -np 1 --flash-attn auto -b 1024 -ub 1024 --split-mode none --jinja"
+
+
+def test_request_body_is_pinned(tmp_path, monkeypatch):
+    _, _, bodies, _, _ = run_main(tmp_path, monkeypatch, "--runs", "1")
+    assert bodies[0] == {"messages": [{"role": "user", "content": "Napisz mi historie o psie i kaczce oraz kotku?"}],
+                         "temperature": 0.0, "seed": 42, "max_tokens": 4096, "logprobs": True, "top_logprobs": 2,
+                         "cache_prompt": False, "chat_template_kwargs": {"enable_thinking": False}}
+    _, _, bodies, _, _ = run_main(tmp_path, monkeypatch, "--runs", "1", "--thinking")
+    assert bodies[0]["max_tokens"] == 8000 and bodies[0]["chat_template_kwargs"] == {"enable_thinking": True}
+
+
+def test_divergence_with_thinking_in_the_thinking_and_in_the_answer():
+    entry = next(e for e in load_reference()["profiles"]["qwen3:0.6b-q8_0"]["references"]
+                 if e.get("thinking") and "b1-f174553e1" in e["llama_cpp"])
+    answer = json.loads((ROOT / "reference" / "texts" / f"{entry['hashes']['0']}.json").read_text(encoding="utf-8"))["text"]
+    thought = json.loads((ROOT / "reference" / "texts" / f"{entry['thinking_hashes']['0']}.json")
+                         .read_text(encoding="utf-8"))["text"]
+
+    def run(text, thinking_text):
+        return dict(fake(0.0, text), thinking_text=thinking_text, thinking_hash=text_hash(thinking_text)[0])
+
+    other_thought = thought[:20] + "X" + thought[21:]
+    s = summarize([run(answer, other_thought)], entry)["0"]      # the thinking differs, the answer does not
+    assert s["thinking_divergence_vs_reference"]["char"] == 20 and s["divergence_vs_reference"] is None
+    s = summarize([run(answer[:5] + "Y" + answer[6:], other_thought)], entry)["0"]   # both differ
+    assert s["thinking_divergence_vs_reference"]["char"] == 20 and s["divergence_vs_reference"]["char"] == 5
+    s = summarize([run(answer, thought)], entry)["0"]            # identical: no divergence anywhere
+    assert s["thinking_divergence_vs_reference"] is None and s["divergence_vs_reference"] is None
