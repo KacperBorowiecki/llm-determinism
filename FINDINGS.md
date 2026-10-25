@@ -130,9 +130,8 @@ on GPU 0 and the kit's own request – only the seed differs.
 ## Batching: several requests computed together
 
 Computing several requests together in one batch (a server with several slots, e.g. `-np 10`) can change the text
-even at temperature 0 – this is how cloud APIs serve requests, so they usually cannot guarantee determinism. This
-kit runs one request at a time. Seen in the origin project (raw data not in this repo); to check it on your own
-server: `parallel_test.py` (10 requests at once, server started with `-np 10 -c 20480`).
+even at temperature 0 – this is how cloud APIs serve requests, so they usually cannot guarantee determinism. To
+check it on your own server: `parallel_test.py` (10 requests at once, server started with `-np 10 -c 20480`).
 
 ## Related observations outside this kit
 
@@ -172,5 +171,5 @@ throughput) can break it; versions must be frozen (an update can change the text
 - 2026-10-25: the seed at temperature 0 does nothing – seeds 42, 7 and 1234 (fresh server for each) gave the same
   text; at temperature 1 every seed gave a different text.
 - 2026-10-25: token 43 is not a near-tie (margin 0.17 nat): the update to 0.40.7 moved the numbers by tenths of
-  a nat; the text splits where the change exceeds the margin. Batching numbers from the origin project removed
-  (raw data not in this repo); no expectations about other machines (after a review).
+  a nat; the text splits where the change exceeds the margin. Batching numbers from the origin project removed;
+  no expectations about other machines (after a review).
