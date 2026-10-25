@@ -6,12 +6,21 @@ test.
 
 ## 1. Once: the model and the Python environment
 
-Pull a model – one of the profiles in `reference.json` (`qwen3:0.6b-q8_0` is the default, `qwen3:0.6b-q4_K_M`,
-`gemma4:26b-a4b-it-q8_0`):
+Pull a model – one of the profiles in `reference.json`:
+
+| profile | download | memory |
+|---|---|---|
+| `qwen3:0.6b-q8_0` (default) | ~0.8 GB | ~2 GB |
+| `qwen3:0.6b-q4_K_M` | ~0.5 GB | ~2 GB |
+| `gemma4:26b-a4b-it-q8_0` | ~28 GB | ~30 GB (GPU, Apple unified memory, or GPU + RAM) |
 
 ```
 ollama pull qwen3:0.6b-q8_0
 ```
+
+The scripts need **Python 3.10 or newer** – check with `python --version` (Windows) or `python3 --version` (macOS;
+the python3 that comes with macOS may be 3.9). Older: install a current one from python.org (on macOS also
+Homebrew) and create the environment with it, e.g. `python3.12 -m venv .venv`.
 
 Windows:
 
@@ -22,10 +31,13 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass   # lets Activate.ps1
 pip install -r requirements.txt
 ```
 
+If a company policy blocks `Activate.ps1`, skip the activation and call the environment's interpreter directly:
+`.venv\Scripts\python.exe -m pip install -r requirements.txt`, later `.venv\Scripts\python.exe run_test.py …`.
+
 macOS:
 
 ```bash
-python3 -m venv .venv          # needs Python ≥ 3.10 – the python3 that comes with macOS may be older
+python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -34,9 +46,12 @@ If the repo is on a drive shared by Windows and macOS, give each system its own 
 
 ## 2. Terminal 1: start the server
 
+First make sure nothing else uses the GPU: `ollama ps` shows no model (otherwise `ollama stop <model>`) and no
+other `llama-server` runs (Windows: `nvidia-smi` lists no other GPU processes; macOS: `pgrep -x llama-server` prints
+nothing).
+
 `llama-server` comes with Ollama. The model file is the path in the first `FROM` line of
-`ollama show <model> --modelfile`. Everything after the model file is the test's setup, the same on every machine
-(`server_args` in `reference.json`).
+`ollama show <model> --modelfile`; the other arguments are the test's setup, the same on every machine.
 
 Windows:
 
@@ -62,10 +77,15 @@ MODEL=$(ollama show "$TAG" --modelfile | grep -m1 '^FROM' | sed 's/^FROM //')
     -ngl 999 -c 8192 -np 1 --flash-attn auto -b 1024 -ub 1024 --split-mode none --jinja
 ```
 
-Wait for `listening on http://127.0.0.1:8090`. Then check that the model is on the GPU – Windows: `nvidia-smi`
-shows the chosen GPU's memory grown by about the model size; macOS: Activity Monitor → Window → GPU History is busy
-while the test generates. Nothing else should use the GPU during the test (no other `llama-server`, `ollama ps`
-empty).
+Wait for `listening on http://127.0.0.1:8090`, then check that the model is on the GPU:
+- Windows: `nvidia-smi` shows the chosen GPU's memory grown by about the model size. If it did not grow, the server
+  runs on the CPU: stop it (Ctrl+C), check `$cuda` – `nvidia-smi` shows the driver's `CUDA Version` top right; below
+  13 use `cuda_v12` – and start again.
+- macOS: Activity Monitor → Window → GPU History is busy while the test generates.
+
+The model does not fit into GPU memory: lower `-ngl` (e.g. `-ngl 30`, only part of the model on the GPU) and run
+the test with `--device mix --note "-ngl 30"`; no usable GPU: `-ngl 0` and `--device cpu`. Part of the model or all
+of it on the CPU will most likely give a different text than the reference.
 
 ## 3. Terminal 2: run the test
 
@@ -75,7 +95,7 @@ Windows:
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .venv\Scripts\Activate.ps1
 $env:PYTHONUTF8 = "1"
-python run_test.py --label <machine-label> --profile qwen3:0.6b-q8_0 --length quick
+python run_test.py --label <machine-label> --profile qwen3:0.6b-q8_0 --length quick --gpu 0
 ```
 
 macOS:
@@ -89,7 +109,8 @@ python run_test.py --label <machine-label> --profile qwen3:0.6b-q8_0 --length qu
 - `--profile` – the model the server runs (the same tag as in step 2);
 - `--length quick | standard | long` – 10, 100 or 1000 runs at each temperature;
 - `--thinking` – the model's thinking on (default off);
-- `--device gpu | cpu | mix` and `--gpu <index>` – where the model runs, recorded in the result;
+- `--device gpu | cpu | mix` – where the model runs; `--gpu <index>` – which GPU (Windows: the same index as
+  `CUDA_VISIBLE_DEVICES`); both are recorded in the result;
 - `--note "…"` – anything unusual (another program running, a restart or an update since the last test).
 
 For a long test keep the computer awake – Windows: Settings → Power → never sleep; macOS: start the test with
@@ -97,7 +118,7 @@ For a long test keep the computer awake – Windows: Settings → Power → neve
 
 ## 4. After the test
 
-Stop the server with Ctrl+C in terminal 1 and rebuild the table:
+Stop the server with Ctrl+C in terminal 1. Then, in terminal 2, rebuild the table:
 
 ```
 python results_table.py
