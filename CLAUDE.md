@@ -1,7 +1,7 @@
 # CLAUDE.md – llm-determinism
 
-A small kit to check whether `llama-server` (from Ollama) gives the same text for the same prompt and seed – on
-this machine (repeatability) and compared with the reference machine (same hash?). See README.md and FINDINGS.md.
+A small kit to check whether `llama-server` (from Ollama) gives the same text for the same prompt and seed, run
+after run (repeatability), and whether it equals the reference hashes. See README.md and FINDINGS.md.
 
 ## Rules
 - **Always ask for the machine label** before a test. Propose one from the hardware (e.g. `mac-m5pro-64gb`);
@@ -29,7 +29,8 @@ this machine (repeatability) and compared with the reference machine (same hash?
   `OLLAMA_LIBRARY_PATH`, `GGML_BACKEND_PATH`) – always check the model is on the GPU after start.
 - The Gemma 4 and Qwen3 chat templates **enable thinking by default** – `run_test.py` sends `enable_thinking: false`.
 - **Reference hashes are per llama.cpp build:** an Ollama update can change the text (0.40.6 → 0.40.7 changed both
-  models). Compare machines on the same build; a new build needs its reference generated on the origin PC.
+  models). A result is compared with the reference of the same build; a new build needs its reference generated on the
+  origin PC.
 - Use `127.0.0.1`, not `localhost` (IPv6 delay on Windows).
 - Partial offload (`-ngl` lower than all layers) or CPU will most likely change the hash – that is a result, write it
   into `--note`.

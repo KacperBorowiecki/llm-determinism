@@ -3,7 +3,7 @@
 **Is an LLM deterministic?** AI is often called non-deterministic: ask twice, get two different answers. We wanted
 to know whether that comes from the model itself or from the environment it runs in. This repo sends the same
 prompt with the same seed to a local model (`llama-server` from [Ollama](https://ollama.com)) many times and
-compares the answers by hash – run after run on one machine, and between machines.
+compares the answers by hash, run after run.
 
 ## What we found
 

@@ -1,8 +1,7 @@
 """Optional curiosity: 10 requests at the same time to one llama-server started with -np 10 -c 20480.
 
-On the reference machine none of the simultaneous answers matched the single-request text (0/100 at temperature 0
-and at temperature 1): the server computes requests together in one batch, which changes the numbers slightly, and at
-a near-tie between two tokens that is enough to change the text. Writes results/<label>/parallel/<start>.json.
+Checks whether computing requests together in one batch changes the text: compares every simultaneous answer with
+a single request on the same server. Writes results/<label>/parallel/<start>.json.
 
   python parallel_test.py --label my-pc --rounds 3 --temperature 0
 """
