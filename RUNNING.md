@@ -95,14 +95,16 @@ Windows:
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .venv\Scripts\Activate.ps1
 $env:PYTHONUTF8 = "1"
-python run_test.py --label <machine-label> --profile qwen3:0.6b-q8_0 --length quick --gpu 0
+$label = "my-pc"                               # this machine's label, e.g. origin-pc-2x5090-win11
+python run_test.py --label $label --profile qwen3:0.6b-q8_0 --length quick --gpu 0
 ```
 
 macOS:
 
 ```bash
 source .venv/bin/activate
-python run_test.py --label <machine-label> --profile qwen3:0.6b-q8_0 --length quick
+LABEL=my-mac                                   # this machine's label, e.g. mac-m5pro-64gb
+python run_test.py --label "$LABEL" --profile qwen3:0.6b-q8_0 --length quick
 ```
 
 - `--label` – this machine, lowercase letters, digits, `.`, `_`, `-` (e.g. `mac-m5pro-64gb`);
@@ -128,8 +130,9 @@ The result is in `results/<label>/`, the table in `RESULTS.md`.
 
 ## Optional: 10 requests at once
 
-Start the server as in step 2, but with `-np 10 -c 20480` instead of `-c 8192 -np 1`, then in terminal 2:
+Start the server as in step 2, but with `-np 10 -c 20480` instead of `-c 8192 -np 1`, then in terminal 2 (with
+the label from step 3):
 
 ```
-python parallel_test.py --label <machine-label> --rounds 3 --temperature 0
+python parallel_test.py --label my-pc --rounds 3 --temperature 0
 ```
