@@ -8,8 +8,9 @@ compares the answers by hash, run after run.
 ## What we found
 
 **The model itself is deterministic – even at temperature 1: the same input (prompt and seed) in a frozen
-environment gives the same output, token for token.** The randomness people see comes from the environment
-around the model.
+environment gives the same output, token for token.** The randomness people see comes from how the model is
+called – at a temperature above 0 without a fixed seed every call draws differently (3 runs without a seed gave 3
+different texts) – and from the environment around the model.
 
 - **Thousands of identical answers in a row.** Gemma 4 26B (Q8_0) on the reference PC: 2 108 runs at temperature 0
   and 10 108 runs at temperature 1 – one text each, on both GPUs. A restart, the PC going to sleep in the middle of
@@ -19,11 +20,12 @@ around the model.
   makes the sampling repeat.*
 - **Every test so far was repeatable:** 3 models (Gemma 4 26B, Qwen3 0.6B in Q8_0 and Q4_K_M), thinking on and off,
   2 machines (Windows with 2× RTX 5090, Apple M5 Pro).
-- **Not only the text – the numbers too.** The kit also hashes the probability of every generated token: on the
-  reference PC every run gave the same probabilities bit for bit, at temperature 0 and 1.
+- **Not only the text – the numbers too.** Since 25 Oct the kit also hashes the probability of every generated
+  token: on the reference PC all 56 runs since then (all three models, thinking on and off) gave the same
+  probabilities bit for bit, at temperature 0 and 1.
 
-What "frozen" means: the same model file, llama.cpp build, settings and machine, one request at a time. Each of
-these changed the text when it changed:
+What "frozen" means: the same model file, llama.cpp build, settings and machine, one request at a time. These
+changed the text in our tests:
 
 | what changed | result |
 |---|---|
@@ -34,9 +36,11 @@ these changed the text when it changed:
 The input means the exact tokens: any change in the prompt – even one extra space – makes it a different input
 and can change the whole answer.
 
-Computing several requests together (batching) can also change the text – this is how cloud APIs work, so even
-temperature 0 does not guarantee the same answer twice there. Locally, one request at a time, the answer repeats;
-`parallel_test.py` shows the effect on your own server.
+Other changes may alter the probabilities, and through them the text, but are not shown here: another machine
+or GPU, distributed computation (the model split across several GPUs or machines – the sums are added in a
+different order) and computing several requests together (batching). The test therefore runs on one GPU, one
+request at a time. Batching is how cloud APIs work, so even temperature 0 does not guarantee the same answer
+twice there; `parallel_test.py` shows the effect on your own server.
 
 *Repeatable ≠ correct:* a broken answer repeats just as faithfully – on the Mac a tiny model looped until the
 token limit, identically in 10 of 10 runs.
