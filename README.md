@@ -32,6 +32,7 @@ changed the text in our tests:
 | llama.cpp build (Ollama update 0.40.6 → 0.40.7) | a different text, still repeatable (the update 0.40.4 → 0.40.6 kept the text) |
 | quantization (Q4_K_M instead of Q8_0) | a different text – effectively a different model |
 | thinking on / off | a different prompt, so a different text |
+| CPU instead of GPU (the same machine and build) | a different text and other numbers, still repeatable |
 
 The input means the exact tokens: any change in the prompt – even one extra space – makes it a different input
 and can change the whole answer.

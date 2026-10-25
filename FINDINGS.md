@@ -127,6 +127,20 @@ per model on GPU 0:
   computation everywhere, the text survived until token 43. The text hash saw the change at token 43, the
   logprobs hash would have seen it at token 0.
 
+## CPU instead of GPU: the same build, a different text (25 Oct)
+
+Reference PC, qwen3:0.6b-q8_0, Ollama 0.40.7 (`b1-f174553e1`) – the same machine, build and model file as the GPU
+reference, but `llama-server` with `-ngl 0` and no GPU visible; 3 runs per temperature (the result is labelled
+`my-pc-2x-5090`).
+
+- **Repeatable on the CPU too:** text and logprobs identical in all 3 runs at both temperatures.
+- **A different text than on the GPU:** at temperature 0 it splits from the reference at character 61
+  (`9c3003d23b05` instead of `23cd03276e07`) and then repeats itself until the 4 096-token limit in every run; at
+  temperature 1 it splits at character 2 (`84401c1a5185`, 300 tokens).
+- So another compute device changes the numbers, and with them the text, even on the same build. *Hypothesis for
+  the reason:* the CPU runs the same model through different code (other kernels, sums added in another order).
+- ~53–74 tok/s on the Ryzen 9 9950X.
+
 ## The seed at temperature 0 does nothing (25 Oct)
 
 Origin PC, gemma4:26b-a4b-it-q8_0, Ollama 0.40.7 (`b1-f174553e1`); for each seed a freshly started `llama-server`
@@ -194,6 +208,7 @@ throughput) can break it; versions must be frozen (an update can change the text
   repetition loop up to max_tokens, identical in 10/10 runs.
 - 2026-10-25: the seed at temperature 0 does nothing – seeds 42, 7 and 1234 (fresh server for each) gave the same
   text; at temperature 1 every seed gave a different text.
+- 2026-10-25: CPU instead of GPU on the reference PC (same build): repeatable, but a different text.
 - 2026-10-25: Gemma 0.40.4 vs 0.40.7 – the same text for 43 tokens, different numbers from token 0.
 - 2026-10-25: logprobs hashed next to the text; references for Ollama 0.40.7 store them – texts and logprobs
   identical bit for bit in every run.

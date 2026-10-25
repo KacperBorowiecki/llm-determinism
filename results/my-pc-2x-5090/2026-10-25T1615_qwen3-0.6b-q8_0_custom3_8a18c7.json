@@ -1,0 +1,217 @@
+{
+ "schema": 1,
+ "label": "my-pc-2x-5090",
+ "profile": "qwen3:0.6b-q8_0",
+ "thinking": false,
+ "seed": 42,
+ "reference_llama_cpp": [
+  "b1-f174553e1"
+ ],
+ "reference_exact": true,
+ "started": "2026-10-25T16:15:55+01:00",
+ "finished": "2026-10-25T16:19:58+01:00",
+ "length": "custom3",
+ "runs_per_temperature": 3,
+ "device": "cpu",
+ "gpu": null,
+ "note": "CPU only: llama-server with -ngl 0 and no GPU visible (CUDA_VISIBLE_DEVICES=-1), on the reference PC – the same machine, build and model file as the GPU reference. End-to-end check of 25 Oct.",
+ "machine": {
+  "os": "Windows 11 (10.0.26200)",
+  "arch": "AMD64",
+  "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
+  "ram_gb": 61.6,
+  "gpus": [
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   },
+   {
+    "name": "NVIDIA GeForce RTX 5090",
+    "memory": "32607 MiB",
+    "driver": "610.88",
+    "cuda": "13.3"
+   }
+  ],
+  "ollama": "0.40.7",
+  "python": "3.13.5",
+  "server": {
+   "build_info": "b1-f174553e1",
+   "model": "sha256-31db9797248620627b127c47c75caa76ec2ce9b7de9dc0f2faca02ba59615818",
+   "n_ctx": 8192,
+   "slots": 1,
+   "sampling": {
+    "top_k": 40,
+    "top_p": 0.949999988079071,
+    "min_p": 0.05000000074505806,
+    "samplers": [
+     "penalties",
+     "dry",
+     "top_n_sigma",
+     "top_k",
+     "typ_p",
+     "top_p",
+     "min_p",
+     "xtc",
+     "temperature"
+    ]
+   }
+  }
+ },
+ "temperatures": {
+  "0": {
+   "runs": 3,
+   "hashes": {
+    "9c3003d23b05": 3
+   },
+   "repeatable": true,
+   "reference_hash": "23cd03276e07",
+   "equals_reference": false,
+   "answer_tokens": [
+    4096
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 53.4,
+   "finish_reasons": {
+    "length": 3
+   },
+   "divergence_vs_reference": {
+    "char": 61,
+    "reference": "rię o psie, kaczce i kotku:\n\n---\n\nW nocy, gdy świat był zbyt zbyt, wojny zaczęła",
+    "this": "rię o psie, kaczce i kotku:\n\n---\n\nW nocy z czarnymi klasami i zimą, w domu, gdzi"
+   },
+   "logprobs_hashes": {
+    "ef9882d77a4e": 3
+   },
+   "logprobs_repeatable": true,
+   "logprobs_reference_hash": "3a2dfeb9c378",
+   "logprobs_equals_reference": false
+  },
+  "1": {
+   "runs": 3,
+   "hashes": {
+    "84401c1a5185": 3
+   },
+   "repeatable": true,
+   "reference_hash": "599eb85dd1d7",
+   "equals_reference": false,
+   "answer_tokens": [
+    300
+   ],
+   "prompt_tokens": [
+    29
+   ],
+   "tok_per_s_median": 73.8,
+   "finish_reasons": {
+    "stop": 3
+   },
+   "divergence_vs_reference": {
+    "char": 2,
+    "reference": "W przestrzeni nieogromnej i niepraktycznie",
+    "this": "W latach 1980-2000 odkryto, że bardzo częs"
+   },
+   "logprobs_hashes": {
+    "b56c2ef3c9e3": 3
+   },
+   "logprobs_repeatable": true,
+   "logprobs_reference_hash": "863045db135f",
+   "logprobs_equals_reference": false
+  }
+ },
+ "warnings": [
+  "temperature 0: 3 generation(s) hit max_tokens (text cut off)"
+ ],
+ "texts": {
+  "9c3003d23b05": "Oczywiście! Oto historię o psie, kaczce i kotku:\n\n---\n\nW nocy z czarnymi klasami i zimą, w domu, gdzie wędrowała psia, kaczka i kotka, by wzielić wsięczone wody. W domu, w której mieszkała psia, kaczka i kotka, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsięczone wody, by wzielić wsi",
+  "84401c1a5185": "W latach 1980-2000 odkryto, że bardzo często urodzi się w sklepcie wiosenek, a także w południowym kraju, na terenie zasiadku. To właśnie przez te długie i nieskupione lata, które zgodnie z przykrytymi prawami, zostały utworzone **kota i psie**, oraz **kaczka**. \n\nWystarczyła w końcu praktyczna historia, i to była bardzo urodzinna historia. W tych wiosennich, które się zbyt często rzeczywistują, wychodzi się w kuchni, z kaczką na głowy i psia, który się z nim dobrodzie. To może być, że przez te lata chcesz znaleźć chętnego człowieka, a także mężczyчника, który będzie miał czas do wizyty do kuchni, aby dobrać dobre go.\n\nPocząwszy od początku, można zacząć od kilku zapisów i przypomnienia, a następnie przejść do pojawienia się jednej z trzech wielu osob. W końcu, gdy wszystko jest zrozumiono, można podzielić ten krótką, ale wyczerpytą historia."
+ },
+ "runs": [
+  {
+   "temperature": 0.0,
+   "run": 1,
+   "time": "2026-10-25T16:17:12+01:00",
+   "started": "2026-10-25T16:15:55.645+01:00",
+   "finished": "2026-10-25T16:17:12.481+01:00",
+   "response_id": "chatcmpl-g1M6FhIcdvE02majJzNgpfKqd02EwGsB",
+   "hash": "9c3003d23b05",
+   "thinking_hash": null,
+   "logprobs_hash": "ef9882d77a4e",
+   "answer_tokens": 4096,
+   "finish_reason": "length",
+   "seconds": 76.86
+  },
+  {
+   "temperature": 0.0,
+   "run": 2,
+   "time": "2026-10-25T16:18:29+01:00",
+   "started": "2026-10-25T16:17:12.509+01:00",
+   "finished": "2026-10-25T16:18:29.333+01:00",
+   "response_id": "chatcmpl-hFNWnCUI12MfyYVu4M2pB8s5JBFM716q",
+   "hash": "9c3003d23b05",
+   "thinking_hash": null,
+   "logprobs_hash": "ef9882d77a4e",
+   "answer_tokens": 4096,
+   "finish_reason": "length",
+   "seconds": 76.84
+  },
+  {
+   "temperature": 0.0,
+   "run": 3,
+   "time": "2026-10-25T16:19:46+01:00",
+   "started": "2026-10-25T16:18:29.351+01:00",
+   "finished": "2026-10-25T16:19:46.133+01:00",
+   "response_id": "chatcmpl-Hr1v4WVJbiXcjWWAioHRInQ5uUvwUvrl",
+   "hash": "9c3003d23b05",
+   "thinking_hash": null,
+   "logprobs_hash": "ef9882d77a4e",
+   "answer_tokens": 4096,
+   "finish_reason": "length",
+   "seconds": 76.79
+  },
+  {
+   "temperature": 1.0,
+   "run": 1,
+   "time": "2026-10-25T16:19:50+01:00",
+   "started": "2026-10-25T16:19:46.151+01:00",
+   "finished": "2026-10-25T16:19:50.252+01:00",
+   "response_id": "chatcmpl-Fsc9o8jfI5xC6wTnFXGQG6t7pFRYQtbP",
+   "hash": "84401c1a5185",
+   "thinking_hash": null,
+   "logprobs_hash": "b56c2ef3c9e3",
+   "answer_tokens": 300,
+   "finish_reason": "stop",
+   "seconds": 4.1
+  },
+  {
+   "temperature": 1.0,
+   "run": 2,
+   "time": "2026-10-25T16:19:54+01:00",
+   "started": "2026-10-25T16:19:50.255+01:00",
+   "finished": "2026-10-25T16:19:54.419+01:00",
+   "response_id": "chatcmpl-X2kNcclkF3VohGyT4k7HWs67LApIrM22",
+   "hash": "84401c1a5185",
+   "thinking_hash": null,
+   "logprobs_hash": "b56c2ef3c9e3",
+   "answer_tokens": 300,
+   "finish_reason": "stop",
+   "seconds": 4.17
+  },
+  {
+   "temperature": 1.0,
+   "run": 3,
+   "time": "2026-10-25T16:19:58+01:00",
+   "started": "2026-10-25T16:19:54.420+01:00",
+   "finished": "2026-10-25T16:19:58.489+01:00",
+   "response_id": "chatcmpl-Nw8PegYT44t7HIiMnYr00FdHlIEb8NN4",
+   "hash": "84401c1a5185",
+   "thinking_hash": null,
+   "logprobs_hash": "b56c2ef3c9e3",
+   "answer_tokens": 300,
+   "finish_reason": "stop",
+   "seconds": 4.07
+  }
+ ]
+}
