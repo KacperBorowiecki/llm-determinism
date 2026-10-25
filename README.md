@@ -80,6 +80,8 @@ Open this folder in Claude Code and say:
 Every step is written out in [.claude/skills/determinism-test/SKILL.md](.claude/skills/determinism-test/SKILL.md).
 The batching test (10 requests at once, `parallel_test.py`) is optional – ask Claude for it.
 
+Without Claude Code: the same steps as commands for Windows and macOS – [RUNNING.md](RUNNING.md).
+
 ## Results
 
 - `results/<label>/<start>_<model>[_thinking]_<length>_<id>.json` – one file per test (`<id>`: a short random code,
