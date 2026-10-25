@@ -28,13 +28,13 @@ these changed the text when it changed:
 | llama.cpp build (Ollama update 0.40.6 → 0.40.7) | a different text, still repeatable (the update 0.40.4 → 0.40.6 changed nothing) |
 | quantization (Q4_K_M instead of Q8_0) | a different text – effectively a different model |
 | thinking on / off | a different prompt, so a different text |
-| 10 requests computed together (batching) | 0 of 100 answers equal to the single-request text, at temperature 0 and 1 |
 
 The input means the exact tokens: any change in the prompt – even one extra space – makes it a different input
 and can change the whole answer.
 
-Batching is how cloud APIs work: your request is computed together with other people's, so even temperature 0 does
-not give the same answer twice. Locally, one request at a time, it does.
+Computing several requests together (batching) can also change the text – this is how cloud APIs work, so even
+temperature 0 does not guarantee the same answer twice there. Locally, one request at a time, the answer repeats;
+`parallel_test.py` shows the effect on your own server.
 
 *Repeatable ≠ correct:* a broken answer repeats just as faithfully – on the Mac a tiny model looped until the
 token limit, identically in 10 of 10 runs.

@@ -1,6 +1,6 @@
 # Findings
 
-Facts come from result files in `results/`; hypotheses are marked as such.
+Facts come from result files in `results/` unless a section names another source; hypotheses are marked as such.
 
 ## Results so far
 
@@ -33,8 +33,8 @@ Windows 11 Pro, AMD Ryzen 9 9950X, 61.6 GB RAM, 2× RTX 5090 (driver 610.88, CUD
 - **gemma4:26b-a4b-it-q8_0:** still repeatable (10/10 at both temperatures, in two separate tests), but a **different text**:
   temperature 0 `179e3c96dff3` (1 276 tokens) instead of `138e66a98238`, temperature 1 `d4afe73e6d3c` (981 tokens)
   instead of `0e661f14a480`. Both split from the old text at character 133, in the title: "Wielka Przygoda na
-  **Podwórku**" → "na **Słonecznej Polanie**" – token 43 ("Pod" 0.44 vs "S" 0.37, a margin of 0.17 nat), which also flipped
-  in the batching test below. It is **not a near-tie**: 25 tokens of the answer have a smaller margin, e.g. token
+  **Podwórku**" → "na **Słonecznej Polanie**" – token 43 ("Pod" 0.44 vs "S" 0.37, a margin of 0.17 nat). It is
+  **not a near-tie**: 25 tokens of the answer have a smaller margin, e.g. token
   37 ("Wiel" vs "Tr", 0.11 nat), earlier in the text, did not flip. The text splits at the first token where the
   change of the numbers exceeds the margin, not at the closest one – and the update moved them by more than
   0.17 nat there, far more than rounding noise.
@@ -44,7 +44,7 @@ Windows 11 Pro, AMD Ryzen 9 9950X, 61.6 GB RAM, 2× RTX 5090 (driver 610.88, CUD
   `-ngl 0`, ~80 % CPU) was running in another process; a clean rerun the next day (CPU ~3 %) gave exactly the same
   new hashes for both models. The CPU load only slowed the GPU generation (114 instead of ~174 tok/s).
 - *An update can change the text, but does not have to* (0.40.4 → 0.40.6 did not). Therefore `reference.json`
-  stores reference hashes **per model and per llama.cpp build**, and machines should be compared on the same build.
+  stores reference hashes **per model and per llama.cpp build**.
 
 ### mac-m5pro-64gb (first machine outside the origin PC, 22 Oct 2026)
 
@@ -64,13 +64,12 @@ Ollama 0.40.4 (`b1-b42b7e6d3`), the model file of the `qwen3:0.6b` tag (= `qwen3
   the same 8 000 tokens, ten times. And a different build can change not only the hash but the quality of the answer.
 - *Hypothesis:* a tiny Q4 model with greedy decoding (temperature 0) can lock into a repetition loop; at
   temperature 1 this seed happened to avoid it. Whether the loop comes from the build (0.40.4) or from the hardware
-  (Metal vs CUDA) cannot be told from these data – a Mac test on Ollama 0.40.7, where the PC reference exists, would
-  separate the two.
+  (Metal vs CUDA) cannot be told from these data.
 
 ## Second model: qwen3:0.6b-q8_0 (default since 22 Oct)
 
 `qwen3:0.6b-q8_0` (752M parameters, 0.8 GB download): ~500 tok/s on an RTX 5090, ~1 s per generation, runs on almost
-any machine – so many more people can take part.
+any machine.
 
 - Ollama 0.40.6: `8cc886e38b1a` (536 tokens) / `e94074591fd4` (434 tokens), 10/10 each.
   Ollama 0.40.7: `23cd03276e07` (370 tokens) / `599eb85dd1d7` (90 tokens), 10/10 each, in two separate tests.
@@ -128,25 +127,12 @@ on GPU 0 and the kit's own request – only the seed differs.
   sampling* repeats.
 - Ad-hoc test, not in `results/`; a script for it is planned.
 
-## Curiosity: 10 requests at once (batching)
+## Batching: several requests computed together
 
-Origin PC, gemma4:26b-a4b-it-q8_0 (Ollama 0.40.6), one server with `-np 10 -c 20480`, prompt cache off, seed 42.
-
-- **10 copies of the prompt, 10 rounds:** temperature 0 → 15 different texts, **0/100 equal to the single-request
-  text**; temperature 1 → 20 different texts, 0/100.
-- **10 different prompts at once, 10 rounds:** every prompt changed its answer – 0/100 at temperature 0 and 0/100 at
-  temperature 1; some already at the 6th token.
-- The single request on the same 10-slot server still gave the reference hash – the change comes from computing
-  requests together, not from the configuration.
-- At temperature 0 the texts split at tokens where the two most likely candidates were close – but not only at
-  near-ties: token 117 "główn"/"ul" (0.001 nat, the closest of all) and token 91 "nie"/"był" (0.32 nat, 58 % vs
-  42 %; 52 tokens of the answer have a smaller margin). Computing a request together with others therefore moves
-  the numbers by tenths of a nat, not by rounding noise. *Hypothesis:* the model is a mixture of experts – a tiny
-  rounding difference can change which experts are used, and that moves the numbers a lot.
-- Rounds with the same batch layout gave the same set of texts, but which request got which text changed from round
-  to round – it depends on the position in the batch, i.e. on arrival order. This is the mechanism behind
-  non-deterministic cloud APIs at temperature 0: your request is computed together with other people's requests.
-- Throughput: 10 stories at once took ~25 s (~2.5 s per story) vs ~8 s one at a time.
+Computing several requests together in one batch (a server with several slots, e.g. `-np 10`) can change the text
+even at temperature 0 – this is how cloud APIs serve requests, so they usually cannot guarantee determinism. This
+kit runs one request at a time. Seen in the origin project (raw data not in this repo); to check it on your own
+server: `parallel_test.py` (10 requests at once, server started with `-np 10 -c 20480`).
 
 ## Related observations outside this kit
 
@@ -164,8 +150,8 @@ exactly what caught the 0.40.7 change), regression tests of prompts and pipeline
 both sides), audit, reproducible synthetic data, safe caching and resuming of pipelines, red teaming, demos.
 
 Limits: repeatable ≠ correct (a wrong answer is repeatably wrong); one seed is one sample, not the model's
-variability; a tiny prompt change gives a different text; batching for throughput breaks it (here ~3× more text
-per second); versions must be frozen (an update can change the text); cloud APIs usually cannot guarantee it.
+variability; a tiny prompt change gives a different text; computing requests together (batching, for
+throughput) can break it; versions must be frozen (an update can change the text); cloud APIs usually cannot guarantee it.
 
 ## Changelog
 
@@ -185,5 +171,6 @@ per second); versions must be frozen (an update can change the text); cloud APIs
   repetition loop up to max_tokens, identical in 10/10 runs.
 - 2026-10-25: the seed at temperature 0 does nothing – seeds 42, 7 and 1234 (fresh server for each) gave the same
   text; at temperature 1 every seed gave a different text.
-- 2026-10-25: tokens 43 and 91 are not near-ties (margins 0.17 and 0.32 nat): the update to 0.40.7 and batching
-  move the numbers by tenths of a nat; the text splits where the change exceeds the margin (after a review).
+- 2026-10-25: token 43 is not a near-tie (margin 0.17 nat): the update to 0.40.7 moved the numbers by tenths of
+  a nat; the text splits where the change exceeds the margin. Batching numbers from the origin project removed
+  (raw data not in this repo); no expectations about other machines (after a review).
